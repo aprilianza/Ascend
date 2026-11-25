@@ -1,0 +1,59 @@
+{
+  "contract_version": "1.0.0",
+  "generated_at": "2026-11-24T15:47:54+00:00",
+  "is_sample": true,
+  "business_types": [
+    {
+      "id": "coffee_shop",
+      "label": "Coffee shop",
+      "available": true,
+      "file": "coffee_shop.geojson"
+    },
+    {
+      "id": "eatery",
+      "label": "Eatery",
+      "available": false,
+      "file": null
+    }
+  ],
+  "data_sources": [
+    {
+      "name": "Synthetic sample",
+      "version": "seed 42",
+      "license": "n/a",
+      "attribution": "Sample data, not real results"
+    },
+    {
+      "name": "Overture Maps Places",
+      "version": "TBD (real run)",
+      "license": "CDLA-Permissive-2.0 and others",
+      "attribution": "\u00a9 Overture Maps Foundation"
+    },
+    {
+      "name": "OpenStreetMap",
+      "version": "TBD (real run)",
+      "license": "ODbL 1.0",
+      "attribution": "\u00a9 OpenStreetMap contributors"
+    },
+    {
+      "name": "WorldPop Global2 R2025A",
+      "version": "2026",
+      "license": "CC BY 4.0",
+      "attribution": "WorldPop (doi:10.5258/SOTON/WP00839)"
+    }
+  ],
+  "model": null,
+  "label_params": {
+    "method": "poisson_kring1",
+    "alpha": 0.05,
+    "min_gap": 1.0,
+    "not_enough_demand_max_expected_k1": 0.3,
+    "low_confidence_min_poi": 3
+  },
+  "label_counts": {
+    "opportunity": 8,
+    "fair": 21,
+    "crowded": 9,
+    "not_enough_demand": 19
+  }
+}

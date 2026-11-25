@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ascend.local/schema/meta.schema.json",
+  "title": "Ascend meta.json",
+  "description": "Data contract v1.0.0. Data versions, model metrics, label parameters, and which business types are available. In Phase 2 this is also the response body of GET /meta. See docs/data-contract.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version", "generated_at", "is_sample",
+    "business_types", "data_sources", "model", "label_params", "label_counts"
+  ],
+  "properties": {
+    "contract_version": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "is_sample": { "type": "boolean" },
+    "business_types": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "available", "file"],
+        "properties": {
+          "id": { "enum": ["coffee_shop", "eatery"] },
+          "label": { "type": "string", "minLength": 1, "description": "Text for the business-type selector." },
+          "available": { "type": "boolean", "description": "false = show as disabled with a 'Coming soon' badge." },
+          "file": {
+            "type": ["string", "null"],
+            "pattern": "^[a-z_]+\\.geojson$",
+            "description": "File name under /data/. null when not available."
+          }
+        }
+      }
+    },
+    "data_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "version", "license", "attribution"],
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": "string", "description": "Release name or year, e.g. '2026-11-19.0' or '2026'." },
+          "license": { "type": "string" },
+          "attribution": { "type": "string", "description": "Exact text to show in the map attribution / About panel." }
+        }
+      }
+    },
+    "model": {
+      "type": ["object", "null"],
+      "description": "null in sample data or before the first model run. UI shows 'Metrics available after the first model run'.",
+      "additionalProperties": false,
+      "required": ["name", "validation", "metrics", "baseline_metrics"],
+      "properties": {
+        "name": { "type": "string" },
+        "validation": { "type": "string" },
+        "metrics": { "$ref": "#/$defs/metrics" },
+        "baseline_metrics": { "$ref": "#/$defs/metrics" }
+      }
+    },
+    "label_params": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "alpha", "min_gap", "not_enough_demand_max_expected_k1", "low_confidence_min_poi"],
+      "properties": {
+        "method": { "const": "poisson_kring1" },
+        "alpha": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.2 },
+        "min_gap": { "type": "number", "minimum": 0 },
+        "not_enough_demand_max_expected_k1": { "type": "number", "minimum": 0 },
+        "low_confidence_min_poi": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "label_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["opportunity", "fair", "crowded", "not_enough_demand"],
+      "properties": {
+        "opportunity": { "type": "integer", "minimum": 0 },
+        "fair": { "type": "integer", "minimum": 0 },
+        "crowded": { "type": "integer", "minimum": 0 },
+        "not_enough_demand": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["poisson_deviance", "mae", "spearman"],
+      "properties": {
+        "poisson_deviance": { "type": "number", "minimum": 0 },
+        "mae": { "type": "number", "minimum": 0 },
+        "spearman": { "type": "number", "minimum": -1, "maximum": 1 }
+      }
+    }
+  }
+}

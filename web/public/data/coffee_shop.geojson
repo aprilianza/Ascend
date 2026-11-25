@@ -1,0 +1,3885 @@
+{
+  "type": "FeatureCollection",
+  "contract_version": "1.0.0",
+  "business_type": "coffee_shop",
+  "is_sample": true,
+  "generated_at": "2026-11-24T15:47:54+00:00",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.60753,
+              -6.89272
+            ],
+            [
+              107.60712,
+              -6.89101
+            ],
+            [
+              107.60536,
+              -6.89058
+            ],
+            [
+              107.604,
+              -6.89187
+            ],
+            [
+              107.60441,
+              -6.89359
+            ],
+            [
+              107.60617,
+              -6.89401
+            ],
+            [
+              107.60753,
+              -6.89272
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c1479a5bffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 2.1,
+        "actual_k1": 10,
+        "expected_k1": 8.9,
+        "gap": -1.1,
+        "p_value": 0.3994,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.4
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.3
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.60941,
+              -6.88671
+            ],
+            [
+              107.609,
+              -6.88499
+            ],
+            [
+              107.60724,
+              -6.88457
+            ],
+            [
+              107.60589,
+              -6.88586
+            ],
+            [
+              107.6063,
+              -6.88757
+            ],
+            [
+              107.60806,
+              -6.888
+            ],
+            [
+              107.60941,
+              -6.88671
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6983ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 3,
+        "expected": 2.1,
+        "actual_k1": 8,
+        "expected_k1": 8.8,
+        "gap": 0.8,
+        "p_value": 0.4823,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.9
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.7
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61158,
+              -6.88885
+            ],
+            [
+              107.61117,
+              -6.88713
+            ],
+            [
+              107.60941,
+              -6.88671
+            ],
+            [
+              107.60806,
+              -6.888
+            ],
+            [
+              107.60847,
+              -6.88971
+            ],
+            [
+              107.61023,
+              -6.89014
+            ],
+            [
+              107.61158,
+              -6.88885
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6993ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 2,
+        "expected": 2.0,
+        "actual_k1": 23,
+        "expected_k1": 16.2,
+        "gap": -6.8,
+        "p_value": 0.0647,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 1.0
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.60847,
+              -6.88971
+            ],
+            [
+              107.60806,
+              -6.888
+            ],
+            [
+              107.6063,
+              -6.88757
+            ],
+            [
+              107.60495,
+              -6.88886
+            ],
+            [
+              107.60536,
+              -6.89058
+            ],
+            [
+              107.60712,
+              -6.89101
+            ],
+            [
+              107.60847,
+              -6.88971
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6997ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 2,
+        "expected": 2.3,
+        "actual_k1": 14,
+        "expected_k1": 10.3,
+        "gap": -3.7,
+        "p_value": 0.1584,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.8
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61252,
+              -6.88584
+            ],
+            [
+              107.61211,
+              -6.88413
+            ],
+            [
+              107.61035,
+              -6.8837
+            ],
+            [
+              107.609,
+              -6.88499
+            ],
+            [
+              107.60941,
+              -6.88671
+            ],
+            [
+              107.61117,
+              -6.88713
+            ],
+            [
+              107.61252,
+              -6.88584
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b699bffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 2.4,
+        "actual_k1": 12,
+        "expected_k1": 10.9,
+        "gap": -1.1,
+        "p_value": 0.4088,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.6
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61809,
+              -6.89527
+            ],
+            [
+              107.61768,
+              -6.89356
+            ],
+            [
+              107.61592,
+              -6.89313
+            ],
+            [
+              107.61457,
+              -6.89442
+            ],
+            [
+              107.61498,
+              -6.89614
+            ],
+            [
+              107.61674,
+              -6.89656
+            ],
+            [
+              107.61809,
+              -6.89527
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d07ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 3,
+        "expected": 3.2,
+        "actual_k1": 18,
+        "expected_k1": 11.1,
+        "gap": -6.9,
+        "p_value": 0.0346,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61903,
+              -6.89227
+            ],
+            [
+              107.61862,
+              -6.89055
+            ],
+            [
+              107.61686,
+              -6.89012
+            ],
+            [
+              107.61551,
+              -6.89142
+            ],
+            [
+              107.61592,
+              -6.89313
+            ],
+            [
+              107.61768,
+              -6.89356
+            ],
+            [
+              107.61903,
+              -6.89227
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d0fffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 2.9,
+        "actual_k1": 20,
+        "expected_k1": 13.4,
+        "gap": -6.6,
+        "p_value": 0.0546,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.8
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61281,
+              -6.894
+            ],
+            [
+              107.6124,
+              -6.89228
+            ],
+            [
+              107.61064,
+              -6.89186
+            ],
+            [
+              107.60929,
+              -6.89315
+            ],
+            [
+              107.60969,
+              -6.89486
+            ],
+            [
+              107.61145,
+              -6.89529
+            ],
+            [
+              107.61281,
+              -6.894
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d23ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 12,
+        "expected": 2.0,
+        "actual_k1": 38,
+        "expected_k1": 16.1,
+        "gap": -21.9,
+        "p_value": 0.0,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.9
+          },
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 0.4
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.60969,
+              -6.89486
+            ],
+            [
+              107.60929,
+              -6.89315
+            ],
+            [
+              107.60753,
+              -6.89272
+            ],
+            [
+              107.60617,
+              -6.89401
+            ],
+            [
+              107.60658,
+              -6.89573
+            ],
+            [
+              107.60834,
+              -6.89615
+            ],
+            [
+              107.60969,
+              -6.89486
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d27ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 2.7,
+        "actual_k1": 21,
+        "expected_k1": 10.9,
+        "gap": -10.1,
+        "p_value": 0.0042,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 1.1
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.9
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Far from a train station",
+            "effect": -0.7
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61375,
+              -6.89099
+            ],
+            [
+              107.61334,
+              -6.88927
+            ],
+            [
+              107.61158,
+              -6.88885
+            ],
+            [
+              107.61023,
+              -6.89014
+            ],
+            [
+              107.61064,
+              -6.89186
+            ],
+            [
+              107.6124,
+              -6.89228
+            ],
+            [
+              107.61375,
+              -6.89099
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d2bffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 4,
+        "expected": 2.4,
+        "actual_k1": 43,
+        "expected_k1": 17.5,
+        "gap": -25.5,
+        "p_value": 0.0,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.9
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.3
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.1
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61064,
+              -6.89186
+            ],
+            [
+              107.61023,
+              -6.89014
+            ],
+            [
+              107.60847,
+              -6.88971
+            ],
+            [
+              107.60712,
+              -6.89101
+            ],
+            [
+              107.60753,
+              -6.89272
+            ],
+            [
+              107.60929,
+              -6.89315
+            ],
+            [
+              107.61064,
+              -6.89186
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d2fffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 6,
+        "expected": 1.8,
+        "actual_k1": 28,
+        "expected_k1": 15.4,
+        "gap": -12.6,
+        "p_value": 0.0025,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.7
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61498,
+              -6.89614
+            ],
+            [
+              107.61457,
+              -6.89442
+            ],
+            [
+              107.61281,
+              -6.894
+            ],
+            [
+              107.61145,
+              -6.89529
+            ],
+            [
+              107.61186,
+              -6.897
+            ],
+            [
+              107.61362,
+              -6.89743
+            ],
+            [
+              107.61498,
+              -6.89614
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d33ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 6,
+        "expected": 2.6,
+        "actual_k1": 30,
+        "expected_k1": 12.4,
+        "gap": -17.6,
+        "p_value": 0.0,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.9
+          },
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61186,
+              -6.897
+            ],
+            [
+              107.61145,
+              -6.89529
+            ],
+            [
+              107.60969,
+              -6.89486
+            ],
+            [
+              107.60834,
+              -6.89615
+            ],
+            [
+              107.60875,
+              -6.89787
+            ],
+            [
+              107.61051,
+              -6.89829
+            ],
+            [
+              107.61186,
+              -6.897
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d37ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 2.2,
+        "actual_k1": 20,
+        "expected_k1": 9.6,
+        "gap": -10.4,
+        "p_value": 0.0022,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 1.2
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 1.1
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61592,
+              -6.89313
+            ],
+            [
+              107.61551,
+              -6.89142
+            ],
+            [
+              107.61375,
+              -6.89099
+            ],
+            [
+              107.6124,
+              -6.89228
+            ],
+            [
+              107.61281,
+              -6.894
+            ],
+            [
+              107.61457,
+              -6.89442
+            ],
+            [
+              107.61592,
+              -6.89313
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d3bffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 8,
+        "expected": 2.4,
+        "actual_k1": 40,
+        "expected_k1": 19.1,
+        "gap": -20.9,
+        "p_value": 0.0,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 1.0
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Far from a train station",
+            "effect": -0.9
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.6178,
+              -6.88712
+            ],
+            [
+              107.6174,
+              -6.8854
+            ],
+            [
+              107.61563,
+              -6.88498
+            ],
+            [
+              107.61428,
+              -6.88627
+            ],
+            [
+              107.61469,
+              -6.88798
+            ],
+            [
+              107.61645,
+              -6.88841
+            ],
+            [
+              107.6178,
+              -6.88712
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d63ffff",
+        "kecamatan": "Coblong",
+        "area_name": "kota_bandung",
+        "actual": 3,
+        "expected": 2.2,
+        "actual_k1": 17,
+        "expected_k1": 11.6,
+        "gap": -5.4,
+        "p_value": 0.081,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 1.0
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.5
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61469,
+              -6.88798
+            ],
+            [
+              107.61428,
+              -6.88627
+            ],
+            [
+              107.61252,
+              -6.88584
+            ],
+            [
+              107.61117,
+              -6.88713
+            ],
+            [
+              107.61158,
+              -6.88885
+            ],
+            [
+              107.61334,
+              -6.88927
+            ],
+            [
+              107.61469,
+              -6.88798
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d67ffff",
+        "kecamatan": "Cibeunying Kidul",
+        "area_name": "kota_bandung",
+        "actual": 5,
+        "expected": 3.2,
+        "actual_k1": 22,
+        "expected_k1": 17.1,
+        "gap": -4.9,
+        "p_value": 0.1442,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -1.1
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.5
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61563,
+              -6.88498
+            ],
+            [
+              107.61523,
+              -6.88326
+            ],
+            [
+              107.61347,
+              -6.88284
+            ],
+            [
+              107.61211,
+              -6.88413
+            ],
+            [
+              107.61252,
+              -6.88584
+            ],
+            [
+              107.61428,
+              -6.88627
+            ],
+            [
+              107.61563,
+              -6.88498
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d6fffff",
+        "kecamatan": "Cibeunying Kidul",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 1.2,
+        "actual_k1": 10,
+        "expected_k1": 9.0,
+        "gap": -1.0,
+        "p_value": 0.4126,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -1.1
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.8
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61997,
+              -6.88926
+            ],
+            [
+              107.61956,
+              -6.88754
+            ],
+            [
+              107.6178,
+              -6.88712
+            ],
+            [
+              107.61645,
+              -6.88841
+            ],
+            [
+              107.61686,
+              -6.89012
+            ],
+            [
+              107.61862,
+              -6.89055
+            ],
+            [
+              107.61997,
+              -6.88926
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d73ffff",
+        "kecamatan": "Cibeunying Kidul",
+        "area_name": "kota_bandung",
+        "actual": 2,
+        "expected": 1.2,
+        "actual_k1": 12,
+        "expected_k1": 10.0,
+        "gap": -2.0,
+        "p_value": 0.3032,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.6
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.5
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.1
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.61686,
+              -6.89012
+            ],
+            [
+              107.61645,
+              -6.88841
+            ],
+            [
+              107.61469,
+              -6.88798
+            ],
+            [
+              107.61334,
+              -6.88927
+            ],
+            [
+              107.61375,
+              -6.89099
+            ],
+            [
+              107.61551,
+              -6.89142
+            ],
+            [
+              107.61686,
+              -6.89012
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c16b6d77ffff",
+        "kecamatan": "Cibeunying Kidul",
+        "area_name": "kota_bandung",
+        "actual": 6,
+        "expected": 3.7,
+        "actual_k1": 29,
+        "expected_k1": 18.0,
+        "gap": -11.0,
+        "p_value": 0.0103,
+        "label": "crowded",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.5
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.4
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.1
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.62715,
+              -6.97505
+            ],
+            [
+              107.62674,
+              -6.97333
+            ],
+            [
+              107.62498,
+              -6.97291
+            ],
+            [
+              107.62363,
+              -6.9742
+            ],
+            [
+              107.62404,
+              -6.97591
+            ],
+            [
+              107.6258,
+              -6.97634
+            ],
+            [
+              107.62715,
+              -6.97505
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14780d3ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 3,
+        "expected": 1.7,
+        "actual_k1": 6,
+        "expected_k1": 6.3,
+        "gap": 0.3,
+        "p_value": 0.5582,
+        "label": "fair",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.9
+          },
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.7
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.62809,
+              -6.97204
+            ],
+            [
+              107.62768,
+              -6.97033
+            ],
+            [
+              107.62592,
+              -6.9699
+            ],
+            [
+              107.62457,
+              -6.97119
+            ],
+            [
+              107.62498,
+              -6.97291
+            ],
+            [
+              107.62674,
+              -6.97333
+            ],
+            [
+              107.62809,
+              -6.97204
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14780dbffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 1.9,
+        "actual_k1": 8,
+        "expected_k1": 10.6,
+        "gap": 2.6,
+        "p_value": 0.2694,
+        "label": "fair",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.6
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.6377,
+              -6.97759
+            ],
+            [
+              107.6373,
+              -6.97588
+            ],
+            [
+              107.63554,
+              -6.97545
+            ],
+            [
+              107.63419,
+              -6.97674
+            ],
+            [
+              107.63459,
+              -6.97846
+            ],
+            [
+              107.63635,
+              -6.97888
+            ],
+            [
+              107.6377,
+              -6.97759
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147844bffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 3,
+        "expected": 2.8,
+        "actual_k1": 8,
+        "expected_k1": 8.8,
+        "gap": 0.8,
+        "p_value": 0.4823,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.5
+          },
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63459,
+              -6.97846
+            ],
+            [
+              107.63419,
+              -6.97674
+            ],
+            [
+              107.63243,
+              -6.97632
+            ],
+            [
+              107.63107,
+              -6.97761
+            ],
+            [
+              107.63148,
+              -6.97932
+            ],
+            [
+              107.63324,
+              -6.97975
+            ],
+            [
+              107.63459,
+              -6.97846
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147844fffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 2.1,
+        "actual_k1": 8,
+        "expected_k1": 13.1,
+        "gap": 5.1,
+        "p_value": 0.0953,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 1.0
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.8
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.62931,
+              -6.97718
+            ],
+            [
+              107.62891,
+              -6.97547
+            ],
+            [
+              107.62715,
+              -6.97505
+            ],
+            [
+              107.6258,
+              -6.97634
+            ],
+            [
+              107.6262,
+              -6.97805
+            ],
+            [
+              107.62796,
+              -6.97847
+            ],
+            [
+              107.62931,
+              -6.97718
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147846bffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 1,
+        "expected": 1.1,
+        "actual_k1": 6,
+        "expected_k1": 10.2,
+        "gap": 4.2,
+        "p_value": 0.118,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 1.0
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.8
+          },
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63148,
+              -6.97932
+            ],
+            [
+              107.63107,
+              -6.97761
+            ],
+            [
+              107.62931,
+              -6.97718
+            ],
+            [
+              107.62796,
+              -6.97847
+            ],
+            [
+              107.62837,
+              -6.98019
+            ],
+            [
+              107.63013,
+              -6.98061
+            ],
+            [
+              107.63148,
+              -6.97932
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147847bffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 3.3,
+        "actual_k1": 5,
+        "expected_k1": 9.0,
+        "gap": 4.0,
+        "p_value": 0.1157,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 1.2
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.9
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63525,
+              -6.9673
+            ],
+            [
+              107.63484,
+              -6.96559
+            ],
+            [
+              107.63308,
+              -6.96517
+            ],
+            [
+              107.63173,
+              -6.96646
+            ],
+            [
+              107.63214,
+              -6.96817
+            ],
+            [
+              107.6339,
+              -6.96859
+            ],
+            [
+              107.63525,
+              -6.9673
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c1478607ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 1.4,
+        "actual_k1": 6,
+        "expected_k1": 7.9,
+        "gap": 1.9,
+        "p_value": 0.3257,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 1.0
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63742,
+              -6.96944
+            ],
+            [
+              107.63701,
+              -6.96773
+            ],
+            [
+              107.63525,
+              -6.9673
+            ],
+            [
+              107.6339,
+              -6.96859
+            ],
+            [
+              107.63431,
+              -6.97031
+            ],
+            [
+              107.63607,
+              -6.97073
+            ],
+            [
+              107.63742,
+              -6.96944
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c1478617ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 1.7,
+        "actual_k1": 4,
+        "expected_k1": 9.3,
+        "gap": 5.3,
+        "p_value": 0.0456,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 1.1
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63214,
+              -6.96817
+            ],
+            [
+              107.63173,
+              -6.96646
+            ],
+            [
+              107.62997,
+              -6.96603
+            ],
+            [
+              107.62862,
+              -6.96732
+            ],
+            [
+              107.62903,
+              -6.96904
+            ],
+            [
+              107.63079,
+              -6.96946
+            ],
+            [
+              107.63214,
+              -6.96817
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c1478633ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 2.0,
+        "actual_k1": 7,
+        "expected_k1": 11.6,
+        "gap": 4.6,
+        "p_value": 0.1085,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -1.1
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.8
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.62903,
+              -6.96904
+            ],
+            [
+              107.62862,
+              -6.96732
+            ],
+            [
+              107.62686,
+              -6.9669
+            ],
+            [
+              107.62551,
+              -6.96819
+            ],
+            [
+              107.62592,
+              -6.9699
+            ],
+            [
+              107.62768,
+              -6.97033
+            ],
+            [
+              107.62903,
+              -6.96904
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c1478637ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 3,
+        "expected": 2.5,
+        "actual_k1": 7,
+        "expected_k1": 9.4,
+        "gap": 2.4,
+        "p_value": 0.2792,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Far from a train station",
+            "effect": -1.0
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.9
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63865,
+              -6.97458
+            ],
+            [
+              107.63824,
+              -6.97287
+            ],
+            [
+              107.63648,
+              -6.97245
+            ],
+            [
+              107.63513,
+              -6.97374
+            ],
+            [
+              107.63554,
+              -6.97545
+            ],
+            [
+              107.6373,
+              -6.97588
+            ],
+            [
+              107.63865,
+              -6.97458
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c1478687ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 2,
+        "expected": 1.5,
+        "actual_k1": 6,
+        "expected_k1": 10.2,
+        "gap": 4.2,
+        "p_value": 0.118,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.5
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63959,
+              -6.97158
+            ],
+            [
+              107.63918,
+              -6.96987
+            ],
+            [
+              107.63742,
+              -6.96944
+            ],
+            [
+              107.63607,
+              -6.97073
+            ],
+            [
+              107.63648,
+              -6.97245
+            ],
+            [
+              107.63824,
+              -6.97287
+            ],
+            [
+              107.63959,
+              -6.97158
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147868fffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 1.2,
+        "actual_k1": 4,
+        "expected_k1": 6.6,
+        "gap": 2.6,
+        "p_value": 0.2127,
+        "label": "fair",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.9
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63337,
+              -6.97331
+            ],
+            [
+              107.63296,
+              -6.9716
+            ],
+            [
+              107.6312,
+              -6.97117
+            ],
+            [
+              107.62985,
+              -6.97246
+            ],
+            [
+              107.63026,
+              -6.97418
+            ],
+            [
+              107.63202,
+              -6.9746
+            ],
+            [
+              107.63337,
+              -6.97331
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786a3ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 2.3,
+        "actual_k1": 1,
+        "expected_k1": 16.6,
+        "gap": 15.6,
+        "p_value": 0.0,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.5
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63026,
+              -6.97418
+            ],
+            [
+              107.62985,
+              -6.97246
+            ],
+            [
+              107.62809,
+              -6.97204
+            ],
+            [
+              107.62674,
+              -6.97333
+            ],
+            [
+              107.62715,
+              -6.97505
+            ],
+            [
+              107.62891,
+              -6.97547
+            ],
+            [
+              107.63026,
+              -6.97418
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786a7ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 1.5,
+        "actual_k1": 6,
+        "expected_k1": 14.0,
+        "gap": 8.0,
+        "p_value": 0.0142,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63431,
+              -6.97031
+            ],
+            [
+              107.6339,
+              -6.96859
+            ],
+            [
+              107.63214,
+              -6.96817
+            ],
+            [
+              107.63079,
+              -6.96946
+            ],
+            [
+              107.6312,
+              -6.97117
+            ],
+            [
+              107.63296,
+              -6.9716
+            ],
+            [
+              107.63431,
+              -6.97031
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786abffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 2.8,
+        "actual_k1": 6,
+        "expected_k1": 15.4,
+        "gap": 9.4,
+        "p_value": 0.0059,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.9
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.6
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.5
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.6312,
+              -6.97117
+            ],
+            [
+              107.63079,
+              -6.96946
+            ],
+            [
+              107.62903,
+              -6.96904
+            ],
+            [
+              107.62768,
+              -6.97033
+            ],
+            [
+              107.62809,
+              -6.97204
+            ],
+            [
+              107.62985,
+              -6.97246
+            ],
+            [
+              107.6312,
+              -6.97117
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786afffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 2.9,
+        "actual_k1": 7,
+        "expected_k1": 16.0,
+        "gap": 9.0,
+        "p_value": 0.01,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 1.1
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.2
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63554,
+              -6.97545
+            ],
+            [
+              107.63513,
+              -6.97374
+            ],
+            [
+              107.63337,
+              -6.97331
+            ],
+            [
+              107.63202,
+              -6.9746
+            ],
+            [
+              107.63243,
+              -6.97632
+            ],
+            [
+              107.63419,
+              -6.97674
+            ],
+            [
+              107.63554,
+              -6.97545
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786b3ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 1,
+        "expected": 2.4,
+        "actual_k1": 8,
+        "expected_k1": 15.8,
+        "gap": 7.8,
+        "p_value": 0.0245,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Far from a train station",
+            "effect": -0.9
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63243,
+              -6.97632
+            ],
+            [
+              107.63202,
+              -6.9746
+            ],
+            [
+              107.63026,
+              -6.97418
+            ],
+            [
+              107.62891,
+              -6.97547
+            ],
+            [
+              107.62931,
+              -6.97718
+            ],
+            [
+              107.63107,
+              -6.97761
+            ],
+            [
+              107.63243,
+              -6.97632
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786b7ffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 2.5,
+        "actual_k1": 6,
+        "expected_k1": 15.2,
+        "gap": 9.2,
+        "p_value": 0.0067,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -1.2
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.1
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.63648,
+              -6.97245
+            ],
+            [
+              107.63607,
+              -6.97073
+            ],
+            [
+              107.63431,
+              -6.97031
+            ],
+            [
+              107.63296,
+              -6.9716
+            ],
+            [
+              107.63337,
+              -6.97331
+            ],
+            [
+              107.63513,
+              -6.97374
+            ],
+            [
+              107.63648,
+              -6.97245
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c14786bbffff",
+        "kecamatan": "Dayeuhkolot",
+        "area_name": "telkom_area",
+        "actual": 0,
+        "expected": 2.2,
+        "actual_k1": 5,
+        "expected_k1": 14.2,
+        "gap": 9.2,
+        "p_value": 0.0048,
+        "label": "opportunity",
+        "confidence": "normal",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.9
+          },
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69746,
+              -6.94998
+            ],
+            [
+              107.69705,
+              -6.94827
+            ],
+            [
+              107.69529,
+              -6.94784
+            ],
+            [
+              107.69394,
+              -6.94913
+            ],
+            [
+              107.69435,
+              -6.95085
+            ],
+            [
+              107.69611,
+              -6.95127
+            ],
+            [
+              107.69746,
+              -6.94998
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cd33ffff",
+        "kecamatan": null,
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.9
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.6
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69435,
+              -6.95085
+            ],
+            [
+              107.69394,
+              -6.94913
+            ],
+            [
+              107.69218,
+              -6.94871
+            ],
+            [
+              107.69083,
+              -6.95
+            ],
+            [
+              107.69124,
+              -6.95171
+            ],
+            [
+              107.693,
+              -6.95214
+            ],
+            [
+              107.69435,
+              -6.95085
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cd37ffff",
+        "kecamatan": null,
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 1.2
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 1.0
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.7
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69868,
+              -6.95512
+            ],
+            [
+              107.69828,
+              -6.95341
+            ],
+            [
+              107.69652,
+              -6.95299
+            ],
+            [
+              107.69517,
+              -6.95428
+            ],
+            [
+              107.69557,
+              -6.95599
+            ],
+            [
+              107.69733,
+              -6.95641
+            ],
+            [
+              107.69868,
+              -6.95512
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cda3ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.2
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69557,
+              -6.95599
+            ],
+            [
+              107.69517,
+              -6.95428
+            ],
+            [
+              107.69341,
+              -6.95385
+            ],
+            [
+              107.69206,
+              -6.95514
+            ],
+            [
+              107.69246,
+              -6.95686
+            ],
+            [
+              107.69422,
+              -6.95728
+            ],
+            [
+              107.69557,
+              -6.95599
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cda7ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 1.0
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.5
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69963,
+              -6.95212
+            ],
+            [
+              107.69922,
+              -6.9504
+            ],
+            [
+              107.69746,
+              -6.94998
+            ],
+            [
+              107.69611,
+              -6.95127
+            ],
+            [
+              107.69652,
+              -6.95299
+            ],
+            [
+              107.69828,
+              -6.95341
+            ],
+            [
+              107.69963,
+              -6.95212
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cdabffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69652,
+              -6.95299
+            ],
+            [
+              107.69611,
+              -6.95127
+            ],
+            [
+              107.69435,
+              -6.95085
+            ],
+            [
+              107.693,
+              -6.95214
+            ],
+            [
+              107.69341,
+              -6.95385
+            ],
+            [
+              107.69517,
+              -6.95428
+            ],
+            [
+              107.69652,
+              -6.95299
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cdafffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Far from a train station",
+            "effect": -0.6
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.70085,
+              -6.95726
+            ],
+            [
+              107.70044,
+              -6.95555
+            ],
+            [
+              107.69868,
+              -6.95512
+            ],
+            [
+              107.69733,
+              -6.95641
+            ],
+            [
+              107.69774,
+              -6.95813
+            ],
+            [
+              107.6995,
+              -6.95855
+            ],
+            [
+              107.70085,
+              -6.95726
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cdb3ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.7
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Far from a train station",
+            "effect": -0.4
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69774,
+              -6.95813
+            ],
+            [
+              107.69733,
+              -6.95641
+            ],
+            [
+              107.69557,
+              -6.95599
+            ],
+            [
+              107.69422,
+              -6.95728
+            ],
+            [
+              107.69463,
+              -6.95899
+            ],
+            [
+              107.69639,
+              -6.95942
+            ],
+            [
+              107.69774,
+              -6.95813
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cdb7ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 1.0
+          },
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.6
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.70179,
+              -6.95426
+            ],
+            [
+              107.70139,
+              -6.95254
+            ],
+            [
+              107.69963,
+              -6.95212
+            ],
+            [
+              107.69828,
+              -6.95341
+            ],
+            [
+              107.69868,
+              -6.95512
+            ],
+            [
+              107.70044,
+              -6.95555
+            ],
+            [
+              107.70179,
+              -6.95426
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c144cdbbffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.6
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.6903,
+              -6.95472
+            ],
+            [
+              107.68989,
+              -6.953
+            ],
+            [
+              107.68813,
+              -6.95258
+            ],
+            [
+              107.68678,
+              -6.95387
+            ],
+            [
+              107.68719,
+              -6.95558
+            ],
+            [
+              107.68895,
+              -6.95601
+            ],
+            [
+              107.6903,
+              -6.95472
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b2c3ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.6
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.5
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69124,
+              -6.95171
+            ],
+            [
+              107.69083,
+              -6.95
+            ],
+            [
+              107.68907,
+              -6.94958
+            ],
+            [
+              107.68772,
+              -6.95087
+            ],
+            [
+              107.68813,
+              -6.95258
+            ],
+            [
+              107.68989,
+              -6.953
+            ],
+            [
+              107.69124,
+              -6.95171
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b2cbffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.5
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69246,
+              -6.95686
+            ],
+            [
+              107.69206,
+              -6.95514
+            ],
+            [
+              107.6903,
+              -6.95472
+            ],
+            [
+              107.68895,
+              -6.95601
+            ],
+            [
+              107.68935,
+              -6.95772
+            ],
+            [
+              107.69111,
+              -6.95815
+            ],
+            [
+              107.69246,
+              -6.95686
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b2d3ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 0.4
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.4
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.68935,
+              -6.95772
+            ],
+            [
+              107.68895,
+              -6.95601
+            ],
+            [
+              107.68719,
+              -6.95558
+            ],
+            [
+              107.68584,
+              -6.95687
+            ],
+            [
+              107.68624,
+              -6.95859
+            ],
+            [
+              107.688,
+              -6.95901
+            ],
+            [
+              107.68935,
+              -6.95772
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b2d7ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 1.2
+          },
+          {
+            "feature": "school_k1",
+            "text": "Few schools nearby",
+            "effect": -0.4
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69341,
+              -6.95385
+            ],
+            [
+              107.693,
+              -6.95214
+            ],
+            [
+              107.69124,
+              -6.95171
+            ],
+            [
+              107.68989,
+              -6.953
+            ],
+            [
+              107.6903,
+              -6.95472
+            ],
+            [
+              107.69206,
+              -6.95514
+            ],
+            [
+              107.69341,
+              -6.95385
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b2dbffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 0,
+        "expected_k1": 0.2,
+        "gap": 0.2,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.8
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.7
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69991,
+              -6.96027
+            ],
+            [
+              107.6995,
+              -6.95855
+            ],
+            [
+              107.69774,
+              -6.95813
+            ],
+            [
+              107.69639,
+              -6.95942
+            ],
+            [
+              107.6968,
+              -6.96113
+            ],
+            [
+              107.69856,
+              -6.96156
+            ],
+            [
+              107.69991,
+              -6.96027
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b64fffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.1,
+        "actual_k1": 0,
+        "expected_k1": 0.1,
+        "gap": 0.1,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -0.6
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.5
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69369,
+              -6.962
+            ],
+            [
+              107.69328,
+              -6.96028
+            ],
+            [
+              107.69152,
+              -6.95986
+            ],
+            [
+              107.69017,
+              -6.96115
+            ],
+            [
+              107.69058,
+              -6.96286
+            ],
+            [
+              107.69234,
+              -6.96329
+            ],
+            [
+              107.69369,
+              -6.962
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b663ffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 1,
+        "expected": 0.0,
+        "actual_k1": 1,
+        "expected_k1": 0.1,
+        "gap": -0.9,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "Campus nearby",
+            "effect": 0.6
+          },
+          {
+            "feature": "transit_k1",
+            "text": "Little public transport nearby",
+            "effect": -0.3
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69463,
+              -6.95899
+            ],
+            [
+              107.69422,
+              -6.95728
+            ],
+            [
+              107.69246,
+              -6.95686
+            ],
+            [
+              107.69111,
+              -6.95815
+            ],
+            [
+              107.69152,
+              -6.95986
+            ],
+            [
+              107.69328,
+              -6.96028
+            ],
+            [
+              107.69463,
+              -6.95899
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b66bffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 1,
+        "expected_k1": 0.2,
+        "gap": -0.8,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "campus_k2",
+            "text": "No campus nearby",
+            "effect": -1.0
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Few residents nearby",
+            "effect": -0.6
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.69152,
+              -6.95986
+            ],
+            [
+              107.69111,
+              -6.95815
+            ],
+            [
+              107.68935,
+              -6.95772
+            ],
+            [
+              107.688,
+              -6.95901
+            ],
+            [
+              107.68841,
+              -6.96073
+            ],
+            [
+              107.69017,
+              -6.96115
+            ],
+            [
+              107.69152,
+              -6.95986
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b66fffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 1,
+        "expected_k1": 0.2,
+        "gap": -0.8,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "office_k1",
+            "text": "Many offices nearby",
+            "effect": 1.1
+          },
+          {
+            "feature": "school_k1",
+            "text": "Schools nearby",
+            "effect": 0.8
+          },
+          {
+            "feature": "pop_k1",
+            "text": "Many residents nearby",
+            "effect": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              107.6968,
+              -6.96113
+            ],
+            [
+              107.69639,
+              -6.95942
+            ],
+            [
+              107.69463,
+              -6.95899
+            ],
+            [
+              107.69328,
+              -6.96028
+            ],
+            [
+              107.69369,
+              -6.962
+            ],
+            [
+              107.69545,
+              -6.96242
+            ],
+            [
+              107.6968,
+              -6.96113
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3": "898c147b67bffff",
+        "kecamatan": "Gedebage",
+        "area_name": "kota_bandung",
+        "actual": 0,
+        "expected": 0.0,
+        "actual_k1": 1,
+        "expected_k1": 0.2,
+        "gap": -0.8,
+        "p_value": null,
+        "label": "not_enough_demand",
+        "confidence": "low",
+        "factors": [
+          {
+            "feature": "transit_k1",
+            "text": "Good bus and angkot access",
+            "effect": 0.8
+          },
+          {
+            "feature": "dist_station_m",
+            "text": "Close to a train station",
+            "effect": 0.4
+          },
+          {
+            "feature": "office_k1",
+            "text": "Few offices nearby",
+            "effect": -0.3
+          }
+        ]
+      }
+    }
+  ]
+}
