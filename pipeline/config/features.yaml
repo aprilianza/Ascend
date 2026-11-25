@@ -1,0 +1,32 @@
+# Demand-generator groups for US-004. No food or drink outlet counts are allowed as features.
+# Each group = Overture taxonomy.primary values and/or OSM tag values; both sources are merged
+# and de-duplicated before counting.
+
+campus:
+  overture_primary: [college_university, campus_building]
+  osm: {amenity: [university, college]}
+school:
+  overture_primary: [school, elementary_school, middle_school, high_school, private_school, religious_school, preschool]
+  osm: {amenity: [school, kindergarten]}
+office:
+  overture_primary: [professional_service, government_office, corporate_office, bank, coworking_space,
+                     financial_service, insurance_agency, real_estate_service, legal_service, it_service]
+  osm: {office: "*"}
+transit:
+  overture_primary: [bus_station, train_station]
+  osm: {highway: [bus_stop], public_transport: [platform, station, stop_position], railway: [station, halt]}
+station:            # train stations only, used for dist_station_m
+  overture_primary: [train_station]
+  osm: {railway: [station, halt]}
+retail:
+  overture_top: [shopping]
+  osm: {shop: "*"}
+  osm_exclude: {shop: [bakery, coffee, tea, pastry, confectionery, beverages]}
+lodging:
+  overture_top: [lodging]
+health:
+  overture_top: [health_care]
+  osm: {amenity: [hospital, clinic, doctors]}
+
+kring_counts: [campus, school, office, transit, retail, lodging, health]
+distance_to: [campus, station]
