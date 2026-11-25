@@ -1,0 +1,52 @@
+# Business-type definitions (PRD §9 D3/D4), checked against real labels in US-000.
+# See docs/category_check.csv for the label counts in the study bbox.
+# Rule: a place counts if its Overture taxonomy.primary is in `overture_primary`
+# (never filter on a parent label: bubble tea and juice bars share the coffee_shop parent).
+
+coffee_shop:
+  overture_primary:
+    - coffee_shop            # food_and_drink > non_alcoholic_beverage_venue > coffee_shop (2204)
+    - cafe                   # food_and_drink > casual_eatery > cafe (1644)
+    - animal_cafe            # child of cafe
+    - hong_kong_style_cafe   # child of cafe
+  overture_exclude:          # listed for transparency; these are never in overture_primary
+    - internet_cafe          # child of cafe in Overture, but a warnet, not a coffee shop
+    - coffee_roastery        # no seating
+    - tea_room
+    - bubble_tea_shop
+    - smoothie_juice_bar
+    - dessert_shop
+  osm:
+    amenity: [cafe]          # amenity=internet_cafe is a separate tag and is not included
+  osm_exclude_cuisine: [bubble_tea, juice, ice_cream, tea]
+
+# Phase 2 (US-016). Defined now so the pipeline only needs config to add it.
+eatery:
+  overture_hierarchy_contains: [restaurant]
+  overture_primary_extra:
+    - fast_food_restaurant
+    - diner
+    - food_truck_stand
+    - food_and_drink         # unlabeled food places, mostly warung makan
+  overture_exclude:
+    - bar
+    - lounge
+    - bakery
+    - dessert_shop
+  osm:
+    amenity: [restaurant, fast_food, food_court]
+  exclude_chain_brands:      # chains are not equal competitors for a first-time owner (D4)
+    - McDonald's
+    - KFC
+    - Richeese Factory
+    - Burger King
+    - A&W
+    - Pizza Hut
+    - Hokben
+    - Solaria
+    - CFC
+    - Mie Gacoan
+
+# Mapped POI (US-006 confidence): all Overture places after filters + all OSM
+# objects with any of these keys.
+mapped_poi_osm_keys: [amenity, shop, office]

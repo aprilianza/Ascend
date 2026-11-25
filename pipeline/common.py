@@ -27,6 +27,7 @@ WEB_DATA = ROOT / "web" / "public" / "data"
 USER_AGENT = "ascend-pipeline/0.1 (STACK 2026 student project)"
 OVERPASS_URLS = (
     "https://overpass-api.de/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
 )
 
@@ -55,7 +56,7 @@ def study_bbox() -> dict[str, float]:
     return load_yaml("area.yaml")["bbox"]
 
 
-def overpass(query: str, *, timeout: int = 300, refresh: bool = False) -> dict[str, Any]:
+def overpass(query: str, *, timeout: int = 300, refresh: bool = False, attempts: int = 4) -> dict[str, Any]:
     """Run an Overpass query with an on-disk cache and simple mirror fallback."""
     key = hashlib.sha256(query.encode()).hexdigest()[:16]
     path = CACHE / "overpass" / f"{key}.json"
@@ -63,7 +64,7 @@ def overpass(query: str, *, timeout: int = 300, refresh: bool = False) -> dict[s
         return json.loads(path.read_text())
     path.parent.mkdir(parents=True, exist_ok=True)
     last_err: Exception | None = None
-    for attempt in range(4):
+    for attempt in range(attempts):
         url = OVERPASS_URLS[attempt % len(OVERPASS_URLS)]
         try:
             r = requests.post(
