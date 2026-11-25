@@ -1,0 +1,11 @@
+# Label rule parameters. Tune alpha only in 0.01-0.10 and
+# record the final value and reason in docs/model_report.md.
+# method: negbin_kring1 (default since 25 Nov) or poisson_kring1. Real counts are over-dispersed
+# (Pearson dispersion ~2.8 on k-ring 1), so the Poisson test labels too many cells; see model_report.md.
+method: negbin_kring1
+alpha: 0.05
+min_gap: 1.0
+not_enough_demand:
+  pop_k1_percentile: 10        # pop_k1 below this percentile of study cells ...
+  max_expected_k1: 0.3         # ... and expected_k1 below this value
+low_confidence_min_poi: 3      # fewer mapped POIs than this in k-ring 1 -> confidence low

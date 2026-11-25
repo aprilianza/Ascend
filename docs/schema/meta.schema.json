@@ -64,7 +64,8 @@
       "additionalProperties": false,
       "required": ["method", "alpha", "min_gap", "not_enough_demand_max_expected_k1", "low_confidence_min_poi"],
       "properties": {
-        "method": { "const": "poisson_kring1" },
+        "method": { "enum": ["poisson_kring1", "negbin_kring1"], "description": "negbin_kring1 (v1.1.0): same k-ring rule with a negative binomial test, used when counts are over-dispersed." },
+        "nb_dispersion": { "type": "number", "minimum": 0, "description": "Optional (v1.1.0). NB2 dispersion a in Var = E + a*E^2; present when method is negbin_kring1." },
         "alpha": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.2 },
         "min_gap": { "type": "number", "minimum": 0 },
         "not_enough_demand_max_expected_k1": { "type": "number", "minimum": 0 },

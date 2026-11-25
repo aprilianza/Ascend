@@ -1,5 +1,5 @@
 /**
- * Data contract v1.0.0 — TypeScript mirror of docs/schema/areas.schema.json
+ * Data contract v1.1.0 — TypeScript mirror of docs/schema/areas.schema.json
  * and docs/schema/meta.schema.json. See docs/data-contract.md.
  *
  * Rule: if a field changes here, it changes in the JSON Schema and in
@@ -83,7 +83,9 @@ export interface Meta {
   /** null → "Metrics available after the first model run". */
   model: { name: string; validation: string; metrics: Metrics; baseline_metrics: Metrics } | null
   label_params: {
-    method: 'poisson_kring1'
+    method: 'poisson_kring1' | 'negbin_kring1'
+    /** v1.1.0, only with negbin_kring1. Not shown in the UI. */
+    nb_dispersion?: number
     alpha: number
     min_gap: number
     not_enough_demand_max_expected_k1: number
