@@ -1,0 +1,17 @@
+[project]
+name = "ascend-pipeline"
+version = "0.1.0"
+description = "Ascend: coffee-shop demand vs competition map for Bandung (STACK 2026)"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 130
+target-version = "py311"
+src = ["pipeline", "pipeline/tools"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "B905"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pipeline", "contract"]
