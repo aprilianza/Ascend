@@ -24,6 +24,20 @@
 
 Aturan cakupan v3: **tidak ada tambahan baru yang masuk Fase 1.** Semua tambahan v3 masuk P2 atau P3, supaya daftar Must untuk semifinal tetap realistis.
 
+### Status implementasi pipeline (25 Nov, data v1)
+
+US-000, US-002 sampai US-008, dan US-006a selesai; detail di `docs/model_report.md` dan `pipeline/data/SOURCES.md`. Temuan dari data asli yang **mengubah** ketentuan di bawah (proposal harus memakai versi ini):
+
+| # | Ketentuan PRD | Yang terjadi di data asli | Keputusan |
+|---|---|---|---|
+| 1 | US-003: hanya `operating_status = 'open'` | 79.931 dari 80.052 tempat Overture tidak punya status (null); hanya 119 yang `open` | Ambil `open` + null; buang hanya yang berstatus closed. Dicatat sebagai keterbatasan |
+| 2 | US-006: uji Poisson k-ring 1 | Over-dispersion: dispersi Pearson 2,76 pada k-ring 1 | Sesuai pemicu §7.2, label memakai **uji negative binomial** (`negbin_kring1`, dispersi 0,127). Data contract naik ke v1.1.0 (tambahan, UI tidak berubah). Hasil: 18 opportunity, 142 crowded, 1.696 fair, 120 not_enough_demand |
+| 3 | US-006: tidak ada label di atas 60% | `fair` 85,8%; alpha 0,01 sampai 0,10 tidak bisa menurunkannya di bawah 60% | Alpha tetap 0,05; opportunity + crowded 8,1% (target 5 sampai 35% terpenuhi). Alasan di `model_report.md` §3 |
+| 4 | US-001: Python 3.11 | Dikembangkan di Python 3.12 | Kode kompatibel ≥ 3.11 (`pyproject.toml`); versi library dikunci di `requirements.txt` |
+| 5 | §10 | Script simulasi dijalankan | Tabel §10 diganti dengan output script (seed 42) |
+
+Belum selesai dari bagian April: cek sampel 30 data (US-003, formulir `docs/sample_check_coffee.csv`, dikerjakan Nopri). US-016, US-023, US-024 adalah P2 (setelah semifinal).
+
 ### Revisi v3.1 (24 Nov, hasil review)
 
 | # | Bagian | Masalah di v3 | Perbaikan di v3.1 |
