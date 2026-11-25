@@ -1,4 +1,4 @@
-"""Data contract v1.0.0 helpers: label rule + validation.
+"""Data contract v1.1.0 helpers: label rule + validation.
 
 Used by make_sample_data.py now, and by the real pipeline later
 (05_score uses `poisson_label`, 07_export calls `validate_files` before writing).
@@ -15,7 +15,7 @@ import math
 import sys
 from pathlib import Path
 
-CONTRACT_VERSION = "1.0.0"
+CONTRACT_VERSION = "1.1.0"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_DIR = REPO_ROOT / "docs" / "schema"
 
@@ -63,6 +63,38 @@ def poisson_label(
     return "fair", p_value
 
 
+def negbin_label(
+    actual_k1: int,
+    expected_k1: float,
+    *,
+    dispersion: float,
+    alpha: float = 0.05,
+    min_gap: float = 1.0,
+    not_enough_demand: bool = False,
+) -> tuple[str, float | None]:
+    """Same rule as `poisson_label`, with a negative binomial test (v1.1.0, method negbin_kring1).
+
+    NB2 parameterisation: mean E, Var = E + dispersion * E^2. dispersion = 0 falls back to Poisson.
+    """
+    if dispersion <= 0:
+        return poisson_label(actual_k1, expected_k1, alpha=alpha, min_gap=min_gap, not_enough_demand=not_enough_demand)
+    if not_enough_demand:
+        return "not_enough_demand", None
+    from scipy.stats import nbinom
+
+    n = 1.0 / dispersion
+    p = n / (n + expected_k1) if expected_k1 > 0 else 1.0
+    gap = expected_k1 - actual_k1
+    p_low = float(nbinom.cdf(actual_k1, n, p))
+    p_high = float(nbinom.sf(actual_k1 - 1, n, p))
+    p_value = p_low if gap >= 0 else p_high
+    if p_low < alpha and gap >= min_gap:
+        return "opportunity", p_value
+    if p_high < alpha and gap <= -min_gap:
+        return "crowded", p_value
+    return "fair", p_value
+
+
 # ---------------------------------------------------------------- validation
 
 def _load(path: Path) -> dict:
@@ -92,6 +124,8 @@ def semantic_errors(areas: dict, meta: dict) -> list[str]:
         errs.append("contract_version differs between areas file and meta.json")
     if areas.get("is_sample") != meta.get("is_sample"):
         errs.append("is_sample differs between areas file and meta.json")
+    if params.get("method") == "negbin_kring1" and "nb_dispersion" not in params:
+        errs.append("label_params.nb_dispersion is required when method is negbin_kring1")
 
     seen: set[str] = set()
     counts = dict.fromkeys(LABELS, 0)

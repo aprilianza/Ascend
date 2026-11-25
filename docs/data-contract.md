@@ -1,4 +1,4 @@
-# Data Contract Ascend v1.0.0
+# Data Contract Ascend v1.1.0
 
 **Berlaku sejak:** 24 Nov 2026 · **Pemilik:** Aprilianza (pipeline) dan Bill (web) · **Acuan:** PRD v3.1 (`tasks/prd-ascend-v3-id.md`), US-006, US-007, US-008, US-011
 
@@ -138,7 +138,7 @@ Urutan `factors` sudah dari yang paling berpengaruh; UI tidak perlu mengurutkan 
 | `business_types[]` | `{id, label, available, file}` | Isi pemilih jenis usaha; `available: false` → nonaktif + "Coming soon" |
 | `data_sources[]` | `{name, version, license, attribution}` | Atribusi peta dan panel About |
 | `model` | object \| null | Metrik di panel About; `null` → "Metrics available after the first model run" |
-| `label_params` | `{method, alpha, min_gap, not_enough_demand_max_expected_k1, low_confidence_min_poi}` | Penjelasan aturan label di About (dalam bahasa sederhana, tanpa angka statistik) |
+| `label_params` | `{method, alpha, min_gap, not_enough_demand_max_expected_k1, low_confidence_min_poi, nb_dispersion?}`. `method` = `poisson_kring1` atau `negbin_kring1` (v1.1.0) | Penjelasan aturan label di About (dalam bahasa sederhana, tanpa angka statistik) |
 | `label_counts` | jumlah per label | Ringkasan opsional di About |
 
 ---
@@ -207,6 +207,7 @@ map.addLayer({
 | Tanggal | Kejadian |
 |---|---|
 | 24 Nov | Kontrak v1.0.0 + data contoh tersedia |
+| 25 Nov | **v1.1.0 (tambahan):** `label_params.method` boleh `negbin_kring1`, field opsional `nb_dispersion`. Data asli memakai uji negative binomial karena hitungannya over-dispersed (`docs/model_report.md`). UI tidak perlu diubah: kedua field tidak ditampilkan |
 | 25 Nov | Kontrak dikunci; wireframe direview dengan acuan tabel §3 |
 | 27 Nov | `07_export` menimpa `coffee_shop.geojson` dan `meta.json` dengan data asli (`is_sample: false`); uji bersama di browser |
 | 28 Nov | Data v1 dibekukan; rekam layar untuk video |
