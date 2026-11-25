@@ -535,7 +535,7 @@ Kolom **Berubah dari 22 Nov** mencatat bila keputusan ini menggantikan jawaban t
 | # | Pertanyaan | Keputusan | Berubah dari 22 Nov | Alasan dan bukti |
 |---|---|---|---|---|
 | D1 | Area Telkom: lingkaran 3 km atau kecamatan? | **Poligon Kecamatan Dayeuhkolot + Bojongsoang.** Titik kampus `-6.9733, 107.6303` tetap dipakai untuk `dist_campus_m`. | Ya: sebelumnya lingkaran radius 3 km | Kampus berada di Sukapura, Dayeuhkolot [12]; Bojongsoang bersebelahan. Kecamatan memberi nama untuk kartu dan cocok dengan statistik BPS. Luas 11,03 dan 27,81 km² [7]; total grid sekitar 1.950 sel. |
-| D2 | Ambang label | **Uji Poisson k-ring 1, alpha 0,05, gap minimal 1** (US-006). Setel alpha sekali dengan data asli; catat alasannya. | Ya: sebelumnya ambang gap/rasio tetap + tuning bila satu label > 60% | Simulasi §10 (setelah US-006a selesai): aturan v1 salah melabeli sekitar 25% heksagon; Poisson k-ring sekitar 6%, dengan presisi lebih tinggi. |
+| D2 | Ambang label | **Uji Poisson k-ring 1, alpha 0,05, gap minimal 1** (US-006). Setel alpha sekali dengan data asli; catat alasannya. | Ya: sebelumnya ambang gap/rasio tetap + tuning bila satu label > 60% | Simulasi §10 (`docs/sim_labels.py`): aturan v1 salah melabeli sekitar 27% heksagon; Poisson k-ring sekitar 7%, dengan presisi sekitar dua kali lipat. |
 | D3 | Definisi coffee shop | **Masuk:** tempat di Overture dengan `taxonomy.primary` `coffee_shop` atau `cafe` (atau hierarkinya memuat keduanya), OSM `amenity=cafe`. Kios kopi ikut dihitung bila tercatat di kategori ini. **Tidak masuk:** roastery tanpa tempat duduk, kedai teh, bubble tea, juice bar, toko khusus dessert, warnet. Pastikan lewat US-000. | Sebagian: inti sama (coffee shop + cafe + kios; tanpa roastery dan dessert); v3 juga mengeluarkan kedai teh, bubble tea, juice bar | Contoh hierarki di Overture: `[food_and_drink, non_alcoholic_beverage_venue, coffee_shop]` [13]. Bubble tea dan juice bar berada di induk yang sama, jadi memfilter berdasarkan induknya akan menghitung terlalu banyak. |
 | D4 | Definisi eatery | **Masuk:** tempat di Overture yang hierarkinya memuat `restaurant` (semua jenis masakan, termasuk casual eatery), warung makan, dan fast food **lokal**; OSM `amenity=restaurant|fast_food|food_court`. **Tidak masuk:** fast food **chain** (data dengan tag `brand`/`brand:wikidata` dari daftar chain di `categories.yaml`, misalnya McDonald's, KFC, Richeese), fine dining, bar, toko roti, dessert, katering saja. | Ya, direkonsiliasi: 22 Nov mengeluarkan fast food chain dan fine dining; v3 memasukkan semua fast food. v3.1 memasukkan fast food lokal (banyak warung makan dipetakan sebagai `fast_food`) tetapi tetap mengeluarkan chain | Hierarki Overture menggabungkan semua restoran ke `restaurant` [1]; ini mencakup warung makan yang dipetakan sebagai restoran. Chain bukan pesaing setara bagi pemilik usaha kecil. Daftar final dari US-000. |
 | D5 | Tahun WorldPop | **Global2 R2025A, 100 m constrained, tahun 2026.** | Tidak: tetap "tahun terbaru apa adanya", sekarang tahunnya ditetapkan | Estimasi tahunan 2015 sampai 2030, dirilis September 2025 [9]; tahun 2026 cocok dengan tahun data Overture/OSM. Catatan di About: estimasi model, rilis alpha. |
@@ -547,17 +547,17 @@ Kolom **Berubah dari 22 Nov** mencatat bila keputusan ini menggantikan jawaban t
 
 ## 10. Bukti untuk D2: simulasi aturan label
 
-> **Status (24 Nov):** `docs/sim_labels.py` **belum ada di repositori.** Angka di tabel ini belum boleh dikutip di proposal sampai US-006a selesai dan hasil jalan ulangnya cocok (atau tabel ini diperbarui mengikuti hasilnya).
+> **Status (25 Nov):** `docs/sim_labels.py` sudah ada (US-006a selesai). Tabel di bawah adalah output script itu (seed 42, rata-rata 20 kali ulang) dan menggantikan angka 24 Nov. Jalankan `python docs/sim_labels.py` untuk mereproduksinya; angka ini boleh dikutip di proposal.
 
-`sim_labels.py` (di `docs/`) membuat sekitar 2.190 heksagon sintetis dengan permintaan yang bervariasi secara spasial (rata-rata 1,8 usaha per heksagon; 41% heksagon memperkirakan kurang dari 1) dan mengambil jumlah aktual dari distribusi Poisson. Model diasumsikan sempurna, jadi setiap label di skenario A adalah alarm palsu. **Semua data sintetis, bukan data Bandung.**
+`sim_labels.py` (di `docs/`) membuat 2.269 heksagon sintetis dengan permintaan yang bervariasi secara spasial (rata-rata 1,8 usaha per heksagon; 41% heksagon memperkirakan kurang dari 1) dan mengambil jumlah aktual dari distribusi Poisson. Model diasumsikan sempurna, jadi setiap label di skenario A adalah alarm palsu. **Semua data sintetis, bukan data Bandung.**
 
 | Aturan | Skenario A: pasokan = permintaan di semua tempat (semua seharusnya "fair") | Skenario B: 10% kantong kurang pasokan + 10% kelebihan pasokan. Presisi / recall |
 |---|---|---|
-| v1: per heksagon, gap/rasio | 14,2% opportunity, 11,1% crowded | opportunity 28% / 43%, crowded 37% / 51% |
-| Uji Poisson, per heksagon | 0,7%, 2,8% | 58% / 7%, 59% / 31% |
-| **Uji Poisson, k-ring 1 (dipilih)** | **2,7%, 3,6%** | **65% / 44%, 62% / 66%** |
+| v1: per heksagon, gap/rasio | 14,6% opportunity, 12,7% crowded | opportunity 28% / 46%, crowded 32% / 48% |
+| Uji Poisson, per heksagon | 0,5%, 2,8% | 67% / 8%, 51% / 24% |
+| **Uji Poisson, k-ring 1 (dipilih)** | **3,1%, 3,8%** | **57% / 42%, 51% / 50%** |
 
-Cara membaca: dengan aturan v1, sekitar 7 dari 10 label "opportunity" hanyalah kebetulan. Uji per heksagon memang tepat, tetapi hampir tidak menemukan apa-apa karena hitungannya terlalu kecil. Menjumlahkan per k-ring memberi hitungan yang cukup untuk mendeteksi kantong yang nyata sambil menjaga alarm palsu sekitar 5%. Data asli punya tambahan noise dari error model, jadi presisi aslinya akan lebih rendah; karena itulah ada cek lapangan (US-019).
+Cara membaca: dengan aturan v1, sekitar 7 dari 10 label "opportunity" hanyalah kebetulan (presisi 28%), dan 27% heksagon diberi label padahal pasokan sama dengan permintaan. Uji per heksagon memang tepat, tetapi hampir tidak menemukan apa-apa (recall 8%) karena hitungannya terlalu kecil. Menjumlahkan per k-ring menemukan sekitar 4 dari 10 sel kantong yang nyata sambil menjaga alarm palsu sekitar 3 sampai 4% per label; presisinya sekitar dua kali aturan v1. Data asli punya tambahan noise dari error model, jadi presisi aslinya akan lebih rendah; karena itulah ada cek lapangan (US-019).
 
 ---
 
