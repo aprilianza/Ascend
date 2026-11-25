@@ -1,0 +1,289 @@
+source,label,hierarchy,basic_category,operating_status,n
+osm,restaurant,cuisine=(none),,,776
+osm,cafe,cuisine=(none),,,313
+osm,cafe,cuisine=coffee_shop,,,153
+osm,fast_food,cuisine=(none),,,89
+osm,restaurant,cuisine=indonesian,,,64
+osm,fast_food,cuisine=chicken,,,47
+osm,food_court,cuisine=(none),,,47
+osm,restaurant,cuisine=noodle,,,27
+osm,restaurant,cuisine=regional,,,27
+osm,fast_food,cuisine=burger,,,25
+osm,restaurant,cuisine=japanese,,,21
+osm,fast_food,cuisine=donut;coffee_shop,,,19
+osm,cafe,cuisine=bubble_tea,,,17
+osm,fast_food,cuisine=japanese,,,17
+osm,restaurant,cuisine=chicken,,,17
+osm,fast_food,cuisine=pizza,,,16
+osm,restaurant,cuisine=chinese,,,11
+osm,restaurant,cuisine=pizza,,,11
+osm,restaurant,cuisine=korean,,,9
+osm,cafe,cuisine=ice_cream;bubble_tea,,,8
+osm,fast_food,cuisine=indonesian,,,8
+osm,restaurant,cuisine=padang,,,8
+osm,fast_food,cuisine=juice,,,6
+osm,restaurant,cuisine=steak_house,,,6
+osm,restaurant,cuisine=tegalan,,,6
+osm,cafe,cuisine=regional,,,5
+osm,fast_food,cuisine=noodle,,,5
+osm,fast_food,cuisine=beef_bowl,,,4
+osm,fast_food,cuisine=kebab,,,4
+osm,restaurant,cuisine=asian,,,4
+osm,restaurant,cuisine=seafood,,,4
+osm,restaurant,cuisine=sundanese,,,4
+osm,restaurant,cuisine=thai,,,4
+osm,cafe,cuisine=indonesian,,,3
+osm,fast_food,cuisine=sandwich,,,3
+osm,restaurant,cuisine=Padang,,,3
+osm,restaurant,cuisine=sushi,,,3
+osm,cafe,cuisine=ice_cream,,,2
+osm,fast_food,cuisine=asian,,,2
+osm,fast_food,cuisine=indonesian;tegalan,,,2
+osm,fast_food,cuisine=mexican,,,2
+osm,fast_food,cuisine=pancake,,,2
+osm,fast_food,cuisine=tegalan,,,2
+osm,fast_food,cuisine=tofu,,,2
+osm,fast_food,cuisine=wings,,,2
+osm,restaurant,cuisine=Japanese_Restaurant,,,2
+osm,restaurant,cuisine=Noodle_Shop,,,2
+osm,restaurant,cuisine=Ramen_Restaurant,,,2
+osm,restaurant,cuisine=arab,,,2
+osm,restaurant,cuisine=barbecue,,,2
+osm,restaurant,cuisine=burger,,,2
+osm,restaurant,cuisine=coffee_shop,,,2
+osm,restaurant,cuisine=indonesian;noodle,,,2
+osm,restaurant,cuisine=indonesian;sundanese,,,2
+osm,restaurant,cuisine=italian,,,2
+osm,restaurant,cuisine=japanese;sushi,,,2
+osm,restaurant,cuisine=juice,,,2
+osm,restaurant,cuisine=mediterranean,,,2
+osm,restaurant,cuisine=padangan;indonesian,,,2
+osm,restaurant,cuisine=ramen,,,2
+osm,restaurant,cuisine=steak,,,2
+osm,restaurant,cuisine=western,,,2
+osm,cafe,cuisine=asian,,,1
+osm,cafe,cuisine=breakfast;cake;coffee_shop;ice_cream;indonesian;tea,,,1
+osm,cafe,cuisine=burger;pizza;coffee_shop;italian,,,1
+osm,cafe,cuisine=burger;regional,,,1
+osm,cafe,cuisine=cafe,,,1
+osm,cafe,cuisine=coffee_bean_shop,,,1
+osm,cafe,cuisine=coffee_shop;asian;indonesian;breakfast;western,,,1
+osm,cafe,cuisine=coffee_shop;coffee,,,1
+osm,cafe,cuisine=coffee_shop;coffee;cafe,,,1
+osm,cafe,cuisine=coffee_shop;cookie,,,1
+osm,cafe,cuisine=coffee_shop;dessert;cake,,,1
+osm,cafe,cuisine=coffee_shop;donuts,,,1
+osm,cafe,cuisine=coffee_shop;indonesian,,,1
+osm,cafe,cuisine=coffee_shop;indonesian;international;pasta,,,1
+osm,cafe,cuisine=coffee_shop;indonesian;noodles,,,1
+osm,cafe,cuisine=coffee_shop;regional,,,1
+osm,cafe,cuisine=daerahregional,,,1
+osm,cafe,cuisine=ice_cream;cake,,,1
+osm,cafe,cuisine=ice_cream;tea,,,1
+osm,cafe,cuisine=japanese;tea;dessert,,,1
+osm,cafe,cuisine=mie_gomak,,,1
+osm,cafe,cuisine=regional;baso_aci;boci;ciwang88,,,1
+osm,cafe,cuisine=regional;coffee_shop,,,1
+osm,cafe,cuisine=restaurant,,,1
+osm,cafe,cuisine=sandwich;asian,,,1
+osm,cafe,cuisine=seblak;bacem;minuman_dingin_dan_panas;ceker;mie;kwetiaw;nasi_goreng;coffee_shop,,,1
+osm,cafe,cuisine=tea,,,1
+osm,cafe,cuisine=tea;coffee_shop,,,1
+osm,cafe,cuisine=western,,,1
+osm,fast_food,cuisine=arab;cake,,,1
+osm,fast_food,cuisine=chicken;fried_chicken;korean;japanese;american,,,1
+osm,fast_food,cuisine=coffee_shop;donut,,,1
+osm,fast_food,cuisine=crepe,,,1
+osm,fast_food,cuisine=donut,,,1
+osm,fast_food,cuisine=fried_chicken,,,1
+osm,fast_food,cuisine=fried_rice,,,1
+osm,fast_food,cuisine=fries,,,1
+osm,fast_food,cuisine=frozen_yogurt,,,1
+osm,fast_food,cuisine=ice_cream;burger,,,1
+osm,fast_food,cuisine=indonesian;burger;chicken,,,1
+osm,fast_food,cuisine=indonesian;regional;sunda,,,1
+osm,fast_food,cuisine=indonesian;salad,,,1
+osm,fast_food,cuisine=indonesian;seblak,,,1
+osm,fast_food,cuisine=japanese;korean;indonesian,,,1
+osm,fast_food,cuisine=korean,,,1
+osm,fast_food,cuisine=kue;roti;donat;brownies;birthday_cake;kue_ulang_tahun;garlic_cheese_bread;roti_tawar;doughnut;cake;bread,,,1
+osm,fast_food,cuisine=nasi_goreng,,,1
+osm,fast_food,cuisine=pudding,,,1
+osm,fast_food,cuisine=regional,,,1
+osm,fast_food,cuisine=salad,,,1
+osm,fast_food,cuisine=snack,,,1
+osm,fast_food,cuisine=snacks;singaporean,,,1
+osm,fast_food,cuisine=teppanyaki,,,1
+osm,food_court,cuisine=regional,,,1
+osm,restaurant,cuisine=Batak_food,,,1
+osm,restaurant,cuisine=Canton;chinese,,,1
+osm,restaurant,cuisine=Family_Restaurant,,,1
+osm,restaurant,cuisine=Glosis,,,1
+osm,restaurant,cuisine=Lumpia,,,1
+osm,restaurant,cuisine=Minang;Padang,,,1
+osm,restaurant,"cuisine=Noodle,_Bakso",,,1
+osm,restaurant,cuisine=Restaurant_or_Cafe,,,1
+osm,restaurant,cuisine=Seafood_Restaurant,,,1
+osm,restaurant,cuisine=Sundanese,,,1
+osm,restaurant,cuisine=Tea;asian;pasta,,,1
+osm,restaurant,cuisine=Tegalan,,,1
+osm,restaurant,cuisine=american;coffee_shop;indonesian,,,1
+osm,restaurant,cuisine=asian;indonesian,,,1
+osm,restaurant,cuisine=asian;padang,,,1
+osm,restaurant,cuisine=bakery,,,1
+osm,restaurant,cuisine=bakso,,,1
+osm,restaurant,cuisine=barbecue;steak_house,,,1
+osm,restaurant,cuisine=belgian_restaurant,,,1
+osm,restaurant,cuisine=bread,,,1
+osm,restaurant,cuisine=burger;coffee_shop;sandwich,,,1
+osm,restaurant,cuisine=cake,,,1
+osm,restaurant,cuisine=cake_shop,,,1
+osm,restaurant,cuisine=chicken;coffee_shop;indonesian;wings,,,1
+osm,restaurant,cuisine=chicken;indonesian,,,1
+osm,restaurant,cuisine=chicken;indonesian;local;tea,,,1
+osm,restaurant,cuisine=chicken;regional;asian,,,1
+osm,restaurant,cuisine=chinese;canton,,,1
+osm,restaurant,cuisine=chinese;fish,,,1
+osm,restaurant,cuisine=chocolate,,,1
+osm,restaurant,cuisine=coffee_shop;indonesian,,,1
+osm,restaurant,cuisine=curry,,,1
+osm,restaurant,cuisine=daerahregional,,,1
+osm,restaurant,cuisine=daerahregional;coffee_shop;chicken,,,1
+osm,restaurant,cuisine=donut,,,1
+osm,restaurant,cuisine=es_teh,,,1
+osm,restaurant,cuisine=food;fried_food;ayam_geprek,,,1
+osm,restaurant,cuisine=german,,,1
+osm,restaurant,cuisine=grill,,,1
+osm,restaurant,cuisine=ice_cream,,,1
+osm,restaurant,cuisine=indian,,,1
+osm,restaurant,cuisine=indonesian;Padang,,,1
+osm,restaurant,cuisine=indonesian;chicken,,,1
+osm,restaurant,cuisine=indonesian;coffee_shop;chicken,,,1
+osm,restaurant,cuisine=indonesian;padangan,,,1
+osm,restaurant,cuisine=indonesian;regional;sundanese,,,1
+osm,restaurant,cuisine=indonesian;regional;tegal,,,1
+osm,restaurant,cuisine=indonesian;soto,,,1
+osm,restaurant,cuisine=indonesian;steak_house,,,1
+osm,restaurant,cuisine=indonesian;tegalan,,,1
+osm,restaurant,cuisine=japanese;noodle,,,1
+osm,restaurant,cuisine=kebab,,,1
+osm,restaurant,cuisine=meat;duck,,,1
+osm,restaurant,cuisine=mexican_restaurant,,,1
+osm,restaurant,cuisine=noodle;chinese;dumplings,,,1
+osm,restaurant,cuisine=noodle;japanese,,,1
+osm,restaurant,cuisine=noodle;meatball,,,1
+osm,restaurant,cuisine=noodle;roti_bakar;bubur_kacang_iho,,,1
+osm,restaurant,cuisine=noodles;yamin,,,1
+osm,restaurant,cuisine=padang;indonesian,,,1
+osm,restaurant,cuisine=padang_restaurant,,,1
+osm,restaurant,cuisine=patisserie,,,1
+osm,restaurant,cuisine=pizza;chicken;coffee_shop,,,1
+osm,restaurant,cuisine=porridge,,,1
+osm,restaurant,cuisine=regional;Nasi_Padang;Kapau;Masakan_Padang,,,1
+osm,restaurant,cuisine=regional;indonesian;western,,,1
+osm,restaurant,cuisine=rendang;gulai,,,1
+osm,restaurant,cuisine=roti_lapissandwich;ice_cream;cake,,,1
+osm,restaurant,cuisine=seafood_restaurant,,,1
+osm,restaurant,cuisine=sunda,,,1
+osm,restaurant,cuisine=tea;sausage;coffee_shop;steak_house;indonesian;pasta;chicken;diner;barbecue,,,1
+osm,restaurant,cuisine=tegalan;indonesian,,,1
+osm,restaurant,cuisine=vietnamese,,,1
+osm,restaurant,cuisine=views_Indonesian_Restaurant,,,1
+overture,restaurant,food_and_drink > restaurant,restaurant,null,3757
+overture,indonesian_restaurant,food_and_drink > restaurant > asian_restaurant > southeast_asian_restaurant > indonesian_restaurant,restaurant,null,2209
+overture,coffee_shop,food_and_drink > non_alcoholic_beverage_venue > coffee_shop,coffee_shop,null,2204
+overture,cafe,food_and_drink > casual_eatery > cafe,cafe,null,1644
+overture,bakery,food_and_drink > casual_eatery > bakery,casual_eatery,null,627
+overture,asian_restaurant,food_and_drink > restaurant > asian_restaurant,restaurant,null,620
+overture,food_and_drink,food_and_drink,food_and_drink,null,558
+overture,chicken_restaurant,food_and_drink > restaurant > meat_restaurant > chicken_restaurant,restaurant,null,486
+overture,fast_food_restaurant,food_and_drink > casual_eatery > fast_food_restaurant,fast_food_restaurant,null,370
+overture,food_truck_stand,food_and_drink > casual_eatery > food_truck_stand,food_truck_stand,null,328
+overture,ramen_restaurant,food_and_drink > restaurant > asian_restaurant > ramen_restaurant,restaurant,null,316
+overture,diner,food_and_drink > casual_eatery > diner,casual_eatery,null,261
+overture,japanese_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > japanese_restaurant,restaurant,null,243
+overture,chinese_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > chinese_restaurant,restaurant,null,237
+overture,seafood_restaurant,food_and_drink > restaurant > seafood_restaurant,restaurant,null,233
+overture,breakfast_and_brunch_restaurant,food_and_drink > restaurant > breakfast_and_brunch_restaurant,restaurant,null,214
+overture,bar,food_and_drink > alcoholic_beverage_venue > bar,bar,null,195
+overture,cupcake_shop,food_and_drink > casual_eatery > dessert_shop > cupcake_shop,casual_eatery,null,166
+overture,delicatessen,food_and_drink > casual_eatery > delicatessen,casual_eatery,null,158
+overture,dessert_shop,food_and_drink > casual_eatery > dessert_shop,casual_eatery,null,147
+overture,soup_restaurant,food_and_drink > restaurant > soup_restaurant,restaurant,null,132
+overture,steakhouse,food_and_drink > restaurant > meat_restaurant > steakhouse,restaurant,null,124
+overture,ice_cream_shop,food_and_drink > casual_eatery > dessert_shop > ice_cream_shop,casual_eatery,null,117
+overture,pizza_restaurant,food_and_drink > restaurant > european_restaurant > mediterranean_restaurant > italian_restaurant > pizza_restaurant,restaurant,null,103
+overture,korean_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > korean_restaurant,restaurant,null,76
+overture,dim_sum_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > chinese_restaurant > dim_sum_restaurant,restaurant,null,75
+overture,barbecue_restaurant,food_and_drink > restaurant > meat_restaurant > barbecue_restaurant,restaurant,null,66
+overture,smoothie_juice_bar,food_and_drink > non_alcoholic_beverage_venue > smoothie_juice_bar,smoothie_juice_bar,null,63
+overture,tea_room,food_and_drink > non_alcoholic_beverage_venue > tea_room,non_alcoholic_beverage_venue,null,61
+overture,burger_restaurant,food_and_drink > restaurant > meat_restaurant > burger_restaurant,restaurant,null,59
+overture,internet_cafe,food_and_drink > casual_eatery > cafe > internet_cafe,cafe,null,56
+overture,sushi_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > japanese_restaurant > sushi_restaurant,restaurant,null,56
+overture,donut_shop,food_and_drink > casual_eatery > dessert_shop > donut_shop,casual_eatery,null,51
+overture,lounge,food_and_drink > alcoholic_beverage_venue > lounge,lounge,null,43
+overture,halal_restaurant,food_and_drink > restaurant > special_diet_restaurant > halal_restaurant,restaurant,null,38
+overture,american_restaurant,food_and_drink > restaurant > north_american_restaurant > american_restaurant,restaurant,null,37
+overture,theme_restaurant,food_and_drink > restaurant > theme_restaurant,restaurant,null,34
+overture,bubble_tea_shop,food_and_drink > non_alcoholic_beverage_venue > bubble_tea_shop,non_alcoholic_beverage_venue,null,31
+overture,italian_restaurant,food_and_drink > restaurant > european_restaurant > mediterranean_restaurant > italian_restaurant,restaurant,null,26
+overture,buffet_restaurant,food_and_drink > restaurant > buffet_restaurant,restaurant,null,25
+overture,chocolatier,food_and_drink > casual_eatery > candy_store > chocolatier,casual_eatery,null,22
+overture,middle_eastern_restaurant,food_and_drink > restaurant > middle_eastern_restaurant,restaurant,null,21
+overture,thai_restaurant,food_and_drink > restaurant > asian_restaurant > southeast_asian_restaurant > thai_restaurant,restaurant,null,21
+overture,health_food_restaurant,food_and_drink > restaurant > special_diet_restaurant > health_food_restaurant,restaurant,null,20
+overture,doner_kebab_restaurant,food_and_drink > restaurant > middle_eastern_restaurant > turkish_restaurant > doner_kebab_restaurant,restaurant,null,19
+overture,vegetarian_restaurant,food_and_drink > restaurant > special_diet_restaurant > vegetarian_restaurant,restaurant,null,17
+overture,bar_and_grill_restaurant,food_and_drink > restaurant > bar_and_grill_restaurant,restaurant,null,15
+overture,sandwich_shop,food_and_drink > casual_eatery > sandwich_shop,casual_eatery,null,15
+overture,salad_bar,food_and_drink > restaurant > salad_bar,restaurant,null,13
+overture,asian_fusion_restaurant,food_and_drink > restaurant > international_fusion_restaurant > asian_fusion_restaurant,restaurant,null,10
+overture,bagel_shop,food_and_drink > casual_eatery > bagel_shop,casual_eatery,null,9
+overture,comfort_food_restaurant,food_and_drink > restaurant > comfort_food_restaurant,restaurant,null,9
+overture,frozen_yogurt_shop,food_and_drink > casual_eatery > dessert_shop > frozen_yogurt_shop,casual_eatery,null,9
+overture,mexican_restaurant,food_and_drink > restaurant > latin_american_restaurant > mexican_restaurant,restaurant,null,9
+overture,pub,food_and_drink > alcoholic_beverage_venue > bar > pub,bar,null,9
+overture,candy_store,food_and_drink > casual_eatery > candy_store,casual_eatery,null,8
+overture,arabian_restaurant,food_and_drink > restaurant > middle_eastern_restaurant > arabian_restaurant,restaurant,null,7
+overture,indian_restaurant,food_and_drink > restaurant > asian_restaurant > south_asian_restaurant > indian_restaurant,restaurant,null,6
+overture,malaysian_restaurant,food_and_drink > restaurant > asian_restaurant > southeast_asian_restaurant > malaysian_restaurant,restaurant,null,6
+overture,wine_bar,food_and_drink > alcoholic_beverage_venue > bar > wine_bar,bar,null,6
+overture,beer_bar,food_and_drink > alcoholic_beverage_venue > bar > beer_bar,bar,null,5
+overture,fish_and_chips_restaurant,food_and_drink > restaurant > seafood_restaurant > fish_and_chips_restaurant,restaurant,null,5
+overture,gay_bar,food_and_drink > alcoholic_beverage_venue > bar > gay_bar,bar,null,5
+overture,airport_lounge,food_and_drink > alcoholic_beverage_venue > lounge > airport_lounge,lounge,null,4
+overture,brewery,food_and_drink > alcoholic_beverage_venue > brewery,brewery,null,4
+overture,food_court,food_and_drink > casual_eatery > food_court,food_court,null,4
+overture,winery,food_and_drink > alcoholic_beverage_venue > winery,winery,null,4
+overture,cocktail_bar,food_and_drink > alcoholic_beverage_venue > bar > cocktail_bar,bar,null,3
+overture,european_restaurant,food_and_drink > restaurant > european_restaurant,restaurant,null,3
+overture,german_restaurant,food_and_drink > restaurant > european_restaurant > central_european_restaurant > german_restaurant,restaurant,null,3
+overture,hong_kong_style_cafe,food_and_drink > casual_eatery > cafe > hong_kong_style_cafe,cafe,null,3
+overture,turkish_restaurant,food_and_drink > restaurant > middle_eastern_restaurant > turkish_restaurant,restaurant,null,3
+overture,eastern_european_restaurant,food_and_drink > restaurant > european_restaurant > eastern_european_restaurant,restaurant,null,2
+overture,indo_chinese_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > chinese_restaurant > indo_chinese_restaurant,restaurant,null,2
+overture,mediterranean_restaurant,food_and_drink > restaurant > european_restaurant > mediterranean_restaurant,restaurant,null,2
+overture,pancake_house,food_and_drink > restaurant > breakfast_and_brunch_restaurant > pancake_house,restaurant,null,2
+overture,speakeasy,food_and_drink > alcoholic_beverage_venue > bar > speakeasy,bar,null,2
+overture,sports_bar,food_and_drink > alcoholic_beverage_venue > bar > sports_bar,bar,null,2
+overture,sundanese_restaurant,food_and_drink > restaurant > asian_restaurant > southeast_asian_restaurant > indonesian_restaurant > sundanese_restaurant,restaurant,null,2
+overture,vietnamese_restaurant,food_and_drink > restaurant > asian_restaurant > southeast_asian_restaurant > vietnamese_restaurant,restaurant,null,2
+overture,afghani_restaurant,food_and_drink > restaurant > asian_restaurant > central_asian_restaurant > afghani_restaurant,restaurant,null,1
+overture,animal_cafe,food_and_drink > casual_eatery > cafe > animal_cafe,cafe,null,1
+overture,beer_garden,food_and_drink > alcoholic_beverage_venue > beer_garden,alcoholic_beverage_venue,null,1
+overture,chicken_wings_restaurant,food_and_drink > restaurant > meat_restaurant > chicken_wings_restaurant,restaurant,null,1
+overture,coffee_roastery,food_and_drink > non_alcoholic_beverage_venue > coffee_shop > coffee_roastery,coffee_shop,null,1
+overture,distillery,food_and_drink > alcoholic_beverage_venue > distillery,distillery,null,1
+overture,french_restaurant,food_and_drink > restaurant > european_restaurant > western_european_restaurant > french_restaurant,restaurant,null,1
+overture,gastropub,food_and_drink > casual_eatery > gastropub,casual_eatery,null,1
+overture,hot_dog_restaurant,food_and_drink > restaurant > meat_restaurant > hot_dog_restaurant,restaurant,null,1
+overture,hotel_bar,food_and_drink > alcoholic_beverage_venue > bar > hotel_bar,bar,null,1
+overture,international_fusion_restaurant,food_and_drink > restaurant > international_fusion_restaurant,restaurant,null,1
+overture,live_and_raw_food_restaurant,food_and_drink > restaurant > special_diet_restaurant > live_and_raw_food_restaurant,restaurant,null,1
+overture,nepalese_restaurant,food_and_drink > restaurant > asian_restaurant > south_asian_restaurant > himalayan_restaurant > nepalese_restaurant,restaurant,null,1
+overture,soul_food,food_and_drink > restaurant > soul_food,restaurant,null,1
+overture,taiwanese_restaurant,food_and_drink > restaurant > asian_restaurant > east_asian_restaurant > taiwanese_restaurant,restaurant,null,1
+overture,tapas_bar,food_and_drink > casual_eatery > tapas_bar,casual_eatery,null,1
+overture,vegan_restaurant,food_and_drink > restaurant > special_diet_restaurant > vegan_restaurant,restaurant,null,1
+overture,whiskey_bar,food_and_drink > alcoholic_beverage_venue > bar > whiskey_bar,bar,null,1
