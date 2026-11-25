@@ -1,7 +1,7 @@
 {
-  "contract_version": "1.0.0",
-  "generated_at": "2026-11-24T15:47:54+00:00",
-  "is_sample": true,
+  "contract_version": "1.1.0",
+  "generated_at": "2026-11-25T15:43:39+00:00",
+  "is_sample": false,
   "business_types": [
     {
       "id": "coffee_shop",
@@ -18,22 +18,16 @@
   ],
   "data_sources": [
     {
-      "name": "Synthetic sample",
-      "version": "seed 42",
-      "license": "n/a",
-      "attribution": "Sample data, not real results"
-    },
-    {
       "name": "Overture Maps Places",
-      "version": "TBD (real run)",
+      "version": "2026-11-18.0",
       "license": "CDLA-Permissive-2.0 and others",
-      "attribution": "\u00a9 Overture Maps Foundation"
+      "attribution": "© Overture Maps Foundation"
     },
     {
       "name": "OpenStreetMap",
-      "version": "TBD (real run)",
+      "version": "Overpass snapshot 2026-11-25",
       "license": "ODbL 1.0",
-      "attribution": "\u00a9 OpenStreetMap contributors"
+      "attribution": "© OpenStreetMap contributors"
     },
     {
       "name": "WorldPop Global2 R2025A",
@@ -42,18 +36,32 @@
       "attribution": "WorldPop (doi:10.5258/SOTON/WP00839)"
     }
   ],
-  "model": null,
+  "model": {
+    "name": "LightGBM (Poisson)",
+    "validation": "GroupKFold 5 folds, groups = H3 res-7 parents",
+    "metrics": {
+      "poisson_deviance": 1.4438,
+      "mae": 0.9488,
+      "spearman": 0.6149
+    },
+    "baseline_metrics": {
+      "poisson_deviance": 2.8329,
+      "mae": 1.333,
+      "spearman": 0.4369
+    }
+  },
   "label_params": {
-    "method": "poisson_kring1",
+    "method": "negbin_kring1",
     "alpha": 0.05,
     "min_gap": 1.0,
     "not_enough_demand_max_expected_k1": 0.3,
-    "low_confidence_min_poi": 3
+    "low_confidence_min_poi": 3,
+    "nb_dispersion": 0.1266
   },
   "label_counts": {
-    "opportunity": 8,
-    "fair": 21,
-    "crowded": 9,
-    "not_enough_demand": 19
+    "opportunity": 18,
+    "fair": 1696,
+    "crowded": 142,
+    "not_enough_demand": 120
   }
 }
