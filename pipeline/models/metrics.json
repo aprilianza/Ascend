@@ -1,0 +1,139 @@
+{
+  "business_type": "coffee_shop",
+  "validation": "GroupKFold 5 folds, groups = H3 res-7 parents",
+  "features": [
+    "pop",
+    "pop_k1",
+    "pop_k2",
+    "campus_k1",
+    "campus_k2",
+    "school_k1",
+    "school_k2",
+    "office_k1",
+    "office_k2",
+    "transit_k1",
+    "transit_k2",
+    "retail_k1",
+    "retail_k2",
+    "lodging_k1",
+    "lodging_k2",
+    "health_k1",
+    "health_k2",
+    "dist_campus_m",
+    "dist_station_m"
+  ],
+  "lgbm_params": {
+    "objective": "poisson",
+    "learning_rate": 0.03,
+    "n_estimators": 600,
+    "num_leaves": 15,
+    "min_child_samples": 20,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "deterministic": true,
+    "force_row_wise": true,
+    "verbose": -1
+  },
+  "study_area": {
+    "n": 1976,
+    "lgbm": {
+      "poisson_deviance": 1.4438,
+      "mae": 0.9488,
+      "spearman": 0.6149
+    },
+    "glm": {
+      "poisson_deviance": 2.8329,
+      "mae": 1.333,
+      "spearman": 0.4369
+    }
+  },
+  "all_cells": {
+    "n": 2779,
+    "lgbm": {
+      "poisson_deviance": 1.2737,
+      "mae": 0.7687,
+      "spearman": 0.5773
+    },
+    "glm": {
+      "poisson_deviance": 2.4007,
+      "mae": 1.1146,
+      "spearman": 0.4444
+    }
+  },
+  "per_fold": [
+    {
+      "fold": 0,
+      "n": 556,
+      "lgbm": {
+        "poisson_deviance": 1.3795,
+        "mae": 0.9738,
+        "spearman": 0.6901
+      },
+      "glm": {
+        "poisson_deviance": 2.9254,
+        "mae": 1.3516,
+        "spearman": 0.5319
+      }
+    },
+    {
+      "fold": 1,
+      "n": 556,
+      "lgbm": {
+        "poisson_deviance": 0.9941,
+        "mae": 0.4188,
+        "spearman": 0.4436
+      },
+      "glm": {
+        "poisson_deviance": 1.8345,
+        "mae": 0.6147,
+        "spearman": 0.3605
+      }
+    },
+    {
+      "fold": 2,
+      "n": 556,
+      "lgbm": {
+        "poisson_deviance": 1.2247,
+        "mae": 0.7315,
+        "spearman": 0.6
+      },
+      "glm": {
+        "poisson_deviance": 1.8814,
+        "mae": 1.0141,
+        "spearman": 0.5239
+      }
+    },
+    {
+      "fold": 3,
+      "n": 556,
+      "lgbm": {
+        "poisson_deviance": 1.6895,
+        "mae": 1.1197,
+        "spearman": 0.6258
+      },
+      "glm": {
+        "poisson_deviance": 3.6109,
+        "mae": 1.5706,
+        "spearman": 0.4603
+      }
+    },
+    {
+      "fold": 4,
+      "n": 555,
+      "lgbm": {
+        "poisson_deviance": 1.0802,
+        "mae": 0.5993,
+        "spearman": 0.4149
+      },
+      "glm": {
+        "poisson_deviance": 1.7499,
+        "mae": 1.0218,
+        "spearman": 0.3937
+      }
+    }
+  ],
+  "deviance_improvement_vs_glm": 0.4903
+}
