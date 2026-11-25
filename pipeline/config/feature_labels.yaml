@@ -1,0 +1,22 @@
+# Card text for each model feature (US-007), max 60 characters.
+# `high` / `low` describe the hexagon's value compared with the median study cell.
+# The arrow (up/down) in the UI comes from the sign of the SHAP effect, not from this text.
+pop:            {high: Many residents in this spot, low: Few residents in this spot}
+pop_k1:         {high: Many residents nearby, low: Few residents nearby}
+pop_k2:         {high: Many residents in the wider area, low: Few residents in the wider area}
+campus_k1:      {high: Campus buildings nearby, low: No campus right nearby}
+campus_k2:      {high: Campuses in the wider area, low: Few campuses in the wider area}
+school_k1:      {high: Schools nearby, low: Few schools nearby}
+school_k2:      {high: Schools in the wider area, low: Few schools in the wider area}
+office_k1:      {high: Offices nearby, low: Few offices nearby}
+office_k2:      {high: Offices in the wider area, low: Few offices in the wider area}
+transit_k1:     {high: Bus stops or stations nearby, low: Few bus stops nearby}
+transit_k2:     {high: Good transit in the wider area, low: Little transit in the wider area}
+retail_k1:      {high: Many shops nearby, low: Few shops nearby}
+retail_k2:      {high: Busy shopping area around, low: Few shops in the wider area}
+lodging_k1:     {high: Hotels nearby, low: No hotels nearby}
+lodging_k2:     {high: Hotels in the wider area, low: Few hotels in the wider area}
+health_k1:      {high: Clinics or hospitals nearby, low: No clinics nearby}
+health_k2:      {high: Health facilities in the wider area, low: Few health facilities around}
+dist_campus_m:  {high: Far from a campus, low: Close to a campus}
+dist_station_m: {high: Far from a train station, low: Close to a train station}
