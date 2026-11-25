@@ -15,7 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import h3
@@ -137,7 +137,7 @@ def build(rng: random.Random) -> tuple[dict, dict]:
     for p in dense[-4:]:
         p["kecamatan"] = "Cibeunying Kidul"            # longer district name
 
-    now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    now = datetime.now(UTC).replace(microsecond=0).isoformat()
     counts = dict.fromkeys(LABELS, 0)
     for p in props:
         counts[p["label"]] += 1

@@ -1,0 +1,28 @@
+# Fixed inputs for the Ascend pipeline. Change values here, not in code.
+seed: 42
+h3_resolution: 9
+group_resolution: 7        # H3 parent used for spatial GroupKFold
+buffer_m: 1000             # edge buffer around the study area
+
+study_area:
+  # OSM relation ids, checked with Nominatim on 25 Nov 2026.
+  kota_bandung:
+    osm_relation: 13290062   # Bandung City, admin_level 5
+    area_name: kota_bandung
+  telkom_area:
+    - {name: Dayeuhkolot, osm_relation: 19172317}
+    - {name: Bojongsoang, osm_relation: 19172316}
+
+expected_cells: [1700, 2200]  # sanity range for in_study_area cells
+
+telkom_campus: {lat: -6.9733, lon: 107.6303}
+
+overture:
+  release: "2026-11-18.0"
+  min_confidence: 0.5
+
+worldpop:
+  url: https://data.worldpop.org/GIS/Population/Global_2015_2030/R2025A/2026/IDN/v1/100m/constrained/idn_pop_2026_CN_100m_R2025A_v1.tif
+  file: idn_pop_2026_CN_100m_R2025A_v1.tif
+  year: 2026
+  release: Global2 R2025A v1, 100 m constrained
