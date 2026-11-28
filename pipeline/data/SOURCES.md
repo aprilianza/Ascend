@@ -42,4 +42,4 @@ roastery, tea room, bubble tea, juice bar, dessert shop.
 ## Category sample check
 
 30 random coffee-shop records were checked on Google Maps on 28 Nov 2026
-(`docs/sample_check_coffee.csv`): 13% errors with drink cafes (boba, Thai tea) counted, 20% coffee-only, against a 15% target. Details in `docs/model_report.md`.
+(`docs/sample_check_coffee.csv`): 20% errors against a 15% target (13% if boba and Thai tea cafes count as cafes). Details in `docs/model_report.md`.

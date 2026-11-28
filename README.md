@@ -100,7 +100,7 @@ pinned in `requirements.txt`).
 | Data pipeline: grid, places, features, model, labels, SHAP explanations, export | Done (see `docs/model_report.md`) |
 | Web map: hexagon map, area card with top factors, About, shortlist, routes, locate me | Done |
 | Deployment on Vercel | Done |
-| Category sample check of 30 records (target error ≤ 15%) | Done: 13% error with drink cafes counted, 20% coffee-only (see `docs/model_report.md`) |
+| Category sample check of 30 records (target error ≤ 15%) | Done: 20% error, target not met (see `docs/model_report.md`) |
 | Eatery business type, chat assistant, break-even calculator, compare view, rent layer | Planned, not built |
 
 **Simulated or synthetic parts, clearly identified:**
@@ -116,8 +116,8 @@ pinned in `requirements.txt`).
    "different from the city pattern", not proven unmet demand.
 2. Informal stalls and new shops are often missing from open data. Overture `operating_status` is almost
    always empty, so some closed places may still be counted.
-3. A Google Maps check of 30 random records found 13% errors when boba and Thai tea cafes count as cafes
-   (20% for coffee only; target 15%). Ice cream places tagged `cafe` are still counted as coffee shops.
+3. A Google Maps check of 30 random records found 20% errors (target 15%): some boba, Thai tea and ice cream
+   places are tagged `cafe` and counted as coffee shops (13% if small drink cafes count as cafes).
 4. Hotel and shop counts also reflect how completely an area is mapped.
 5. WorldPop 2026 population is a modelled estimate.
 6. Labels are conservative: 18 opportunity cells out of 1,976. They are candidates for a field check,

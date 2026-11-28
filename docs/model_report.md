@@ -16,24 +16,26 @@ Reproduce everything below with `python -m pipeline.run` (seed 42). Raw numbers:
 
 Source versions, filters and the `operating_status` finding: `pipeline/data/SOURCES.md`.
 
-**Category sample check (target error ≤ 15%): met, 13% (4 of 30), with drink cafes counted.**
-Desk check of 30 random records on Google Maps (category, closed status, position) by Aprilianza,
-assisted by Claude Code, 28 Nov 2026; results in `docs/sample_check_coffee.csv`. A record is an error
-when it is not a coffee shop or cafe, or is permanently closed.
+**Category sample check (target error ≤ 15%): not met, 20% (6 of 30).** Desk check of 30 random
+records on Google Maps (category, closed status, position) by Aprilianza, assisted by Claude Code,
+28 Nov 2026; results in `docs/sample_check_coffee.csv`. A record is an error when it is not a coffee
+shop or is permanently closed.
 
 | Result | Records |
 |---|---|
-| Coffee shop or cafe, not permanently closed | 22 (2 are drink cafes: boba and Thai tea; 3 borderline: a warkop and a cafe listed as restaurant or cafeteria, a steak cafe) |
-| Not a coffee shop or cafe | 3: two ice cream places, a restaurant |
+| Coffee shop, not permanently closed | 20 (3 borderline: a warkop and a cafe listed as restaurant or cafeteria, a steak cafe) |
+| Not a coffee shop | 5: boba, Thai tea, two ice cream places, a restaurant |
 | Permanently closed | 1 (2 more are temporarily closed and are kept) |
-| Not found on Google Maps | 4 (excluded; error among the 26 found records is 15%) |
+| Not found on Google Maps | 4 (excluded; error among the 26 found records is 23%) |
 | Position within 50 m (of the records found at this point) | 20 yes, 3 no |
 
-Definition note: the check counts small drink cafes (boba, Thai tea) as cafes, because they compete
-for the same walk-in drink customers. Under a strict coffee-only definition the error is **20% (6 of 30)**,
-above the target. The pipeline filter is not yet fully aligned with the broad definition: Overture
-`cafe` places that sell boba are kept, while OSM cafes tagged `cuisine=bubble_tea` or `tea` are dropped.
-Ice cream and dessert places are excluded under both definitions; they are the main remaining errors.
+Pattern: the errors come from the broad `cafe` label (Overture and OSM), which also covers drink and
+dessert shops. If small drink cafes (boba, Thai tea) were counted as cafes, since they compete for the
+same walk-in drink customers, the error would be 13%; the pipeline uses the coffee-only definition, so
+20% is the figure we report. Effect: coffee-shop counts are somewhat too high, more so near malls and
+campuses, which makes `crowded` slightly more likely. Not fixed for the semifinal: a name filter
+(boba, thai tea, ice cream, es krim) would be tuned on this same sample, so it needs a fresh sample to
+check. Planned after the semifinal.
 
 ## 2. Demand model
 
@@ -157,8 +159,8 @@ pockets while keeping false alarms at 3 to 4% per label.
    means "different from the city pattern", not "unmet demand" for certain.
 2. Informal stalls and new shops are missing from open data; Overture `operating_status` is almost
    always empty, so some closed places may be counted.
-   The category sample check found 13% errors with drink cafes counted (20% coffee-only, target 15%):
-   some ice cream and dessert shops tagged `cafe` are counted as coffee shops.
+   The category sample check found 20% errors (target 15%): some drink and dessert shops tagged
+   `cafe` are counted as coffee shops.
 3. Hotel and shop counts carry mapping-completeness bias.
 4. WorldPop 2026 is a modelled estimate (alpha release R2025A).
 5. Labels are conservative after the NB switch: 18 opportunity cells. They are candidates to check
