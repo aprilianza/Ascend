@@ -25,3 +25,5 @@ dist/
 *.zip
 *.xlsx
 Handbook*.docx
+.claude/
+web/dist
