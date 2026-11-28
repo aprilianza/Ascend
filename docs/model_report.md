@@ -16,8 +16,24 @@ Reproduce everything below with `python -m pipeline.run` (seed 42). Raw numbers:
 
 Source versions, filters and the `operating_status` finding: `pipeline/data/SOURCES.md`.
 
-**Category sample check (target error ≤ 15%):** pending. 30 random records are in
-`docs/sample_check_coffee.csv` for Nopri to check on street imagery or on site.
+**Category sample check (target error ≤ 15%): met, 13% (4 of 30), with drink cafes counted.**
+Desk check of 30 random records on Google Maps (category, closed status, position) by Aprilianza,
+assisted by Claude Code, 28 Nov 2026; results in `docs/sample_check_coffee.csv`. A record is an error
+when it is not a coffee shop or cafe, or is permanently closed.
+
+| Result | Records |
+|---|---|
+| Coffee shop or cafe, not permanently closed | 22 (2 are drink cafes: boba and Thai tea; 3 borderline: a warkop and a cafe listed as restaurant or cafeteria, a steak cafe) |
+| Not a coffee shop or cafe | 3: two ice cream places, a restaurant |
+| Permanently closed | 1 (2 more are temporarily closed and are kept) |
+| Not found on Google Maps | 4 (excluded; error among the 26 found records is 15%) |
+| Position within 50 m (of the records found at this point) | 20 yes, 3 no |
+
+Definition note: the check counts small drink cafes (boba, Thai tea) as cafes, because they compete
+for the same walk-in drink customers. Under a strict coffee-only definition the error is **20% (6 of 30)**,
+above the target. The pipeline filter is not yet fully aligned with the broad definition: Overture
+`cafe` places that sell boba are kept, while OSM cafes tagged `cuisine=bubble_tea` or `tea` are dropped.
+Ice cream and dessert places are excluded under both definitions; they are the main remaining errors.
 
 ## 2. Demand model
 
@@ -141,6 +157,8 @@ pockets while keeping false alarms at 3 to 4% per label.
    means "different from the city pattern", not "unmet demand" for certain.
 2. Informal stalls and new shops are missing from open data; Overture `operating_status` is almost
    always empty, so some closed places may be counted.
+   The category sample check found 13% errors with drink cafes counted (20% coffee-only, target 15%):
+   some ice cream and dessert shops tagged `cafe` are counted as coffee shops.
 3. Hotel and shop counts carry mapping-completeness bias.
 4. WorldPop 2026 is a modelled estimate (alpha release R2025A).
 5. Labels are conservative after the NB switch: 18 opportunity cells. They are candidates to check

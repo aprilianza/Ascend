@@ -39,7 +39,7 @@ Overture `taxonomy.primary` ∈ {`coffee_shop`, `cafe`, `animal_cafe`, `hong_kon
 OSM `amenity=cafe` (excluding `cuisine` bubble_tea, juice, ice_cream, tea). Excluded: internet cafe,
 roastery, tea room, bubble tea, juice bar, dessert shop.
 
-## Open item for the team
+## Category sample check
 
-Nopri: fill in `docs/sample_check_coffee.csv` (30 random records, street imagery or visit) and
-report the error rate in `docs/model_report.md` (target ≤ 15%).
+30 random coffee-shop records were checked on Google Maps on 28 Nov 2026
+(`docs/sample_check_coffee.csv`): 13% errors with drink cafes (boba, Thai tea) counted, 20% coffee-only, against a 15% target. Details in `docs/model_report.md`.
