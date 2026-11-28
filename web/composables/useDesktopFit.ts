@@ -48,31 +48,41 @@ export function useDesktopFit() {
     isCompact.value && viewportH.value / homeZoom.value > 960,
   )
 
+  // Always span the full visual viewport height (100vh in real pixels after CSS zoom)
+  // so sticky transitions (Ascend video & Counting Layer) behave identically to desktop
+  // at every flexible/resized browser width (< 1280px) without previous sections peeking in.
   const homeStickyHeightPx = computed(() =>
-    isCompact.value ? Math.min(Math.ceil(viewportH.value / homeZoom.value), 860) : null,
+    isCompact.value ? Math.ceil(viewportH.value / homeZoom.value) : null,
   )
 
   const homeStorySectionHeightPx = computed(() => {
-    if (!isCompact.value || !homeStickyHeightPx.value) return null
-    return isTallCompact.value
-      ? Math.round(homeStickyHeightPx.value * 2.2)
-      : Math.ceil((viewportH.value * 2.6) / homeZoom.value)
+    if (!isCompact.value) return null
+    return Math.ceil((viewportH.value * 4.5) / homeZoom.value)
   })
 
   const homePortalSectionHeightPx = computed(() => {
-    if (!isCompact.value || !homeStickyHeightPx.value) return null
-    return isTallCompact.value
-      ? Math.round(homeStickyHeightPx.value * 1.45)
-      : Math.ceil((viewportH.value * 1.65) / homeZoom.value)
+    if (!isCompact.value) return null
+    return Math.ceil((viewportH.value * 2.35) / homeZoom.value)
   })
 
-  const homeBackgroundOverlapPx = computed(() => (isCompact.value ? 0 : null))
+  // Synchronized overlap so #latar-belakang begins scrolling up right as the video
+  // starts its blackout fade-out (p_enter = 1 - 0.84 / 3.5 = 0.760, matching desktop's 0.768).
+  const homeBackgroundOverlapPx = computed(() =>
+    isCompact.value ? -Math.round((viewportH.value * 0.84) / homeZoom.value) : null,
+  )
 
-  const homeBackgroundPadTopPx = computed(() => (isCompact.value ? 56 : null))
+  const homeBackgroundPadTopPx = computed(() =>
+    isCompact.value ? Math.round((viewportH.value * 0.1) / homeZoom.value) : null,
+  )
 
-  const homeSolutionOverlapPx = computed(() => (isCompact.value ? 0 : null))
+  // Synchronized overlap so #solusi enters smoothly right as Counting Layer finishes fading out (p_enter = 0.748).
+  const homeSolutionOverlapPx = computed(() =>
+    isCompact.value ? -Math.round((viewportH.value * 0.34) / homeZoom.value) : null,
+  )
 
-  const homeSolutionPadTopPx = computed(() => (isCompact.value ? 48 : null))
+  const homeSolutionPadTopPx = computed(() =>
+    isCompact.value ? Math.round((viewportH.value * 0.14) / homeZoom.value) : null,
+  )
 
   const mapHeaderTopPx = computed(() => (isCompact.value ? 8 : 12))
 
