@@ -128,10 +128,10 @@ pinned in `requirements.txt`).
 
 | Member | Role | Contribution |
 |---|---|---|
-| Azziz Abdul Ghofur | Lead, backend and AI | Team lead; backend and chat assistant (planned after the semifinal) |
-| Aprilianza Muhammad Yusup | Product and ML lead | Data pipeline, demand model, label rule, SHAP explanations, model report, front-end fixes |
-| Bill Stephen Sembiring | Front end and UI/UX | Visual design, landing page, interactive map and area card |
-| Nopri Anita Libertiana Saragih | Data quality and research | Source checks, category sample check, field-check planning |
+| Azziz Abdul Ghofur | Lead, business and pitch | Team lead; business direction, value for first-time shop owners and pitching |
+| Aprilianza Muhammad Yusup | Product and ML lead | Product direction and demand modelling across 1,976 mapped areas, turning neighbourhood counts into Opportunity, Fair and Crowded labels |
+| Bill Stephen Sembiring | Front end and UI/UX | Visual design system, interactive hexagon map and scroll storytelling |
+| Nopri Anita Libertiana Saragih | Data quality and research | Audits of open map sources, street coverage and local demand clues, so that sparse areas stay clearly flagged |
 
 ## AI assistance
 

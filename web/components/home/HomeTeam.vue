@@ -2,28 +2,28 @@
 import type { Component } from 'vue'
 import {
   BarChart3,
-  BrainCircuit,
+  Briefcase,
   ChevronDown,
   ClipboardCheck,
   Code2,
   Compass,
-  Cpu,
-  Database,
   FileSearch,
+  Handshake,
   Layers,
   LayoutGrid,
   MapPin,
+  Megaphone,
   Monitor,
   Palette,
   PenTool,
+  Presentation,
   Search,
-  Server,
   ShieldCheck,
   Sliders,
   Sparkles,
   Target,
-  Terminal,
   TrendingUp,
+  Users,
 } from 'lucide-vue-next'
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
@@ -83,13 +83,13 @@ const themeMap: Record<
 }
 
 const iconSetMap: Record<IconSetKey, Array<{ icon: Component; posClass: string; animClass: string; delay: string }>> = {
-  backend: [
-    { icon: Server, posClass: 'top-6 left-4', animClass: 'team-icon-float-a', delay: '0ms' },
-    { icon: BrainCircuit, posClass: 'top-5 right-4', animClass: 'team-icon-float-b', delay: '120ms' },
-    { icon: Cpu, posClass: 'top-[86px] left-3', animClass: 'team-icon-float-b', delay: '200ms' },
-    { icon: Terminal, posClass: 'top-[88px] right-3', animClass: 'team-icon-float-a', delay: '80ms' },
-    { icon: Database, posClass: 'top-[146px] left-5', animClass: 'team-icon-float-a', delay: '160ms' },
-    { icon: Sparkles, posClass: 'top-[146px] right-5', animClass: 'team-icon-float-b', delay: '260ms' },
+  business: [
+    { icon: Briefcase, posClass: 'top-6 left-4', animClass: 'team-icon-float-a', delay: '0ms' },
+    { icon: Megaphone, posClass: 'top-5 right-4', animClass: 'team-icon-float-b', delay: '120ms' },
+    { icon: Handshake, posClass: 'top-[86px] left-3', animClass: 'team-icon-float-b', delay: '200ms' },
+    { icon: TrendingUp, posClass: 'top-[88px] right-3', animClass: 'team-icon-float-a', delay: '80ms' },
+    { icon: Users, posClass: 'top-[146px] left-5', animClass: 'team-icon-float-a', delay: '160ms' },
+    { icon: Presentation, posClass: 'top-[146px] right-5', animClass: 'team-icon-float-b', delay: '260ms' },
   ],
   ml: [
     { icon: Layers, posClass: 'top-6 left-4', animClass: 'team-icon-float-a', delay: '0ms' },
