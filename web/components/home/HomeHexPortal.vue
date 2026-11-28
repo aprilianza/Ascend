@@ -1,7 +1,15 @@
 <script setup lang="ts">
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
-const { fitReady, isCompact, isTallCompact, homeStickyHeightPx, homePortalSectionHeightPx } = useDesktopFit()
+const {
+  viewportW,
+  viewportH,
+  fitReady,
+  isCompact,
+  homeZoom,
+  homeStickyHeightPx,
+  homePortalSectionHeightPx,
+} = useDesktopFit()
 
 // 6 airy, luminous concentric hexagons (crisp, serene, 60fps)
 const RING_COUNT = 6
@@ -99,10 +107,15 @@ function drawPortal(p: number) {
   ctx.fillStyle = `rgb(${rBg}, ${gBg}, ${bBg})`
   ctx.fillRect(0, 0, cssW, cssH)
 
-  // Beat 0 (0.00 -> 0.08): pure serene dark breath right below SCROLL pill
-  // Beat 1 (0.08 -> 0.30): concentric hexagons emerge smoothly FIRST with zero text yet
-  // Beat 2..End (0.30 -> 1.00): hexagons STAY 100% alive and unstick naturally into Solution
-  const hexAlpha = reducedMotion.value ? 1 : smoothstep(0.06, 0.28, p)
+  // Beat 0 (0.00 -> 0.06): pure serene dark breath right below SCROLL pill
+  // Beat 1 (0.06 -> 0.26): concentric hexagons emerge smoothly FIRST with zero text yet
+  // Beat 2 (0.26 -> 0.72): hexagons stay alive around "THE COUNTING LAYER"
+  // Beat 3 (0.72 -> 0.90 on flexible/compact): full smooth fade-out into #0F1115 before Solution takes over
+  const hexEnter = reducedMotion.value ? 1 : smoothstep(0.06, 0.26, p)
+  const hexExit = reducedMotion.value || !(fitReady.value && isCompact.value)
+    ? 1
+    : 1 - smoothstep(0.72, 0.9, p)
+  const hexAlpha = hexEnter * hexExit
   if (hexAlpha <= 0.004) {
     ctx.restore()
     return
@@ -284,15 +297,10 @@ function drawPortal(p: number) {
 function measureScrollProgress() {
   if (!sectionRef.value) return
   const rect = sectionRef.value.getBoundingClientRect()
-  const vh = window.innerHeight || 900
-  if (fitReady.value && isTallCompact.value) {
-    const stageH = stageRef.value?.getBoundingClientRect().height || Math.min(vh, 260)
-    const startY = vh * 0.72
-    const endY = -(rect.height - stageH)
-    targetP = clamp((startY - rect.top) / Math.max(1, startY - endY), 0, 1)
-    return
-  }
-  const scrollable = Math.max(1, rect.height - vh)
+  // Measure sticky stage height in the exact same coordinate space as sectionRef
+  // so CSS `zoom` cancels out cleanly across all browsers and flexible viewport sizes.
+  const stageH = stageRef.value?.getBoundingClientRect().height || window.innerHeight || 900
+  const scrollable = Math.max(1, rect.height - stageH)
   targetP = clamp(-rect.top / scrollable, 0, 1)
 }
 
@@ -342,13 +350,28 @@ const layerTitleStyle = computed(() => {
     return { opacity: '1', transform: 'translate3d(0, 0, 0) scale(1)' }
   }
   const p = renderedP.value
-  const reveal = smoothstep(0.32, 0.6, p)
-  const scale = lerp(0.88, 1.02, smoothstep(0.32, 0.96, p))
-  const risePx = lerp(18, 0, reveal)
+  const compact = fitReady.value && isCompact.value
+  const reveal = smoothstep(compact ? 0.26 : 0.32, compact ? 0.48 : 0.6, p)
+  const exitFade = compact ? 1 - smoothstep(0.68, 0.86, p) : 1
+  const opacity = reveal * exitFade
+  // Keep "THE COUNTING LAYER" safely inside 390px viewports with generous side padding
+  const titleBoost = compact ? clamp(0.42 / homeZoom.value, 1, 1.24) : 1
+  const scale = lerp(0.88, 1.02, smoothstep(0.28, 0.96, p)) * titleBoost
+  const risePx = lerp(18, 0, reveal) - (1 - exitFade) * 14
   return {
-    opacity: reveal.toFixed(4),
+    opacity: opacity.toFixed(4),
     transform: `translate3d(0, ${risePx.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`,
   }
+})
+
+watch([viewportW, viewportH], () => {
+  if (!import.meta.client || unmounted || reducedMotion.value) return
+  nextTick(() => {
+    measureScrollProgress()
+    smoothP = targetP
+    renderedP.value = smoothP
+    drawPortal(smoothP)
+  })
 })
 
 onMounted(() => {

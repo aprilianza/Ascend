@@ -2,7 +2,15 @@
 import { ChevronsDown } from 'lucide-vue-next'
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
-const { fitReady, isCompact, isTallCompact, homeStickyHeightPx, homeStorySectionHeightPx } = useDesktopFit()
+const {
+  viewportW,
+  viewportH,
+  fitReady,
+  isCompact,
+  homeZoom,
+  homeStickyHeightPx,
+  homeStorySectionHeightPx,
+} = useDesktopFit()
 
 const TOTAL_FRAMES = 72
 const FRAME_ASPECT = 16 / 9
@@ -117,7 +125,7 @@ function computeVisualState(p: number) {
 
   const zoomT = clamp((p - 0.12) / (0.72 - 0.12), 0, 1)
   const zoomEase = 1 - Math.pow(1 - zoomT, 2.3)
-  const isPortrait = !(fitReady.value && isCompact.value) && typeof window !== 'undefined' && window.innerWidth < window.innerHeight
+  const isPortrait = typeof window !== 'undefined' && window.innerWidth < window.innerHeight
   const startZoom = isPortrait ? 2.55 : 2.18
   const baseScale = startZoom - (startZoom - 1.0) * zoomEase
 
@@ -229,15 +237,10 @@ function drawCanvas(force = false) {
 function measureScrollProgress() {
   if (!sectionRef.value) return
   const rect = sectionRef.value.getBoundingClientRect()
-  const vh = window.innerHeight || 900
-  if (fitReady.value && isTallCompact.value) {
-    const stageH = stageRef.value?.getBoundingClientRect().height || Math.min(vh, 260)
-    const startY = Math.min(vh * 0.42, 340)
-    const endY = -(rect.height - stageH)
-    targetProgress = clamp((startY - rect.top) / Math.max(1, startY - endY), 0, 1)
-    return
-  }
-  const scrollable = Math.max(1, rect.height - vh)
+  // Measure sticky stage height in the exact same coordinate space as sectionRef
+  // so CSS `zoom` cancels out cleanly across all browsers and flexible viewport sizes.
+  const stageH = stageRef.value?.getBoundingClientRect().height || window.innerHeight || 900
+  const scrollable = Math.max(1, rect.height - stageH)
   targetProgress = clamp(-rect.top / scrollable, 0, 1)
 }
 
@@ -281,14 +284,13 @@ function onScroll() {
 const videoOpacity = computed(() => {
   if (reducedMotion.value) return 1
   const p = renderedProgress.value
-  if (fitReady.value && isTallCompact.value) {
-    return 0.92 + 0.08 * smoothstep(0.05, 0.22, p)
-  }
-  return smoothstep(0.11, 0.22, p)
+  const fadeIn = smoothstep(0.11, 0.22, p)
+  const fadeOut = 1 - smoothstep(0.75, 0.91, p)
+  return fadeIn * fadeOut
 })
 
 const introWhisperOpacity = computed(() => {
-  if (reducedMotion.value || (fitReady.value && isTallCompact.value)) return 0
+  if (reducedMotion.value) return 0
   const p = renderedProgress.value
   const fadeIn = 0.25 + 0.75 * smoothstep(0.0, 0.04, p)
   const fadeOut = 1 - smoothstep(0.08, 0.125, p)
@@ -298,12 +300,13 @@ const introWhisperOpacity = computed(() => {
 const exitBlackVeilOpacity = computed(() => {
   if (reducedMotion.value) return 0
   const p = renderedProgress.value
-  if (fitReady.value && isTallCompact.value) {
-    return smoothstep(0.84, 0.99, p) * 0.55
-  }
-  // GTA VI style blackout darken starting right as "Busy isn't room." glides up (0.74 -> 0.92)
-  return smoothstep(0.74, 0.92, p)
+  // Full blackout fade-out right as "Busy isn't room." glides up (0.74 -> 0.90)
+  return smoothstep(0.74, 0.9, p)
 })
+
+const overlayScale = computed(() =>
+  fitReady.value && isCompact.value ? clamp(0.82 / homeZoom.value, 1, 2.35) : 1,
+)
 
 const hudOpacity = computed(() => {
   if (reducedMotion.value) return 0
@@ -335,12 +338,22 @@ const hudStatusText = computed(() => {
 function skipToContent() {
   const target = document.getElementById('busy-header') || document.getElementById('latar-belakang')
   if (!target) return
-  const y = target.getBoundingClientRect().top + window.scrollY - 104
+  const y = target.getBoundingClientRect().top + window.scrollY - (fitReady.value && isCompact.value ? 72 : 104)
   window.scrollTo({
     top: Math.max(0, y),
     behavior: reducedMotion.value ? 'auto' : 'smooth',
   })
 }
+
+watch([viewportW, viewportH], () => {
+  if (!import.meta.client || unmounted) return
+  nextTick(() => {
+    measureScrollProgress()
+    smoothProgress = targetProgress
+    renderedProgress.value = smoothProgress
+    drawCanvas(true)
+  })
+})
 
 onMounted(() => {
   reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -437,22 +450,33 @@ onBeforeUnmount(() => {
         aria-hidden="true"
       >
         <div
-          class="w-40 h-40 rounded-full blur-3xl opacity-35 mb-2"
-          style="background: radial-gradient(circle, rgba(16, 185, 129, 0.45), transparent 72%);"
-        />
-        <div class="inline-flex items-center gap-2.5 -mt-20">
-          <span class="w-1.5 h-1.5 rounded-full bg-mint shadow-[0_0_12px_rgba(16,185,129,0.9)]" />
-          <span class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[#8FA8AC]">
-            {{ HOME_COPY.storyShowcase.introWhisper }}
-          </span>
+          class="flex flex-col items-center justify-center"
+          :style="overlayScale !== 1 ? { transform: `scale(${overlayScale.toFixed(3)})` } : undefined"
+        >
+          <div
+            class="w-40 h-40 rounded-full blur-3xl opacity-35 mb-2"
+            style="background: radial-gradient(circle, rgba(16, 185, 129, 0.45), transparent 72%);"
+          />
+          <div class="inline-flex items-center gap-2.5 -mt-20">
+            <span class="w-1.5 h-1.5 rounded-full bg-mint shadow-[0_0_12px_rgba(16,185,129,0.9)]" />
+            <span class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-[#8FA8AC]">
+              {{ HOME_COPY.storyShowcase.introWhisper }}
+            </span>
+          </div>
         </div>
       </div>
 
-      <!-- Ultra-Minimal Bottom Scroll Progress Hairline (stacked cleanly above Skip button on mobile) -->
+      <!-- Ultra-Minimal Bottom Scroll Progress Hairline (stacked cleanly above Skip button on narrow viewports) -->
       <div
         v-if="!reducedMotion"
-        class="pointer-events-none absolute bottom-9 inset-x-0 z-10 flex flex-col items-center gap-2.5 px-6"
-        :style="{ opacity: hudOpacity.toFixed(4) }"
+        class="pointer-events-none absolute inset-x-0 z-10 flex flex-col items-center gap-2.5 px-6"
+        :class="fitReady && isCompact && viewportW < 640 ? '' : 'bottom-9'"
+        :style="{
+          opacity: hudOpacity.toFixed(4),
+          bottom: fitReady && isCompact && viewportW < 640 ? `${Math.round(62 / homeZoom)}px` : undefined,
+          transform: overlayScale !== 1 ? `scale(${overlayScale.toFixed(3)})` : undefined,
+          transformOrigin: 'center bottom',
+        }"
         aria-hidden="true"
       >
         <span class="font-mono text-[9.5px] uppercase tracking-[0.24em] text-[#B7CDD0]/85 drop-shadow-[0_1px_6px_rgba(0,0,0,0.9)]">
@@ -482,7 +506,11 @@ onBeforeUnmount(() => {
         v-if="!reducedMotion"
         class="absolute bottom-8 right-8 z-30 transition-none"
         :class="skipButtonOpacity > 0.08 ? 'pointer-events-auto' : 'pointer-events-none'"
-        :style="{ opacity: skipButtonOpacity.toFixed(4) }"
+        :style="{
+          opacity: skipButtonOpacity.toFixed(4),
+          transform: overlayScale !== 1 ? `scale(${overlayScale.toFixed(3)})` : undefined,
+          transformOrigin: 'right bottom',
+        }"
       >
         <button
           type="button"

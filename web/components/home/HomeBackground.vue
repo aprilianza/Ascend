@@ -130,7 +130,7 @@ onBeforeUnmount(() => {
     class="relative z-20 pb-24"
     :class="fitReady && isCompact ? '' : 'gta-overlap-rise'"
     :style="[
-      { background: fitReady && isCompact ? 'linear-gradient(180deg, #020406 0%, #0B0E13 18%, #0F1115 44%, #0F1115 100%)' : 'linear-gradient(180deg, rgba(10, 13, 18, 0) 0%, rgba(11, 14, 19, 0.72) 14%, rgba(15, 17, 21, 0.95) 32%, #0F1115 50%, #0F1115 100%)' },
+      { background: 'linear-gradient(180deg, rgba(10, 13, 18, 0) 0%, rgba(11, 14, 19, 0.72) 14%, rgba(15, 17, 21, 0.95) 32%, #0F1115 50%, #0F1115 100%)' },
       fitReady && isCompact && homeBackgroundPadTopPx !== null
         ? { marginTop: `${homeBackgroundOverlapPx ?? 0}px`, paddingTop: `${homeBackgroundPadTopPx}px` }
         : undefined,

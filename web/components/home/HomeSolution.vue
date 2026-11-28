@@ -351,7 +351,7 @@ const summaryStats = computed(() => {
     class="relative z-20 pb-24"
     :class="fitReady && isCompact ? 'motion-reduce:mt-0 motion-reduce:pt-16' : 'motion-safe:-mt-[28vh] motion-safe:pt-[24vh] motion-reduce:mt-0 motion-reduce:pt-16'"
     :style="[
-      { background: fitReady && isCompact ? '#0F1115' : 'linear-gradient(180deg, rgba(15, 17, 21, 0) 0%, rgba(15, 17, 21, 0) 26%, rgba(15, 17, 21, 0.85) 48%, #0F1115 62%, #0F1115 100%)' },
+      { background: 'linear-gradient(180deg, rgba(15, 17, 21, 0) 0%, rgba(15, 17, 21, 0) 26%, rgba(15, 17, 21, 0.85) 48%, #0F1115 62%, #0F1115 100%)' },
       fitReady && isCompact && homeSolutionPadTopPx !== null
         ? { marginTop: `${homeSolutionOverlapPx ?? 0}px`, paddingTop: `${homeSolutionPadTopPx}px` }
         : undefined,
