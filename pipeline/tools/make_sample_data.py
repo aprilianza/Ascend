@@ -1,7 +1,7 @@
 """Generate SYNTHETIC sample data that follows data contract v1.0.0.
 
 Purpose: let the web team build the map, card, and shortlist before the real
-model exists. Every number here is random. Do not use it in the proposal,
+model exists. Every number here is random. Do not report it as a result,
 video, or screenshots. The real pipeline (07_export) overwrites these files.
 
     python pipeline/tools/make_sample_data.py            # writes web/public/data/

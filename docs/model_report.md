@@ -33,9 +33,9 @@ Pattern: the errors come from the broad `cafe` label (Overture and OSM), which a
 dessert shops. If small drink cafes (boba, Thai tea) were counted as cafes, since they compete for the
 same walk-in drink customers, the error would be 13%; the pipeline uses the coffee-only definition, so
 20% is the figure we report. Effect: coffee-shop counts are somewhat too high, more so near malls and
-campuses, which makes `crowded` slightly more likely. Not fixed for the semifinal: a name filter
+campuses, which makes `crowded` slightly more likely. Not fixed in this version: a name filter
 (boba, thai tea, ice cream, es krim) would be tuned on this same sample, so it needs a fresh sample to
-check. Planned after the semifinal.
+check.
 
 ## 2. Demand model
 
@@ -111,7 +111,7 @@ that the Poisson test would have given only because it ignores the extra varianc
 - `not_enough_demand`: `pop_k1` below the 10th percentile (2,369 people) and expected < 0.3.
 - The model expects 2,148 shops in study cells against 2,426 observed (11% fewer): out-of-fold
   predictions are slightly low inside the city, so `crowded` is somewhat more likely than
-  `opportunity`. Recorded as a known bias; a calibration step is a post-semifinal option.
+  `opportunity`. Recorded as a known bias; a calibration step is a possible later improvement.
 
 ## 4. Explanations
 
@@ -153,7 +153,7 @@ With the v1 rule about 7 in 10 opportunity labels are chance. The per-hexagon te
 finds almost nothing, because counts are too small. Summing over k-ring 1 finds about 4 in 10 real
 pockets while keeping false alarms at 3 to 4% per label.
 
-## 6. Limitations to state in the proposal
+## 6. Limitations
 
 1. The model learns the usual relation between demand proxies and coffee shops in Bandung; a gap
    means "different from the city pattern", not "unmet demand" for certain.

@@ -93,15 +93,16 @@ Main libraries: Nuxt 3, Vue 3, MapLibre GL JS, three.js, Tailwind CSS, lucide-vu
 LightGBM, SHAP, scikit-learn, statsmodels, SciPy, h3, GeoPandas, OSMnx, DuckDB, rasterio (pipeline,
 pinned in `requirements.txt`).
 
-## Status
+## Features
 
-| Item | Status |
-|---|---|
-| Data pipeline: grid, places, features, model, labels, SHAP explanations, export | Done (see `docs/model_report.md`) |
-| Web map: hexagon map, area card with top factors, About, shortlist, routes, locate me | Done |
-| Deployment on Vercel | Done |
-| Category sample check of 30 records (target error ≤ 15%) | Done: 20% error, target not met (see `docs/model_report.md`) |
-| Eatery business type, chat assistant, break-even calculator, compare view, rent layer | Planned, not built |
+- **Hexagon map** of Bandung and the Telkom University area, showing where coffee shops are an
+  Opportunity, Fair, Crowded, or have not enough demand.
+- **Area card**: coffee shops counted against what local demand usually supports, a confidence note,
+  and the top factors behind the estimate.
+- **Shortlist** of areas, **routes** to a selected area, and optional **Locate me**.
+- **About** panel that explains the method, data sources and limits.
+- **Reproducible data pipeline**: demand model, label rule, SHAP explanations and schema-checked
+  export (see `docs/model_report.md`).
 
 **Simulated or synthetic parts, clearly identified:**
 
@@ -141,10 +142,4 @@ pinned in `requirements.txt`).
 | Gemini (Google) | Drafted parts of the front-end code and interface text |
 
 All AI-drafted work was reviewed, run and tested by the team, and the team can explain every part of it.
-Every number in the proposal can be reproduced with the commands above.
-
-## Versions
-
-| Version | Commit |
-|---|---|
-| Semifinal submission | to be recorded at submission |
+Model and map numbers can be reproduced with the commands above.
