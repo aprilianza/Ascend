@@ -1,0 +1,26 @@
+[build]
+  base = "web"
+  command = "npm run generate"
+  publish = ".output/public"
+
+[[redirects]]
+  from = "/map/*"
+  to = "/map/index.html"
+  status = 200
+
+[[headers]]
+  for = "/_nuxt/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(self)"
