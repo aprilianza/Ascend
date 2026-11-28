@@ -55,7 +55,7 @@ export function useAscendData() {
       return parsed
     }
     catch (err) {
-      const msg = err instanceof Error ? err.message : 'Gagal memuat metadata'
+      const msg = err instanceof Error ? err.message : 'Could not load map metadata'
       error.value = msg
       throw err
     }
@@ -76,7 +76,7 @@ export function useAscendData() {
       const currentMeta = meta.value ?? (await getMeta(force))
       const entry = currentMeta.business_types.find(b => b.id === type)
       if (!entry || !entry.available || !entry.file) {
-        throw new Error(`Jenis usaha ${type} belum tersedia pada tahap ini.`)
+        throw new Error(`Business type ${type} is not available yet.`)
       }
 
       const url = apiBase
@@ -94,7 +94,7 @@ export function useAscendData() {
       return parsed
     }
     catch (err) {
-      const msg = err instanceof Error ? err.message : 'Gagal memuat data peta'
+      const msg = err instanceof Error ? err.message : 'Could not load map data'
       error.value = msg
       throw err
     }

@@ -4,6 +4,14 @@ export type AscendLocale = 'en' | 'id'
 
 // Complete 1-to-1 Indonesian translations for all 30 real factor strings in coffee_shop.geojson
 const FACTOR_TEXT_ID: Record<string, string> = {
+  'Campus buildings nearby': 'Ada gedung kampus di sekitar sini',
+  'Campuses in the wider area': 'Ada kampus di area sekitar yang lebih luas',
+  'Few bus stops nearby': 'Sedikit halte bus di sekitar',
+  'Few campuses in the wider area': 'Sedikit kampus di area sekitar yang lebih luas',
+  'Few health facilities around': 'Sedikit fasilitas kesehatan di sekitar',
+  'Good transit in the wider area': 'Transportasi umum baik di area sekitar',
+  'Little transit in the wider area': 'Transportasi umum minim di area sekitar',
+  'No campus right nearby': 'Tidak ada kampus tepat di sekitar sini',
   'Bus stops or stations nearby': 'Dekat halte bus atau stasiun',
   'Busy shopping area around': 'Area belanja yang ramai di sekitar',
   'Clinics or hospitals nearby': 'Dekat klinik atau rumah sakit',

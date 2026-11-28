@@ -219,7 +219,7 @@ onBeforeUnmount(() => {
               <div class="min-w-0">
                 <p class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-mint/90">
                   <UiAscendMark :size="15" />
-                  <span>SELAMAT DATANG · METHODOLOGY</span>
+                  <span>WELCOME · METHODOLOGY</span>
                 </p>
 
                 <h2 class="mt-2.5 flex items-baseline gap-2 leading-none">
@@ -370,7 +370,7 @@ onBeforeUnmount(() => {
               </div>
 
               <p class="text-[13.5px] text-[#DCE4EE]">
-                Expected counts estimate how many coffee shops similar urban neighborhoods typically sustain based on residents, campuses, schools, offices, retail clusters, streets, and transit stops.
+                Expected counts estimate how many coffee shops a neighborhood like this one usually has in Bandung, based on residents, shops, hotels, campuses, schools, offices, health facilities and transit stops. The model learns the usual city pattern, not true demand, so a gap means "different from the usual pattern", not a guarantee.
               </p>
 
               <p class="text-[12.5px] text-ink-secondary">
@@ -522,6 +522,14 @@ onBeforeUnmount(() => {
                     <span class="font-mono text-signal-coral font-bold mt-0.5">x</span>
                     <span>No lease listings, property scraping, or official zoning / permit clearance.</span>
                   </li>
+                  <li class="flex items-start gap-2">
+                    <span class="font-mono text-signal-coral font-bold mt-0.5">x</span>
+                    <span>Data years differ: places and streets are 2026 snapshots; population is a WorldPop 2026 model estimate (alpha release).</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="font-mono text-signal-coral font-bold mt-0.5">x</span>
+                    <span>The factors on each card explain estimated demand at that spot; the label compares counts over about 500 m.</span>
+                  </li>
                 </ul>
               </div>
 
@@ -533,6 +541,9 @@ onBeforeUnmount(() => {
                   </p>
                   <p class="text-[12.5px] text-ink-secondary leading-relaxed">
                     Your shortlist stays inside this browser's local storage and is never uploaded. Designed for users 18+; when Ask Ascend launches, avoid entering personal information.
+                  </p>
+                  <p class="text-[12.5px] text-ink-secondary leading-relaxed">
+                    Location is optional and only used when you tap "Locate me". Your device location is used first; if it fails, an approximate location is looked up from your IP address via get.geojs.io or ipapi.co. Routes come from public OSRM routing servers, which receive your location and the selected area. Ascend stores none of this.
                   </p>
                 </div>
               </div>
