@@ -1,0 +1,3275 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-ground: #0F1115;
+  --bg-abyss: #0B0D11;
+  --bg-surface: #161A21;
+  --bg-elevated: #1C2430;
+  --border-subtle: #232836;
+  --border-strong: #34404F;
+  --ink-primary: #F8FAFC;
+  --ink-secondary: #94A3B8;
+  --ink-muted: #64748B;
+  --ink-dark: #090D11;
+  --accent-mint: #10B981;
+  --accent-mint-bright: #14D496;
+  --accent-mint-soft: #34D399;
+  --accent-teal: #14B8A6;
+  --accent-teal-abyss: #0D2D26;
+  --accent-amber: #F59E0B;
+  --label-opportunity: #10B981;
+  --label-fair: #F59E0B;
+  --label-crowded: #EF4444;
+  --label-low-demand: #64748B;
+  --ease-signal: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-grand: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-ground);
+    color: var(--ink-primary);
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    color-scheme: dark;
+    scrollbar-color: #34404F #0F1115;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0F1115;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2A3342;
+    border-radius: 9999px;
+    border: 2px solid #0F1115;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3B495E;
+  }
+
+  /* Dark styling for MapLibre controls */
+  .maplibregl-ctrl-group {
+    background: #161A21 !important;
+    border: 1px solid #232836 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .maplibregl-ctrl-group button + button {
+    border-top: 1px solid #232836 !important;
+  }
+
+  .maplibregl-ctrl-group button span {
+    filter: invert(0.92);
+  }
+
+  .maplibregl-ctrl-attrib {
+    background: rgba(22, 26, 33, 0.88) !important;
+    color: #94A3B8 !important;
+    border: 1px solid #232836 !important;
+  }
+
+  .maplibregl-ctrl-attrib a {
+    color: #10B981 !important;
+  }
+
+  body {
+    background-color: var(--bg-ground);
+    color: var(--ink-primary);
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: rgba(16, 185, 129, 0.28);
+    color: #F8FAFC;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #10B981;
+    outline-offset: 2px;
+  }
+}
+
+/* Nusantara-general abstract tenun-ikat diamond lattice at 4% opacity */
+.bg-tenun-lattice {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M24 2 L46 24 L24 46 L2 24 Z' fill='none' stroke='%2394A3B8' stroke-width='1' stroke-opacity='0.06'/%3E%3Cpath d='M24 12 L36 24 L24 36 L12 24 Z' fill='none' stroke='%2394A3B8' stroke-width='0.75' stroke-opacity='0.04'/%3E%3Ccircle cx='24' cy='24' r='1.2' fill='%2394A3B8' fill-opacity='0.06'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+
+/* Subtle dot-matrix secondary backdrop for mid-page rhythm */
+.bg-signal-dots {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Chamfered surface with crisp 1px outer border using layered clip-path */
+.chamfer-card {
+  position: relative;
+  background-color: #232836;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 16px) 0,
+    100% 16px,
+    100% 100%,
+    16px 100%,
+    0 calc(100% - 16px)
+  );
+  padding: 1px;
+  transition: background-color 260ms var(--ease-signal), transform 260ms var(--ease-signal), filter 260ms var(--ease-signal);
+}
+
+.chamfer-card-inner {
+  background-color: #161A21;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 15.5px) 0,
+    100% 15.5px,
+    100% 100%,
+    15.5px 100%,
+    0 calc(100% - 15.5px)
+  );
+  height: 100%;
+  width: 100%;
+  transition: background-color 260ms var(--ease-signal);
+}
+
+.chamfer-card-interactive:hover {
+  background-color: rgba(16, 185, 129, 0.58);
+  transform: translateY(-3px);
+}
+
+.chamfer-card-interactive:hover .chamfer-card-inner {
+  background-color: #181E27;
+}
+
+/* Chamfer top-right only */
+.chamfer-tr {
+  position: relative;
+  background-color: #232836;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  padding: 1px;
+  transition: background-color 260ms var(--ease-signal), transform 260ms var(--ease-signal);
+}
+
+.chamfer-tr-inner {
+  background-color: #161A21;
+  clip-path: polygon(0 0, calc(100% - 13.5px) 0, 100% 13.5px, 100% 100%, 0 100%);
+  height: 100%;
+  width: 100%;
+  transition: background-color 260ms var(--ease-signal);
+}
+
+.chamfer-tr-interactive:hover {
+  background-color: rgba(16, 185, 129, 0.56);
+  transform: translateY(-3px);
+}
+
+.chamfer-tr-interactive:hover .chamfer-tr-inner {
+  background-color: #181E27;
+}
+
+/* Chamfer large for CTA Papan Nama */
+.chamfer-signboard {
+  position: relative;
+  background-color: #34404F;
+  clip-path: polygon(
+    20px 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    20px 100%,
+    0 calc(100% - 20px),
+    0 20px
+  );
+  padding: 1px;
+  transition: background-color 360ms var(--ease-signal), box-shadow 360ms var(--ease-signal);
+}
+
+.chamfer-signboard:hover {
+  background-color: rgba(16, 185, 129, 0.58);
+}
+
+.chamfer-signboard-inner {
+  background-color: #161A21;
+  clip-path: polygon(
+    19.5px 0,
+    calc(100% - 19.5px) 0,
+    100% 19.5px,
+    100% calc(100% - 19.5px),
+    calc(100% - 19.5px) 100%,
+    19.5px 100%,
+    0 calc(100% - 19.5px),
+    0 19.5px
+  );
+}
+
+/* Primary mint CTA button (dark ink strictly on mint surface) */
+.btn-mint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #10B981;
+  color: #090D11;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  transition: background-color 140ms var(--ease-signal),
+    transform 140ms var(--ease-signal),
+    box-shadow 240ms var(--ease-signal);
+}
+
+.btn-mint:hover {
+  background-color: #14D496;
+  box-shadow: 0 0 28px rgba(16, 185, 129, 0.48), 0 0 12px rgba(20, 184, 166, 0.3);
+  transform: translateY(-1.5px);
+}
+
+.btn-mint:active {
+  transform: translateY(0px) scale(0.985);
+}
+
+/* Ghost secondary button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(15, 22, 24, 0.72);
+  border: 1px solid #34404F;
+  color: #F8FAFC;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  transition: border-color 160ms var(--ease-signal),
+    background-color 160ms var(--ease-signal),
+    color 160ms var(--ease-signal),
+    transform 160ms var(--ease-signal);
+}
+
+.btn-ghost:hover {
+  border-color: #10B981;
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #F8FAFC;
+  transform: translateY(-1.5px);
+}
+
+.btn-ghost:active {
+  transform: translateY(0px) scale(0.985);
+}
+
+/* Editorial mint italic accent */
+.editorial-mint {
+  font-family: 'Josefin Sans', sans-serif;
+  font-style: italic;
+  font-weight: 600;
+  color: #10B981;
+}
+
+/* =====================================================================
+   HERO ASCEND 3D WORDMARK: Luhur Signal Mint & Teal Abyss Sculpted Rise
+   ===================================================================== */
+@keyframes ascend-step-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(var(--step-y, 0px) + 54px)) scale(0.92) rotateX(18deg);
+    filter: blur(8px);
+  }
+  65% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(var(--step-y, 0px)) scale(1) rotateX(0deg);
+    filter: blur(0px);
+  }
+}
+
+@keyframes ascend-mint-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes songket-step-draw {
+  0% {
+    stroke-dashoffset: 1050;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.ascend-wordmark-stage {
+  perspective: 900px;
+}
+
+.ascend-letter-shell {
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+  transform: translateY(var(--step-y, 0px));
+  animation: ascend-step-rise 820ms var(--ease-grand) both;
+  animation-delay: var(--step-delay, 0ms);
+  will-change: transform, opacity;
+}
+
+/* Real 3D extruded bevel back-layer in Luhur Signal Deep Teal Abyss */
+.ascend-letter-extrude {
+  position: absolute;
+  inset: 0;
+  color: #0B2620;
+  pointer-events: none;
+  user-select: none;
+  transform: translate3d(0px, 2px, 0px);
+  text-shadow:
+    0 1px 0 #134137,
+    0 2px 0 #10382F,
+    0 3px 0 #0D2F28,
+    0 4px 0 #0B2620,
+    0 5px 0 #081E1A,
+    0 6px 0 #061714,
+    0 7px 0 #051210,
+    0 14px 28px rgba(0, 0, 0, 0.72),
+    0 0 26px rgba(16, 185, 129, 0.16);
+  transition: transform 300ms var(--ease-grand), text-shadow 300ms var(--ease-signal);
+}
+
+.ascend-wordmark-hovered .ascend-letter-extrude {
+  text-shadow:
+    0 1px 0 #14B8A6,
+    0 2px 0 #108C77,
+    0 3px 0 #0E6D5D,
+    0 4px 0 #0B5246,
+    0 5px 0 #093D35,
+    0 6px 0 #072C26,
+    0 7px 0 #051D19,
+    0 18px 34px rgba(0, 0, 0, 0.8),
+    0 0 36px rgba(16, 185, 129, 0.42);
+}
+
+/* Sculpted front face in Luhur Signal Ink White -> Pearl -> Mint */
+.ascend-letter-glyph {
+  position: relative;
+  display: inline-block;
+  background-image: linear-gradient(
+    162deg,
+    #FFFFFF 14%,
+    #F1F5F9 44%,
+    #CCFBF1 74%,
+    #6EE7B7 96%
+  );
+  background-size: 220% 220%;
+  background-position: var(--grad-pos, 15%) 40%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition:
+    transform 300ms var(--ease-grand),
+    filter 300ms var(--ease-signal),
+    background-position 420ms var(--ease-signal);
+}
+
+/* Distinct hover mode when cursor hovers over the ASCEND wordmark (Luhur Signal Mint/Teal sheen) */
+.ascend-wordmark-hovered .ascend-letter-glyph {
+  background-image: linear-gradient(
+    115deg,
+    #F8FAFC 0%,
+    #A7F3D0 24%,
+    #14D496 48%,
+    #14B8A6 72%,
+    #F8FAFC 100%
+  );
+  background-size: 260% 260%;
+  animation: ascend-mint-flow 2.6s linear infinite;
+  filter: drop-shadow(0 0 22px rgba(16, 185, 129, 0.5)) drop-shadow(0 0 10px rgba(20, 184, 166, 0.35));
+}
+
+/* Clean 2D ASCEND wordmark face (crisp white -> soft mint hover sheen) */
+.ascend-2d-glyph {
+  position: relative;
+  display: inline-block;
+  background-image: linear-gradient(
+    180deg,
+    #FFFFFF 18%,
+    #F1F5F9 72%,
+    #DCFCE7 100%
+  );
+  background-size: 220% 220%;
+  background-position: var(--grad-pos, 15%) 40%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.55));
+  transition:
+    transform 300ms var(--ease-grand),
+    filter 300ms var(--ease-signal),
+    background-position 420ms var(--ease-signal);
+}
+
+.ascend-2d-hovered .ascend-2d-glyph {
+  background-image: linear-gradient(
+    115deg,
+    #FFFFFF 0%,
+    #CCFBF1 28%,
+    #34D399 52%,
+    #14B8A6 76%,
+    #FFFFFF 100%
+  );
+  background-size: 260% 260%;
+  animation: ascend-mint-flow 2.8s linear infinite;
+  filter: drop-shadow(0 0 22px rgba(0, 229, 168, 0.44)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.6));
+}
+
+/* =====================================================================
+   HERO 2D CARTOGRAPHY & ANIMATED TREASURE-HUNT ROUTE (A -> X)
+   ===================================================================== */
+@keyframes hero-rotate-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hero-rotate-ccw {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes hero-aurora-drift {
+  0%, 100% {
+    opacity: 0.38;
+    transform: translate(-50%, 0px) scale(1);
+  }
+  50% {
+    opacity: 0.62;
+    transform: translate(-50%, 10px) scale(1.06);
+  }
+}
+
+@keyframes hero-sonar-ping {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.hero-astrolabe-cw {
+  transform-box: view-box;
+  animation: hero-rotate-cw 95s linear infinite;
+}
+
+.hero-astrolabe-ccw {
+  transform-box: view-box;
+  animation: hero-rotate-ccw 125s linear infinite;
+}
+
+.hero-astrolabe-inner {
+  transform-box: view-box;
+  animation: hero-rotate-cw 72s linear infinite;
+}
+
+.hero-aurora-breathe {
+  animation: hero-aurora-drift 10s ease-in-out infinite;
+}
+
+.hero-beacon-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-sonar-ping 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.hero-beacon-ping-delayed {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-sonar-ping 2.8s cubic-bezier(0.16, 1, 0.3, 1) 1.4s infinite;
+}
+
+/* Treasure-Hunt Trail Progressive Draw Mask (Draws dashed trail left -> right toward X!) */
+@keyframes treasure-reveal-stroke {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes treasure-dash-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -120;
+  }
+}
+
+@keyframes treasure-arrow-appear {
+  0%, 84% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes treasure-wp-ignite {
+  0% {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.22);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes treasure-wp-ring-burst {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  30% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+@keyframes treasure-x-burst-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.35) rotate(-24deg);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.22) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes treasure-x-idle-pulse {
+  0%, 100% {
+    opacity: 0.92;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+}
+
+@keyframes treasure-x-shock {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  25% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.55);
+  }
+}
+
+@keyframes treasure-x-spark-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+
+@keyframes treasure-comet-fadeout {
+  0%, 88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes treasure-comet-fadein {
+  0%, 92% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.92;
+  }
+}
+
+.treasure-mask-reveal {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: treasure-reveal-stroke 2.1s cubic-bezier(0.22, 0.85, 0.28, 1) 0.25s forwards;
+}
+
+.treasure-dash-march {
+  animation: treasure-dash-flow 5.6s linear 2.35s infinite;
+}
+
+.treasure-arrow-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: treasure-arrow-appear 2.32s var(--ease-grand) forwards;
+}
+
+.treasure-waypoint-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: treasure-wp-ignite 560ms var(--ease-grand) var(--wp-delay, 0.86s) forwards;
+}
+
+.treasure-waypoint-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: treasure-wp-ring-burst 1.2s var(--ease-grand) var(--wp-delay, 0.86s) forwards;
+}
+
+.treasure-x-ignite {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation:
+    treasure-x-burst-in 680ms cubic-bezier(0.22, 1, 0.36, 1) 2.26s forwards,
+    treasure-x-idle-pulse 3.2s ease-in-out 2.98s infinite;
+}
+
+.treasure-x-shockwave {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: treasure-x-shock 1.35s var(--ease-grand) 2.28s forwards;
+}
+
+.treasure-x-sparks {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: treasure-x-spark-pop 1.1s var(--ease-grand) 2.3s forwards;
+}
+
+.treasure-comet-initial {
+  animation: treasure-comet-fadeout 2.38s linear 0.25s forwards;
+}
+
+.treasure-comet-loop {
+  opacity: 0;
+  animation: treasure-comet-fadein 2.9s linear forwards;
+}
+
+/* =====================================================================
+   5-SCENE SEQUENTIAL 2D HERO ANIMATION KEYFRAMES
+   ===================================================================== */
+@keyframes indo-scan-sweep {
+  0% {
+    transform: translateX(-140%);
+  }
+  100% {
+    transform: translateX(480%);
+  }
+}
+
+@keyframes commerce-drift-a {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes commerce-drift-b {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes horizon-beam-pulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes terrace-gentle-wave {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes scene-progress-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.scene-indo-scan-beam {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.25) 38%,
+    rgba(0, 229, 168, 0.72) 52%,
+    rgba(52, 211, 153, 0.22) 68%,
+    transparent 100%
+  );
+  animation: indo-scan-sweep 5.8s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+
+.commerce-float-a {
+  animation: commerce-drift-a 6.2s ease-in-out infinite;
+}
+
+.commerce-float-b {
+  animation: commerce-drift-b 7.4s ease-in-out infinite;
+}
+
+.horizon-beams-breathe {
+  animation: horizon-beam-pulse 5.8s ease-in-out infinite;
+}
+
+.terrace-wave-slow {
+  animation: terrace-gentle-wave 7.2s ease-in-out infinite;
+}
+
+.scene-progress-fill {
+  transform-origin: left center;
+  animation: scene-progress-bar 7.5s linear forwards;
+}
+
+/* =====================================================================
+   LIVING BANDUNG STREET STRIP ANIMATIONS (HomeMarquee Replacement)
+   ===================================================================== */
+@keyframes gerobak-glide {
+  0%, 100% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes street-steam {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  45% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes street-blink {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes street-lantern {
+  0%, 100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+.street-gerobak-roll {
+  animation: gerobak-glide 4.6s ease-in-out infinite;
+}
+
+.street-steam-rise {
+  animation: street-steam 2.4s ease-out infinite;
+}
+
+.street-steam-rise-b {
+  animation: street-steam 2.4s ease-out 1.1s infinite;
+}
+
+.street-blink-open {
+  animation: street-blink 2.2s ease-in-out infinite;
+}
+
+.street-warm-breathe {
+  animation: street-blink 3.4s ease-in-out 0.6s infinite;
+}
+
+.street-flag-sway {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: street-lantern 3.2s ease-in-out infinite;
+}
+
+.street-lantern-swing {
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: street-lantern 3.8s ease-in-out infinite;
+}
+
+/* =====================================================================
+   EXPERIMENTAL TRIAL: LEFT CLIMBER + RIGHT ENCOURAGING GUIDE
+   ===================================================================== */
+@keyframes trial-climber-path {
+  0% {
+    opacity: 0;
+    transform: translate(18px, 176px);
+  }
+  8% {
+    opacity: 1;
+    transform: translate(28px, 176px);
+  }
+  22% {
+    transform: translate(62px, 152px);
+  }
+  38% {
+    transform: translate(96px, 128px);
+  }
+  54% {
+    transform: translate(130px, 104px);
+  }
+  72% {
+    opacity: 1;
+    transform: translate(166px, 80px);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(172px, 80px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(174px, 76px);
+  }
+}
+
+@keyframes trial-stride-a {
+  0%, 100% {
+    transform: rotate(-16deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes trial-stride-b {
+  0%, 100% {
+    transform: rotate(18deg);
+  }
+  50% {
+    transform: rotate(-16deg);
+  }
+}
+
+@keyframes trial-step-glow {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  45%, 65% {
+    opacity: 1;
+  }
+}
+
+@keyframes trial-guide-greet {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(9deg);
+  }
+}
+
+@keyframes trial-spark-float {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.7);
+  }
+  35% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) scale(1.1);
+  }
+}
+
+.trial-climber-ascent {
+  transform: translate(96px, 128px);
+  animation: trial-climber-path 8.4s cubic-bezier(0.32, 0.08, 0.24, 1) infinite;
+}
+
+.trial-leg-a {
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: trial-stride-a 0.9s ease-in-out infinite;
+}
+
+.trial-leg-b {
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: trial-stride-b 0.9s ease-in-out infinite;
+}
+
+.trial-arm-a {
+  transform-box: fill-box;
+  transform-origin: top right;
+  animation: trial-stride-b 0.9s ease-in-out infinite;
+}
+
+.trial-arm-b {
+  transform-box: fill-box;
+  transform-origin: top left;
+  animation: trial-stride-a 1.8s ease-in-out infinite;
+}
+
+.trial-step-lit-1 {
+  animation: trial-step-glow 8.4s ease-in-out 0.3s infinite;
+}
+
+.trial-step-lit-2 {
+  animation: trial-step-glow 8.4s ease-in-out 1.6s infinite;
+}
+
+.trial-step-lit-3 {
+  animation: trial-step-glow 8.4s ease-in-out 3.0s infinite;
+}
+
+.trial-step-lit-4 {
+  animation: trial-step-glow 8.4s ease-in-out 4.3s infinite;
+}
+
+.trial-step-lit-5 {
+  animation: trial-step-glow 8.4s ease-in-out 5.8s infinite;
+}
+
+.trial-beacon-float {
+  animation: float-calm 4.2s ease-in-out infinite;
+}
+
+.trial-guide-wave {
+  transform-box: fill-box;
+  transform-origin: bottom left;
+  animation: trial-guide-greet 3.4s ease-in-out infinite;
+}
+
+.trial-spark-1 {
+  animation: trial-spark-float 3.6s ease-out infinite;
+}
+
+.trial-spark-2 {
+  animation: trial-spark-float 4.2s ease-out 1.1s infinite;
+}
+
+.trial-spark-3 {
+  animation: trial-spark-float 3.9s ease-out 2.2s infinite;
+}
+
+/* =====================================================================
+   BUYER-SELLER & ENTERING-SHOP INTERACTION KEYFRAMES (3D Hex Stations)
+   ===================================================================== */
+@keyframes buyer-walk-approach {
+  0% {
+    opacity: 0;
+    transform: translate(86px, 59px);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(70px, 58px);
+  }
+  58% {
+    opacity: 1;
+    transform: translate(68px, 58px);
+  }
+  84% {
+    opacity: 1;
+    transform: translate(86px, 60px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(92px, 61px);
+  }
+}
+
+@keyframes buyer-walk-left {
+  0% {
+    opacity: 0;
+    transform: translate(20px, 59px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(33px, 58px);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(34px, 58px);
+  }
+  86% {
+    opacity: 1;
+    transform: translate(22px, 59px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(16px, 60px);
+  }
+}
+
+@keyframes buyer-enter-doorway {
+  0% {
+    opacity: 0;
+    transform: translate(90px, 60px);
+  }
+  28% {
+    opacity: 1;
+    transform: translate(76px, 58px);
+  }
+  54% {
+    opacity: 1;
+    transform: translate(68px, 56px) scale(0.95);
+  }
+  68% {
+    opacity: 0;
+    transform: translate(67px, 55px) scale(0.86);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(67px, 55px) scale(0.86);
+  }
+}
+
+@keyframes buyer-exit-bag {
+  0%, 18% {
+    opacity: 0;
+    transform: translate(69px, 55px) scale(0.86);
+  }
+  34% {
+    opacity: 1;
+    transform: translate(71px, 57px) scale(1);
+  }
+  82% {
+    opacity: 1;
+    transform: translate(88px, 60px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(94px, 61px);
+  }
+}
+
+@keyframes buyer-enter-market {
+  0% {
+    opacity: 0;
+    transform: translate(30px, 60px);
+  }
+  34% {
+    opacity: 1;
+    transform: translate(48px, 58px);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(56px, 56px) scale(0.92);
+  }
+  78% {
+    opacity: 0;
+    transform: translate(56px, 54px) scale(0.82);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(56px, 54px) scale(0.82);
+  }
+}
+
+@keyframes seller-offer-hand {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  38%, 55% {
+    transform: rotate(-10deg) translateX(2px);
+  }
+}
+
+@keyframes exchange-spark-pop {
+  0%, 28%, 74%, 100% {
+    opacity: 0;
+    transform: scale(0.4) translateY(3px);
+  }
+  44%, 58% {
+    opacity: 1;
+    transform: scale(1.15) translateY(-3px);
+  }
+}
+
+/* Larger Hero Side Wing Buyer-Seller Vignettes */
+@keyframes wing-buyer-approach {
+  0% {
+    opacity: 0;
+    transform: translate(172px, 134px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(134px, 130px);
+  }
+  58% {
+    opacity: 1;
+    transform: translate(132px, 130px);
+  }
+  86% {
+    opacity: 1;
+    transform: translate(170px, 134px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(180px, 136px);
+  }
+}
+
+@keyframes wing-buyer-enter-shop {
+  0% {
+    opacity: 0;
+    transform: translate(56px, 132px);
+  }
+  26% {
+    opacity: 1;
+    transform: translate(108px, 130px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(144px, 127px) scale(0.94);
+  }
+  64% {
+    opacity: 0;
+    transform: translate(144px, 125px) scale(0.84);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(144px, 125px) scale(0.84);
+  }
+}
+
+@keyframes wing-buyer-exit-shop {
+  0%, 42% {
+    opacity: 0;
+    transform: translate(144px, 125px) scale(0.84);
+  }
+  56% {
+    opacity: 1;
+    transform: translate(138px, 128px) scale(1);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(70px, 133px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(56px, 135px);
+  }
+}
+
+.interact-buyer-approach {
+  transform: translate(70px, 58px);
+  animation: buyer-walk-approach 5.6s ease-in-out infinite;
+}
+
+.interact-buyer-left {
+  transform: translate(34px, 58px);
+  animation: buyer-walk-left 5.8s ease-in-out infinite;
+}
+
+.interact-enter-door {
+  transform: translate(72px, 57px);
+  animation: buyer-enter-doorway 5.4s ease-in-out infinite;
+}
+
+.interact-exit-bag {
+  transform: translate(78px, 59px);
+  animation: buyer-exit-bag 5.8s ease-in-out infinite;
+}
+
+.interact-enter-center {
+  transform: translate(52px, 57px);
+  animation: buyer-enter-market 5.4s ease-in-out infinite;
+}
+
+.interact-hand-offer {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: seller-offer-hand 5.6s ease-in-out infinite;
+}
+
+.interact-exchange-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: exchange-spark-pop 5.6s ease-in-out infinite;
+}
+
+.wing-buyer-left {
+  transform: translate(134px, 130px);
+  animation: wing-buyer-approach 6.8s ease-in-out infinite;
+}
+
+.wing-buyer-enter {
+  transform: translate(108px, 130px);
+  animation: wing-buyer-enter-shop 7.6s ease-in-out infinite;
+}
+
+.wing-buyer-exit {
+  transform: translate(106px, 131px);
+  animation: wing-buyer-exit-shop 7.6s ease-in-out infinite;
+}
+
+/* =====================================================================
+   SYNCHRONIZED 15-SECOND ASCEND LETTER POP-UP + UNDERLINE EXIT & DIORAMA SWAP
+   ===================================================================== */
+@keyframes ascend-letter-trail-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(var(--step-y, 0px) + 38px)) scale(0.86);
+    filter: blur(5px) drop-shadow(0 0 18px rgba(0, 229, 168, 0.85));
+  }
+  58% {
+    opacity: 1;
+    transform: translateY(calc(var(--step-y, 0px) - 7px)) scale(1.045);
+    filter: blur(0px) drop-shadow(0 0 22px rgba(0, 229, 168, 0.65));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(var(--step-y, 0px)) scale(1);
+    filter: blur(0px) drop-shadow(0 0 0px transparent);
+  }
+}
+
+@keyframes ascend-letter-trail-repop {
+  0% {
+    opacity: 0.22;
+    transform: translateY(calc(var(--step-y, 0px) + 16px)) scale(0.92);
+    filter: drop-shadow(0 0 18px rgba(0, 229, 168, 0.85));
+  }
+  54% {
+    opacity: 1;
+    transform: translateY(calc(var(--step-y, 0px) - 8px)) scale(1.055);
+    filter: drop-shadow(0 0 24px rgba(0, 229, 168, 0.72));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(var(--step-y, 0px)) scale(1);
+    filter: drop-shadow(0 0 0px transparent);
+  }
+}
+
+@keyframes ascend-letter-trail-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(var(--step-y, 0px)) scale(1);
+  }
+  100% {
+    opacity: 0.22;
+    transform: translateY(calc(var(--step-y, 0px) + 16px)) scale(0.92);
+  }
+}
+
+@keyframes treasure-retract-stroke {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1000;
+  }
+}
+
+@keyframes treasure-fade-out-node {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+}
+
+@keyframes wing-swap-pulse-ring {
+  0% {
+    opacity: 0.9;
+    transform: translateX(-50%) scale(0.55);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(1.55);
+  }
+}
+
+@keyframes station-launch-hop {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  42% {
+    transform: translateY(-12px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+}
+
+/* Unified 140x112 NusantaraBusinessHexDiorama buyer movement animations */
+@keyframes diorama-walk-right {
+  0% {
+    opacity: 0;
+    transform: translate(112px, 78px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(90px, 76px);
+  }
+  58% {
+    opacity: 1;
+    transform: translate(88px, 76px);
+  }
+  86% {
+    opacity: 1;
+    transform: translate(110px, 78px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(116px, 79px);
+  }
+}
+
+@keyframes diorama-walk-left {
+  0% {
+    opacity: 0;
+    transform: translate(24px, 78px);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(40px, 76px);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(41px, 76px);
+  }
+  86% {
+    opacity: 1;
+    transform: translate(26px, 78px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(20px, 79px);
+  }
+}
+
+@keyframes diorama-enter-doorway {
+  0% {
+    opacity: 0;
+    transform: translate(112px, 78px);
+  }
+  28% {
+    opacity: 1;
+    transform: translate(94px, 76px);
+  }
+  56% {
+    opacity: 1;
+    transform: translate(84px, 74px) scale(0.92);
+  }
+  70% {
+    opacity: 0;
+    transform: translate(84px, 72px) scale(0.82);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(84px, 72px) scale(0.82);
+  }
+}
+
+@keyframes diorama-exit-with-bag {
+  0%, 16% {
+    opacity: 0;
+    transform: translate(86px, 73px) scale(0.84);
+  }
+  32% {
+    opacity: 1;
+    transform: translate(89px, 75px) scale(1);
+  }
+  84% {
+    opacity: 1;
+    transform: translate(112px, 78px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(118px, 79px);
+  }
+}
+
+@keyframes diorama-enter-arch {
+  0% {
+    opacity: 0;
+    transform: translate(38px, 78px);
+  }
+  34% {
+    opacity: 1;
+    transform: translate(60px, 76px);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(70px, 74px) scale(0.9);
+  }
+  78% {
+    opacity: 0;
+    transform: translate(70px, 72px) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(70px, 72px) scale(0.8);
+  }
+}
+
+.ascend-letter-sync-enter {
+  position: relative;
+  display: inline-block;
+  transform: translateY(var(--step-y, 0px));
+  animation: ascend-letter-trail-pop 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--step-delay, 240ms) both;
+}
+
+.ascend-letter-sync-reenter {
+  position: relative;
+  display: inline-block;
+  transform: translateY(var(--step-y, 0px));
+  animation: ascend-letter-trail-repop 680ms cubic-bezier(0.22, 1, 0.36, 1) var(--step-delay, 240ms) both;
+}
+
+.ascend-letter-sync-exit {
+  position: relative;
+  display: inline-block;
+  transform: translateY(var(--step-y, 0px));
+  animation: ascend-letter-trail-exit 560ms var(--ease-signal) var(--exit-delay, 0ms) forwards;
+}
+
+.treasure-mask-exit {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: treasure-retract-stroke 1.25s cubic-bezier(0.45, 0, 0.85, 0.35) forwards;
+}
+
+.treasure-arrow-exit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: treasure-fade-out-node 380ms var(--ease-signal) 0.92s forwards;
+}
+
+.treasure-waypoint-exit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: treasure-fade-out-node 420ms var(--ease-signal) var(--wp-exit-delay, 0.3s) forwards;
+}
+
+.treasure-x-exit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: treasure-fade-out-node 460ms var(--ease-signal) 1.02s forwards;
+}
+
+.wing-swap-ring {
+  animation: wing-swap-pulse-ring 720ms var(--ease-grand) forwards;
+}
+
+.station-click-launch {
+  animation: station-launch-hop 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.diorama-buyer-right {
+  transform: translate(90px, 76px);
+  animation: diorama-walk-right 5.8s ease-in-out infinite;
+}
+
+.diorama-buyer-left {
+  transform: translate(40px, 76px);
+  animation: diorama-walk-left 5.8s ease-in-out infinite;
+}
+
+.diorama-enter-door {
+  transform: translate(92px, 75px);
+  animation: diorama-enter-doorway 5.6s ease-in-out infinite;
+}
+
+.diorama-exit-bag {
+  transform: translate(96px, 77px);
+  animation: diorama-exit-with-bag 5.8s ease-in-out infinite;
+}
+
+.diorama-enter-center {
+  transform: translate(62px, 75px);
+  animation: diorama-enter-arch 5.6s ease-in-out infinite;
+}
+
+.songket-line-draw {
+  stroke-dasharray: 1050;
+  stroke-dashoffset: 0;
+  animation: songket-step-draw 1.4s var(--ease-grand) 220ms both;
+}
+
+/* =====================================================================
+   LIVING BACKGROUND MOTION (Hero Terraces, CTA Streams, Footer Niaga)
+   ===================================================================== */
+@keyframes ascend-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: ascend-marquee 34s linear infinite;
+}
+
+.marquee-wrap:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes signal-pulse {
+  0%, 100% {
+    opacity: 0.92;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.55);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 22px rgba(16, 185, 129, 0.92), 0 0 10px rgba(20, 184, 166, 0.45);
+  }
+}
+
+.open-sign-glow {
+  animation: signal-pulse 2.6s var(--ease-signal) infinite;
+}
+
+@keyframes dash-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -120;
+  }
+}
+
+.animate-dash-flow {
+  animation: dash-flow 5.5s linear infinite;
+}
+
+.animate-dash-flow-slow {
+  animation: dash-flow 9s linear infinite;
+}
+
+@keyframes float-calm {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-float-calm {
+  animation: float-calm 5.2s ease-in-out infinite;
+}
+
+@keyframes ember-rise {
+  0% {
+    transform: translateY(0px) scale(0.7);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.75;
+  }
+  80% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-90px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.animate-ember {
+  animation: ember-rise var(--ember-dur, 7s) ease-out infinite;
+  animation-delay: var(--ember-delay, 0s);
+}
+
+@keyframes footer-pillar-wave {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.footer-pillar-breathe {
+  animation: footer-pillar-wave 5.6s ease-in-out infinite;
+  animation-delay: var(--pillar-delay, 0ms);
+}
+
+@keyframes hero-pillar-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.hero-pillar-rise {
+  animation: hero-pillar-enter 820ms var(--ease-grand) both;
+  animation-delay: var(--pillar-enter, 0ms);
+}
+
+/* 3D Diorama Building Staggered Pop-Up Generation on Empty Pads */
+@keyframes building-popup-generate {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.72, 0.42);
+    filter: brightness(1.75) drop-shadow(0 0 28px rgba(0, 229, 168, 0.9));
+  }
+  58% {
+    opacity: 1;
+    transform: translateY(-7px) scale(1.03, 1.04);
+    filter: brightness(1.18) drop-shadow(0 0 22px rgba(0, 229, 168, 0.55));
+  }
+  82% {
+    transform: translateY(2px) scale(0.99, 0.99);
+    filter: brightness(1.04) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.72));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1, 1);
+    filter: brightness(1) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.72));
+  }
+}
+
+@keyframes pad-scan-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.45);
+  }
+  30% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -18px) scale(1.38);
+  }
+}
+
+.building-generate-pop {
+  transform-origin: 50% 88%;
+  animation: building-popup-generate 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--build-delay, 0ms);
+}
+
+.pad-scan-ring {
+  animation: pad-scan-burst 1.05s var(--ease-grand) both;
+  animation-delay: var(--build-delay, 0ms);
+}
+
+/* Loading skeleton shimmer */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-bar {
+  background: linear-gradient(
+    90deg,
+    #161A21 0%,
+    #1F2937 45%,
+    #161A21 90%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s linear infinite;
+}
+
+/* =====================================================================
+   SMOOTH SCROLL REVEAL ENGINE (v-reveal)
+   ===================================================================== */
+.reveal-el {
+  opacity: 0;
+  transition:
+    opacity 640ms var(--ease-grand),
+    transform 680ms var(--ease-grand),
+    clip-path 680ms var(--ease-grand);
+  will-change: opacity, transform;
+}
+
+.reveal-up {
+  transform: translateY(26px);
+}
+
+.reveal-left {
+  transform: translateX(-28px);
+}
+
+.reveal-right {
+  transform: translateX(28px);
+}
+
+.reveal-scale {
+  transform: scale(0.96) translateY(16px);
+}
+
+.reveal-clip {
+  opacity: 0;
+  transform: translateY(10px);
+  clip-path: inset(0 18% 0 0);
+}
+
+@keyframes room-slot-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35), inset 0 0 12px rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.72);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.32), inset 0 0 18px rgba(16, 185, 129, 0.28);
+    border-color: rgba(52, 211, 153, 0.95);
+  }
+}
+
+@keyframes crowd-slot-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.32), inset 0 0 10px rgba(239, 68, 68, 0.14);
+    border-color: rgba(239, 68, 68, 0.65);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.32), inset 0 0 16px rgba(239, 68, 68, 0.28);
+    border-color: rgba(248, 113, 113, 0.92);
+  }
+}
+
+@keyframes stage-progress-sweep {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.room-slot-open {
+  animation: room-slot-pulse 2.2s ease-in-out infinite;
+}
+
+.crowd-slot-overflow {
+  animation: crowd-slot-pulse 2.2s ease-in-out infinite;
+}
+
+.stage-progress-bar {
+  transform-origin: left center;
+  animation: stage-progress-sweep 4s linear forwards;
+}
+
+/* GTA VI style layered blackout overlap for "Busy isn't room." rising as showcase fades out */
+.gta-overlap-rise {
+  margin-top: -86vh;
+  padding-top: 10vh;
+}
+
+/* =====================================================================
+   SOLUTION SECTION: SMOKED GLASSMORPHISM CARD & LIVE HEX SCANNER MOTION
+   ===================================================================== */
+.solution-glass-card {
+  position: relative;
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(26, 35, 46, 0.72) 0%,
+    rgba(15, 20, 28, 0.62) 52%,
+    rgba(11, 22, 21, 0.68) 100%
+  );
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(16, 185, 129, 0.14),
+    0 28px 72px rgba(0, 0, 0, 0.56);
+  overflow: hidden;
+}
+
+.solution-glass-reflection {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    126deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.025) 24%,
+    transparent 48%,
+    transparent 82%,
+    rgba(16, 185, 129, 0.05) 100%
+  );
+}
+
+.solution-glass-well {
+  background: linear-gradient(
+    180deg,
+    rgba(7, 11, 16, 0.76) 0%,
+    rgba(9, 14, 20, 0.68) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.solution-glass-callout {
+  background: linear-gradient(
+    145deg,
+    rgba(20, 29, 39, 0.76) 0%,
+    rgba(11, 17, 24, 0.68) 100%
+  );
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 14px 36px rgba(0, 0, 0, 0.52);
+}
+
+@keyframes sol-scan-sweep {
+  0% {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.75;
+  }
+  82% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(260%);
+    opacity: 0;
+  }
+}
+
+@keyframes sol-orb-breathe {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+@keyframes sol-hex-halo {
+  0%, 100% {
+    stroke-opacity: 0.42;
+    transform: scale(1);
+  }
+  50% {
+    stroke-opacity: 0.92;
+    transform: scale(1.045);
+  }
+}
+
+@keyframes sol-filter-progress {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.sol-scan-beam {
+  animation: sol-scan-sweep 5.2s cubic-bezier(0.32, 0.08, 0.24, 1) infinite;
+}
+
+.sol-orb-breathe {
+  animation: sol-orb-breathe 6.5s ease-in-out infinite;
+}
+
+.sol-hex-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sol-hex-halo 2.4s ease-in-out infinite;
+}
+
+.sol-filter-progress {
+  transform-origin: left center;
+  animation: sol-filter-progress var(--sol-step-ms, 4800ms) linear forwards;
+}
+
+/* =====================================================================
+   FEATURES BENTO: BUBBLE CARDS, SHADOW-SPLIT ANIMATION & LIFT ON HOVER
+   ===================================================================== */
+.feat-bento-live {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(150deg, #121822 0%, #0D131A 62%, #0B1416 100%);
+  border: 1px solid rgba(52, 64, 79, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 42px rgba(0, 0, 0, 0.36);
+  transition:
+    border-color 300ms var(--ease-signal),
+    transform 320ms var(--ease-grand),
+    box-shadow 320ms var(--ease-signal);
+  will-change: transform;
+}
+
+.feat-bento-live:hover {
+  border-color: rgba(16, 185, 129, 0.7);
+  transform: translate3d(0, -8px, 0);
+  box-shadow:
+    inset 0 1px 0 rgba(110, 231, 183, 0.3),
+    0 26px 54px rgba(0, 0, 0, 0.56),
+    0 0 34px rgba(16, 185, 129, 0.22);
+}
+
+.feat-bento-soon {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(150deg, #141820 0%, #10141B 100%);
+  border: 1px dashed rgba(100, 116, 139, 0.52);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 14px 34px rgba(0, 0, 0, 0.3);
+  transition:
+    border-color 300ms var(--ease-signal),
+    transform 320ms var(--ease-grand),
+    box-shadow 320ms var(--ease-signal);
+  will-change: transform;
+}
+
+.feat-bento-soon:hover {
+  border-color: rgba(148, 163, 184, 0.72);
+  transform: translate3d(0, -6px, 0);
+  box-shadow:
+    inset 0 1px 0 rgba(203, 213, 225, 0.14),
+    0 22px 46px rgba(0, 0, 0, 0.5),
+    0 0 26px rgba(148, 163, 184, 0.14);
+}
+
+/* Primary-mint tinted animation backdrop for Live feature cards */
+.feat-visual-mint {
+  background:
+    radial-gradient(circle at 76% 24%, rgba(52, 211, 153, 0.36) 0%, transparent 56%),
+    radial-gradient(circle at 22% 84%, rgba(20, 184, 166, 0.28) 0%, transparent 54%),
+    linear-gradient(140deg, rgba(16, 185, 129, 0.32) 0%, rgba(11, 61, 49, 0.78) 54%, rgba(7, 36, 31, 0.92) 100%);
+}
+
+/* Neutral slate-grey tinted animation backdrop for Coming Soon feature cards */
+.feat-visual-grey {
+  background:
+    radial-gradient(circle at 76% 24%, rgba(148, 163, 184, 0.22) 0%, transparent 56%),
+    radial-gradient(circle at 22% 84%, rgba(100, 116, 139, 0.2) 0%, transparent 54%),
+    linear-gradient(140deg, rgba(71, 85, 105, 0.34) 0%, rgba(30, 38, 50, 0.8) 58%, rgba(20, 25, 34, 0.92) 100%);
+}
+
+/* Ambient floating bubble motion for Blindspots and Features */
+@keyframes bubble-drift-a {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -7px, 0) scale(1.06);
+  }
+}
+
+@keyframes bubble-drift-b {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(0.96);
+  }
+  50% {
+    transform: translate3d(4px, 6px, 0) scale(1.08);
+  }
+}
+
+.ascend-bubble-a {
+  animation: bubble-drift-a 5.4s ease-in-out infinite;
+}
+
+.ascend-bubble-b {
+  animation: bubble-drift-b 6.6s ease-in-out 0.9s infinite;
+}
+
+/* Frosted Smoked-Glass Container for Honest Boundaries ("What Ascend does not do") */
+.boundary-glass-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(
+    148deg,
+    rgba(28, 34, 46, 0.56) 0%,
+    rgba(16, 21, 30, 0.44) 55%,
+    rgba(24, 18, 24, 0.5) 100%
+  );
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(239, 68, 68, 0.14),
+    0 24px 64px rgba(0, 0, 0, 0.54);
+}
+
+.boundary-glass-tile {
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(12, 16, 24, 0.48) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* =====================================================================
+   TEAM CARDS: GENAH HEX MONOGRAM -> 3D POP-OUT PORTRAIT & FLOATING JOBDESK ICONS
+   ===================================================================== */
+.team-member-card {
+  position: relative;
+  overflow: visible;
+  border-radius: 20px;
+  transition:
+    transform 360ms var(--ease-grand),
+    box-shadow 360ms var(--ease-signal);
+  will-change: transform;
+}
+
+.team-member-card:hover,
+.team-member-card.is-active {
+  transform: translate3d(0, -10px, 0);
+}
+
+@keyframes team-icon-orbit-a {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -7px, 0) rotate(6deg);
+  }
+}
+
+@keyframes team-icon-orbit-b {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(3px, 6px, 0) rotate(-6deg);
+  }
+}
+
+.team-icon-float-a {
+  animation: team-icon-orbit-a 4.2s ease-in-out infinite;
+}
+
+.team-icon-float-b {
+  animation: team-icon-orbit-b 4.8s ease-in-out 0.6s infinite;
+}
+
+@keyframes team-hex-rotate-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes team-hex-rotate-ccw {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes team-hex-pulse-ripple {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.72;
+  }
+  100% {
+    transform: scale(1.48);
+    opacity: 0;
+  }
+}
+
+@keyframes team-hex-core-breathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.045);
+    filter: brightness(1.16);
+  }
+}
+
+.team-hex-spin-cw {
+  transform-box: view-box;
+  transform-origin: 83px 83px;
+  animation: team-hex-rotate-cw 34s linear infinite;
+}
+
+.team-hex-spin-ccw {
+  transform-box: view-box;
+  transform-origin: 83px 83px;
+  animation: team-hex-rotate-ccw 24s linear infinite;
+}
+
+.team-hex-ripple {
+  transform-box: view-box;
+  transform-origin: 83px 83px;
+  animation: team-hex-pulse-ripple 3.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.team-hex-breathe {
+  transform-box: view-box;
+  transform-origin: 83px 83px;
+  animation: team-hex-core-breathe 3.4s ease-in-out infinite;
+}
+
+@keyframes feat-hex-pulse {
+  0%, 100% {
+    opacity: 0.62;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes feat-bar-breathe-a {
+  0%, 100% {
+    transform: scaleX(0.74);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes feat-bar-breathe-b {
+  0%, 100% {
+    transform: scaleX(0.84);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes feat-shortlist-glow-1 {
+  0%, 30% {
+    border-color: rgba(16, 185, 129, 0.65);
+    background-color: rgba(16, 185, 129, 0.12);
+    transform: translateX(4px);
+  }
+  38%, 100% {
+    border-color: rgba(255, 255, 255, 0.07);
+    background-color: rgba(255, 255, 255, 0.025);
+    transform: translateX(0);
+  }
+}
+
+@keyframes feat-shortlist-glow-2 {
+  0%, 32%, 68%, 100% {
+    border-color: rgba(255, 255, 255, 0.07);
+    background-color: rgba(255, 255, 255, 0.025);
+    transform: translateX(0);
+  }
+  38%, 62% {
+    border-color: rgba(16, 185, 129, 0.65);
+    background-color: rgba(16, 185, 129, 0.12);
+    transform: translateX(4px);
+  }
+}
+
+@keyframes feat-shortlist-glow-3 {
+  0%, 66% {
+    border-color: rgba(255, 255, 255, 0.07);
+    background-color: rgba(255, 255, 255, 0.025);
+    transform: translateX(0);
+  }
+  72%, 96% {
+    border-color: rgba(245, 158, 11, 0.55);
+    background-color: rgba(245, 158, 11, 0.09);
+    transform: translateX(4px);
+  }
+}
+
+@keyframes feat-cursor-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes feat-compare-bar-1 {
+  0%, 100% {
+    transform: scaleY(0.86);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes feat-compare-bar-2 {
+  0%, 100% {
+    transform: scaleY(0.92);
+  }
+  50% {
+    transform: scaleY(0.76);
+  }
+}
+
+@keyframes feat-rent-slide {
+  0%, 100% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(22%);
+  }
+}
+
+.feat-hex-a {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: feat-hex-pulse 3.6s ease-in-out 0s infinite;
+}
+
+.feat-hex-b {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: feat-hex-pulse 3.6s ease-in-out 1.2s infinite;
+}
+
+.feat-hex-c {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: feat-hex-pulse 3.6s ease-in-out 2.4s infinite;
+}
+
+.feat-bar-a {
+  transform-origin: left center;
+  animation: feat-bar-breathe-a 4.2s ease-in-out infinite;
+}
+
+.feat-bar-b {
+  transform-origin: left center;
+  animation: feat-bar-breathe-b 4.2s ease-in-out 0.8s infinite;
+}
+
+.feat-shortlist-1 {
+  animation: feat-shortlist-glow-1 6.6s ease-in-out infinite;
+}
+
+.feat-shortlist-2 {
+  animation: feat-shortlist-glow-2 6.6s ease-in-out infinite;
+}
+
+.feat-shortlist-3 {
+  animation: feat-shortlist-glow-3 6.6s ease-in-out infinite;
+}
+
+.feat-cursor {
+  animation: feat-cursor-blink 1.1s steps(1) infinite;
+}
+
+.feat-compare-1 {
+  transform-origin: bottom center;
+  animation: feat-compare-bar-1 4.4s ease-in-out infinite;
+}
+
+.feat-compare-2 {
+  transform-origin: bottom center;
+  animation: feat-compare-bar-2 4.4s ease-in-out 0.9s infinite;
+}
+
+.feat-rent-marker {
+  animation: feat-rent-slide 4.8s ease-in-out infinite;
+}
+
+/* =====================================================================
+   HOW IT WORKS: SCROLL-ILLUMINATED EMERALD SPINE, COMET HEAD & SPARKS
+   ===================================================================== */
+@keyframes hiw-spark-drift-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.4);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(-16px, -22px, 0) scale(0.15);
+    opacity: 0;
+  }
+}
+
+@keyframes hiw-spark-drift-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.45);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(18px, -18px, 0) scale(0.15);
+    opacity: 0;
+  }
+}
+
+@keyframes hiw-spark-drift-c {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.35);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(10px, 16px, 0) scale(0.1);
+    opacity: 0;
+  }
+}
+
+@keyframes hiw-node-pulse-ring {
+  0% {
+    transform: scale(0.86);
+    opacity: 0.72;
+  }
+  100% {
+    transform: scale(1.68);
+    opacity: 0;
+  }
+}
+
+@keyframes hiw-comet-breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.18);
+    opacity: 1;
+  }
+}
+
+.hiw-spark-a {
+  animation: hiw-spark-drift-a 1.85s ease-out infinite;
+}
+
+.hiw-spark-b {
+  animation: hiw-spark-drift-b 2.15s ease-out 0.45s infinite;
+}
+
+.hiw-spark-c {
+  animation: hiw-spark-drift-c 2.4s ease-out 0.95s infinite;
+}
+
+.hiw-node-ring {
+  animation: hiw-node-pulse-ring 2.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.hiw-comet-head {
+  animation: hiw-comet-breathe 1.6s ease-in-out infinite;
+}
+
+/* =====================================================================
+   BLINDSPOTS: PRIMARY MINT HOVER + DIAGONAL SHIMMER ("KINCLONG") + SVG MOTION
+   ===================================================================== */
+.blindspot-card {
+  position: relative;
+  background-color: #232836;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% 100%,
+    18px 100%,
+    0 calc(100% - 18px)
+  );
+  padding: 1.5px;
+  transition:
+    background-color 320ms var(--ease-signal),
+    transform 340ms var(--ease-grand),
+    filter 320ms var(--ease-signal);
+  will-change: transform;
+}
+
+.blindspot-card-inner {
+  position: relative;
+  overflow: hidden;
+  background-color: #151A22;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 17px) 0,
+    100% 17px,
+    100% 100%,
+    17px 100%,
+    0 calc(100% - 17px)
+  );
+  height: 100%;
+  width: 100%;
+  transition:
+    background-color 360ms var(--ease-signal),
+    color 320ms var(--ease-signal);
+}
+
+.blindspot-card:hover {
+  background-color: #34D399;
+  transform: translate3d(0, -10px, 0) scale(1.006);
+  filter: drop-shadow(0 24px 44px rgba(16, 185, 129, 0.34));
+}
+
+.blindspot-card:hover .blindspot-card-inner {
+  background-color: #10B981;
+}
+
+.blindspot-card-glow-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.32) 0%, rgba(16, 185, 129, 0.08) 50%, rgba(5, 150, 105, 0.35) 100%);
+  transition: opacity 360ms var(--ease-signal);
+}
+
+.blindspot-card:hover .blindspot-card-glow-layer {
+  opacity: 1;
+}
+
+/* Diagonal Glass Shimmer Sweep ("Kinclong") Passing Across Card on Hover */
+.blindspot-sheen {
+  position: absolute;
+  top: -35%;
+  bottom: -35%;
+  left: -45%;
+  width: 36%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-120%) skewX(-24deg);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 24%,
+    rgba(236, 253, 245, 0.56) 50%,
+    rgba(255, 255, 255, 0.16) 76%,
+    transparent 100%
+  );
+  z-index: 20;
+}
+
+@keyframes blindspot-sheen-pass {
+  0% {
+    opacity: 0;
+    transform: translateX(-110%) skewX(-24deg);
+  }
+  16% {
+    opacity: 1;
+  }
+  84% {
+    opacity: 0.92;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(480%) skewX(-24deg);
+  }
+}
+
+.blindspot-card:hover .blindspot-sheen {
+  animation: blindspot-sheen-pass 0.92s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Twinkling 4-point star sparkles ("kinclong-kinclong") on hover */
+@keyframes blindspot-sparkle-twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.4) rotate(0deg);
+  }
+  45% {
+    opacity: 0.95;
+    transform: scale(1.15) rotate(45deg);
+  }
+  70% {
+    opacity: 0.35;
+    transform: scale(0.75) rotate(90deg);
+  }
+}
+
+.blindspot-sparkle {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.blindspot-card:hover .blindspot-sparkle-a {
+  animation: blindspot-sparkle-twinkle 1.6s ease-in-out 0.12s infinite;
+}
+
+.blindspot-card:hover .blindspot-sparkle-b {
+  animation: blindspot-sparkle-twinkle 1.85s ease-in-out 0.45s infinite;
+}
+
+.blindspot-card:hover .blindspot-sparkle-c {
+  animation: blindspot-sparkle-twinkle 1.5s ease-in-out 0.78s infinite;
+}
+
+/* Calm Loconomics-style continuous illustrations inside Blindspot cards */
+@keyframes blindspot-radar-ring {
+  0% {
+    transform: scale(0.45);
+    opacity: 0.75;
+  }
+  75% {
+    transform: scale(1.18);
+    opacity: 0.18;
+  }
+  100% {
+    transform: scale(1.28);
+    opacity: 0;
+  }
+}
+
+@keyframes blindspot-rival-reveal {
+  0%, 28%, 100% {
+    opacity: 0.22;
+    transform: scale(0.92);
+  }
+  48%, 74% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes blindspot-question-fade {
+  0%, 28%, 100% {
+    opacity: 0.92;
+  }
+  48%, 74% {
+    opacity: 0.16;
+  }
+}
+
+@keyframes blindspot-dash-flow {
+  from {
+    stroke-dashoffset: 36;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes blindspot-traffic-glide {
+  0% {
+    transform: translateY(-28px);
+    opacity: 0;
+  }
+  18%, 82% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(156px);
+    opacity: 0;
+  }
+}
+
+@keyframes blindspot-traffic-glide-up {
+  0% {
+    transform: translateY(156px);
+    opacity: 0;
+  }
+  18%, 82% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-28px);
+    opacity: 0;
+  }
+}
+
+@keyframes blindspot-hub-ripple {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.72;
+  }
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+
+@keyframes blindspot-float-gentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4.5px);
+  }
+}
+
+@keyframes blindspot-float-gentle-alt {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(3.5px) rotate(-3deg);
+  }
+}
+
+@keyframes blindspot-steam-drift {
+  0% {
+    transform: translateY(4px);
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-9px);
+    opacity: 0;
+  }
+}
+
+.bs-radar-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-radar-ring 3.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.bs-radar-ring-delay {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-radar-ring 3.8s cubic-bezier(0.2, 0.8, 0.2, 1) 1.9s infinite;
+}
+
+.bs-rival-reveal-1 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-rival-reveal 5.2s ease-in-out 0s infinite;
+}
+
+.bs-rival-reveal-2 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-rival-reveal 5.2s ease-in-out 0.65s infinite;
+}
+
+.bs-rival-reveal-3 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-rival-reveal 5.2s ease-in-out 1.3s infinite;
+}
+
+.bs-q-fade-1 {
+  animation: blindspot-question-fade 5.2s ease-in-out 0s infinite;
+}
+
+.bs-q-fade-2 {
+  animation: blindspot-question-fade 5.2s ease-in-out 0.65s infinite;
+}
+
+.bs-q-fade-3 {
+  animation: blindspot-question-fade 5.2s ease-in-out 1.3s infinite;
+}
+
+.bs-dash-flow {
+  stroke-dasharray: 4 5;
+  animation: blindspot-dash-flow 2.8s linear infinite;
+}
+
+.bs-dash-flow-slow {
+  stroke-dasharray: 5 5;
+  animation: blindspot-dash-flow 3.8s linear infinite;
+}
+
+.bs-traffic-down {
+  animation: blindspot-traffic-glide 2.6s linear infinite;
+}
+
+.bs-traffic-down-delay {
+  animation: blindspot-traffic-glide 2.6s linear 1.3s infinite;
+}
+
+.bs-traffic-up {
+  animation: blindspot-traffic-glide-up 3.1s linear 0.6s infinite;
+}
+
+.bs-hub-ripple-1 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-hub-ripple 3.2s ease-out 0s infinite;
+}
+
+.bs-hub-ripple-2 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-hub-ripple 3.2s ease-out 0.9s infinite;
+}
+
+.bs-hub-ripple-3 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-hub-ripple 3.2s ease-out 1.8s infinite;
+}
+
+.bs-float-tag {
+  animation: blindspot-float-gentle 3.8s ease-in-out infinite;
+}
+
+.bs-float-key {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blindspot-float-gentle-alt 4.2s ease-in-out infinite;
+}
+
+.bs-steam-a {
+  animation: blindspot-steam-drift 2.4s ease-out infinite;
+}
+
+.bs-steam-b {
+  animation: blindspot-steam-drift 2.4s ease-out 1.1s infinite;
+}
+
+.reveal-el.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  clip-path: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .open-sign-glow,
+  .skeleton-bar,
+  .ascend-letter-shell,
+  .ascend-wordmark-hovered .ascend-letter-glyph,
+  .ascend-2d-hovered .ascend-2d-glyph,
+  .hero-astrolabe-cw,
+  .hero-astrolabe-ccw,
+  .hero-astrolabe-inner,
+  .hero-aurora-breathe,
+  .hero-beacon-ping,
+  .hero-beacon-ping-delayed,
+  .treasure-mask-reveal,
+  .treasure-dash-march,
+  .treasure-arrow-pop,
+  .treasure-waypoint-node,
+  .treasure-waypoint-ring,
+  .treasure-x-ignite,
+  .treasure-x-shockwave,
+  .treasure-x-sparks,
+  .treasure-comet-initial,
+  .treasure-comet-loop,
+  .scene-indo-scan-beam,
+  .commerce-float-a,
+  .commerce-float-b,
+  .horizon-beams-breathe,
+  .terrace-wave-slow,
+  .scene-progress-fill,
+  .street-gerobak-roll,
+  .street-steam-rise,
+  .street-steam-rise-b,
+  .street-blink-open,
+  .street-warm-breathe,
+  .street-flag-sway,
+  .street-lantern-swing,
+  .trial-climber-ascent,
+  .trial-leg-a,
+  .trial-leg-b,
+  .trial-arm-a,
+  .trial-arm-b,
+  .trial-step-lit-1,
+  .trial-step-lit-2,
+  .trial-step-lit-3,
+  .trial-step-lit-4,
+  .trial-step-lit-5,
+  .trial-beacon-float,
+  .trial-guide-wave,
+  .trial-spark-1,
+  .trial-spark-2,
+  .trial-spark-3,
+  .interact-buyer-approach,
+  .interact-buyer-left,
+  .interact-enter-door,
+  .interact-exit-bag,
+  .interact-enter-center,
+  .interact-hand-offer,
+  .interact-exchange-spark,
+  .wing-buyer-left,
+  .wing-buyer-enter,
+  .wing-buyer-exit,
+  .ascend-letter-sync-enter,
+  .ascend-letter-sync-reenter,
+  .ascend-letter-sync-exit,
+  .treasure-mask-exit,
+  .treasure-arrow-exit,
+  .treasure-waypoint-exit,
+  .treasure-x-exit,
+  .wing-swap-ring,
+  .station-click-launch,
+  .diorama-buyer-right,
+  .diorama-buyer-left,
+  .diorama-enter-door,
+  .diorama-exit-bag,
+  .diorama-enter-center,
+  .songket-line-draw,
+  .animate-dash-flow,
+  .animate-dash-flow-slow,
+  .animate-float-calm,
+  .animate-ember,
+  .footer-pillar-breathe,
+  .hero-pillar-rise,
+  .building-generate-pop,
+  .pad-scan-ring,
+  .room-slot-open,
+  .crowd-slot-overflow,
+  .stage-progress-bar,
+  .blindspot-sheen,
+  .blindspot-sparkle-a,
+  .blindspot-sparkle-b,
+  .blindspot-sparkle-c,
+  .bs-radar-ring,
+  .bs-radar-ring-delay,
+  .bs-rival-reveal-1,
+  .bs-rival-reveal-2,
+  .bs-rival-reveal-3,
+  .bs-q-fade-1,
+  .bs-q-fade-2,
+  .bs-q-fade-3,
+  .bs-dash-flow,
+  .bs-dash-flow-slow,
+  .bs-traffic-down,
+  .bs-traffic-down-delay,
+  .bs-traffic-up,
+  .bs-hub-ripple-1,
+  .bs-hub-ripple-2,
+  .bs-hub-ripple-3,
+  .bs-float-tag,
+  .bs-float-key,
+  .bs-steam-a,
+  .bs-steam-b,
+  .sol-scan-beam,
+  .sol-orb-breathe,
+  .sol-hex-halo,
+  .sol-filter-progress,
+  .feat-hex-a,
+  .feat-hex-b,
+  .feat-hex-c,
+  .feat-bar-a,
+  .feat-bar-b,
+  .feat-shortlist-1,
+  .feat-shortlist-2,
+  .feat-shortlist-3,
+  .feat-cursor,
+  .feat-compare-1,
+  .feat-compare-2,
+  .feat-rent-marker,
+  .hiw-spark-a,
+  .hiw-spark-b,
+  .hiw-spark-c,
+  .hiw-node-ring,
+  .hiw-comet-head,
+  .ascend-bubble-a,
+  .ascend-bubble-b,
+  .team-icon-float-a,
+  .team-icon-float-b,
+  .team-hex-spin-cw,
+  .team-hex-spin-ccw,
+  .team-hex-ripple,
+  .team-hex-breathe {
+    animation: none !important;
+  }
+  .treasure-mask-reveal {
+    stroke-dashoffset: 0 !important;
+  }
+  .treasure-waypoint-node,
+  .treasure-x-ignite,
+  .treasure-arrow-pop {
+    opacity: 1 !important;
+  }
+  .treasure-comet-initial,
+  .treasure-comet-loop,
+  .treasure-waypoint-ring,
+  .treasure-x-shockwave,
+  .treasure-x-sparks {
+    opacity: 0 !important;
+  }
+  .reveal-el {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .gta-overlap-rise {
+    margin-top: 0 !important;
+    padding-top: 4rem !important;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================================
+   USER SETTINGS: CALM ANIMATIONS MODE (Homepage & Map)
+   ===================================================================== */
+html.ascend-calm-motion .open-sign-glow,
+html.ascend-calm-motion .animate-ping,
+html.ascend-calm-motion .animate-pulse,
+html.ascend-calm-motion .ascend-bubble-a,
+html.ascend-calm-motion .ascend-bubble-b,
+html.ascend-calm-motion .hiw-spark-a,
+html.ascend-calm-motion .hiw-spark-b,
+html.ascend-calm-motion .hiw-spark-c,
+html.ascend-calm-motion .hiw-node-ring,
+html.ascend-calm-motion .hiw-flow-dash,
+html.ascend-calm-motion .hiw-flow-dash-slow,
+html.ascend-calm-motion .hiw-radar-pulse,
+html.ascend-calm-motion .hiw-dot-pulse,
+html.ascend-calm-motion .footer-prism-wave,
+html.ascend-calm-motion .footer-wave-a,
+html.ascend-calm-motion .footer-wave-b,
+html.ascend-calm-motion .footer-wave-c,
+html.ascend-calm-motion .footer-wave-d,
+html.ascend-calm-motion .footer-light-twinkle,
+html.ascend-calm-motion .footer-shaft-breathe,
+html.ascend-calm-motion .summit-gpu-aurora-a,
+html.ascend-calm-motion .summit-gpu-aurora-b,
+html.ascend-calm-motion .summit-gpu-aurora-c {
+  animation: none !important;
+}
+
+/* =====================================================================
+   MAP-ONLY LUHUR SIGNAL LIGHT INTERFACE THEME (.map-theme-light)
+   Scoped strictly to /map workspace and map-context modals.
+   Homepage and Loading Screen remain undisturbed in dark obsidian.
+   ===================================================================== */
+.map-theme-light {
+  background-color: #EEF2F6 !important;
+  color: #0F172A;
+}
+
+/* Frosted Pearl-Alabaster Primary Surfaces (Header, Dock, Legend, Rail, Popovers, Cards) */
+.map-theme-light .bg-\[\#111620\]\/95,
+.map-theme-light .bg-\[\#10151E\]\/95,
+.map-theme-light .bg-\[\#10151E\]\/90,
+.map-theme-light .bg-\[\#10151F\]\/95,
+.map-theme-light .bg-\[\#0E141D\]\/95,
+.map-theme-light .bg-\[\#0E141D\]\/90,
+.map-theme-light .bg-\[\#111722\]\/95,
+.map-theme-light .bg-\[\#121822\]\/95,
+.map-theme-light .bg-\[\#0D121A\]\/95,
+.map-theme-light .bg-\[\#0D121A\]\/90,
+.map-theme-light .bg-\[\#0D121A\],
+.map-theme-light .bg-\[\#090C11\]\/95,
+.map-theme-light .bg-\[\#090C11\]\/90,
+.map-theme-light .bg-\[\#111620\] {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  color: #0F172A;
+}
+
+/* Remove dark pill backdrop behind factor labels in Light Mode (blends cleanly over white card while masking BASE line) */
+.map-theme-light .area-factor-pill {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+/* Rich Deep Emerald Gradient for Hex-Pin Logo Mark in Light Mode Map */
+.map-theme-light .ascend-pin-dark {
+  display: none !important;
+}
+
+.map-theme-light .ascend-pin-light {
+  display: inline !important;
+}
+
+/* Clean Light-Mode Scrollbar (No Dark Track!) for Map Panels & Light Modals */
+.map-theme-light,
+.map-theme-light *,
+.light-mode-scroll {
+  color-scheme: light;
+  scrollbar-color: rgba(100, 116, 139, 0.36) transparent;
+  scrollbar-width: thin;
+}
+
+.map-theme-light ::-webkit-scrollbar,
+.light-mode-scroll::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.map-theme-light ::-webkit-scrollbar-track,
+.light-mode-scroll::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.map-theme-light ::-webkit-scrollbar-thumb,
+.light-mode-scroll::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.34) !important;
+  border-radius: 9999px;
+  border: 2px solid transparent !important;
+  background-clip: content-box !important;
+}
+
+.map-theme-light ::-webkit-scrollbar-thumb:hover,
+.light-mode-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 0.56) !important;
+}
+
+/* Recessed Controls, Inputs, KPI Boxes, Tabs, and Secondary Cards */
+.map-theme-light .bg-\[\#0A0E14\]\/90,
+.map-theme-light .bg-\[\#0A0E14\],
+.map-theme-light .bg-\[\#0D131C\],
+.map-theme-light .bg-\[\#090D14\],
+.map-theme-light .bg-\[\#0B0F16\]\/90,
+.map-theme-light .bg-\[\#0B0F16\]\/85,
+.map-theme-light .bg-\[\#0B0F16\]\/80,
+.map-theme-light .bg-\[\#0B0F16\]\/60,
+.map-theme-light .bg-\[\#0C1119\],
+.map-theme-light .bg-\[\#111722\]\/90,
+.map-theme-light .bg-\[\#111722\]\/80,
+.map-theme-light .bg-\[\#111722\],
+.map-theme-light .bg-\[\#121822\]\/85,
+.map-theme-light .bg-\[\#121822\],
+.map-theme-light .bg-\[\#121A26\]\/95,
+.map-theme-light .bg-\[\#141C28\],
+.map-theme-light .bg-\[\#152028\],
+.map-theme-light .bg-\[\#1A212D\],
+.map-theme-light .bg-\[\#0B1017\] {
+  background-color: #F1F5F9 !important;
+}
+
+.map-theme-light .bg-\[\#18212E\]\/95,
+.map-theme-light .hover\:bg-\[\#192A2D\]:hover {
+  background-color: #E6F8F1 !important;
+}
+
+.map-theme-light .bg-white\/\[0\.02\],
+.map-theme-light .bg-white\/\[0\.025\],
+.map-theme-light .bg-white\/\[0\.03\],
+.map-theme-light .bg-white\/\[0\.04\],
+.map-theme-light .bg-white\/\[0\.05\],
+.map-theme-light .bg-white\/\[0\.06\],
+.map-theme-light .bg-white\/\[0\.07\],
+.map-theme-light .bg-white\/\[0\.08\],
+.map-theme-light .bg-white\/\[0\.1\] {
+  background-color: rgba(15, 23, 42, 0.045) !important;
+}
+
+.map-theme-light .hover\:bg-white\/\[0\.05\]:hover,
+.map-theme-light .hover\:bg-white\/\[0\.06\]:hover,
+.map-theme-light .hover\:bg-white\/\[0\.08\]:hover,
+.map-theme-light .hover\:bg-white\/\[0\.12\]:hover,
+.map-theme-light .hover\:bg-white\/\[0\.16\]:hover {
+  background-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Subtle Daylight Modal Header Gradient inside Map Light Mode */
+.map-theme-light .from-\[\#131C28\] {
+  background-image: linear-gradient(180deg, #F0FDF7 0%, #F8FAFC 60%, #FFFFFF 100%) !important;
+}
+
+/* Daylight High-Contrast Ink Hierarchy (>= 4.5:1) */
+.map-theme-light .text-ink-primary {
+  color: #0F172A !important;
+}
+
+.map-theme-light .text-ink-secondary {
+  color: #334155 !important;
+}
+
+.map-theme-light .text-ink-muted {
+  color: #64748B !important;
+}
+
+.map-theme-light .text-\[\#CBD5E1\],
+.map-theme-light .text-\[\#DCE4EE\],
+.map-theme-light .text-\[\#E2E8F0\] {
+  color: #334155 !important;
+}
+
+.map-theme-light .text-\[\#94A3B8\] {
+  color: #475569 !important;
+}
+
+.map-theme-light .text-\[\#64748B\] {
+  color: #64748B !important;
+}
+
+.map-theme-light .text-\[\#FDE68A\] {
+  color: #92400E !important;
+}
+
+.map-theme-light .text-mint {
+  color: #059669 !important;
+}
+
+.map-theme-light .editorial-mint {
+  color: #059669 !important;
+}
+
+.map-theme-light .placeholder\:text-ink-muted::placeholder {
+  color: #64748B !important;
+}
+
+/* Crisp Hairline Borders & Shadows on Pearl Surfaces */
+.map-theme-light .border-white\/10,
+.map-theme-light .border-white\/15,
+.map-theme-light .border-white\/20,
+.map-theme-light .border-white\/25,
+.map-theme-light .border-white\/35,
+.map-theme-light .border-white\/\[0\.07\],
+.map-theme-light .border-white\/\[0\.08\],
+.map-theme-light .border-white\/\[0\.09\] {
+  border-color: rgba(15, 23, 42, 0.13) !important;
+}
+
+.map-theme-light .border-\[\#334155\],
+.map-theme-light .border-\[\#334155\]\/90,
+.map-theme-light .border-\[\#334155\]\/80,
+.map-theme-light .border-\[\#CBD5E1\] {
+  border-color: rgba(100, 116, 139, 0.45) !important;
+}
+
+.map-theme-light .shadow-xl,
+.map-theme-light .shadow-2xl,
+.map-theme-light .shadow-\[0_12px_40px_rgba\(0\,0\,0\,0\.65\)\],
+.map-theme-light .shadow-\[0_24px_75px_rgba\(0\,0\,0\,0\.78\)\],
+.map-theme-light .shadow-\[0_24px_60px_rgba\(0\,0\,0\,0\.88\)\],
+.map-theme-light .shadow-\[0_18px_48px_rgba\(0\,0\,0\,0\.8\)\],
+.map-theme-light .shadow-\[0_18px_40px_rgba\(0\,0\,0\,0\.72\)\] {
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.14), 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Center BASE Divider inside MapAreaPanel "WHY THIS LABEL" */
+.map-theme-light .bg-white {
+  background-color: #0F172A !important;
+}
+
+.map-theme-light .bg-white\/25 {
+  background-color: rgba(15, 23, 42, 0.22) !important;
+}
+
+.map-theme-light .bg-mint {
+  background-color: #10B981 !important;
+  color: #042F22 !important;
+}
+
+.map-theme-light .bg-mint\/15 {
+  background-color: rgba(16, 185, 129, 0.14) !important;
+}
+
+.map-theme-light .border-mint\/70,
+.map-theme-light .border-mint\/60,
+.map-theme-light .border-mint {
+  border-color: #059669 !important;
+}
+
+/* Keep Label Badges & Solid Status Dots Vivid in Light Mode */
+.map-theme-light .text-signal-amber {
+  color: #B45309 !important;
+}
+
+.map-theme-light .text-signal-coral {
+  color: #DC2626 !important;
+}
+
+.map-theme-light .text-\[\#34D399\] {
+  color: #059669 !important;
+}
+
+.map-theme-light .bg-gradient-to-b.from-white\/55 {
+  background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.22), rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.22)) !important;
+  box-shadow: none !important;
+}
+
+.map-theme-light .bg-signal-amber\/10,
+.map-theme-light .bg-signal-amber\/15,
+.map-theme-light .bg-signal-amber\/\[0\.12\] {
+  background-color: rgba(245, 158, 11, 0.14) !important;
+}
+
+/* Preserve white dot / knob inside switches or map-style swatches */
+.map-theme-light .map-style-light-road {
+  background-color: #FFFFFF !important;
+}
