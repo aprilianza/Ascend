@@ -24,7 +24,7 @@ import {
   Tag,
   UtensilsCrossed,
 } from 'lucide-vue-next'
-import type { AreaFeature, Factor } from '~/types/areas'
+import type { AreaFeature } from '~/types/areas'
 import { factorDirection } from '~/types/areas'
 import { MAP_LABEL_COPY, formatDistanceKm, formatExpectedCount } from '~/utils/mapPatterns'
 import {
@@ -55,6 +55,7 @@ const emit = defineEmits<{
   requestLocation: []
   toggleRoute: []
   selectTravelMode: [mode: TravelMode]
+  openAbout: []
 }>()
 
 const settings = useAscendSettings()
@@ -119,16 +120,9 @@ const nowBarPatternStyle = computed(() => {
   }
 })
 
-// Relative visual-only directional widths for the 3 demand drivers (never showing numeric weights)
-const maxAbsFactor = computed(() => {
-  const vals = p.value.factors.map(f => Math.abs(f.effect))
-  return Math.max(...vals, 0.1)
-})
-
-function factorBarWidthPct(factor: Factor): number {
-  const ratio = Math.abs(factor.effect) / maxAbsFactor.value
-  return Math.round(28 + Math.min(1, ratio) * 72)
-}
+// Data contract §6: only the sign of `effect` is used (direction). Every bar has the same
+// width so the card never suggests an amount; factors are already ordered by strength.
+const FACTOR_BAR_WIDTH_PCT = 80
 
 const biggestPushText = computed(() => {
   const first = p.value.factors[0]
@@ -346,6 +340,13 @@ const biggestPushText = computed(() => {
         >
           {{ settings.t('Calculates real street distance and travel time from your current pin to this area.', 'Menghitung jarak jalan nyata dan waktu tempuh dari pin lokasimu ke area ini.') }}
         </p>
+
+        <p class="font-sans text-[10.5px] leading-snug text-ink-muted/90">
+          {{ settings.t(
+            'Optional. Uses your device location; if that fails, an approximate location is looked up from your IP address (get.geojs.io, ipapi.co). Routes are calculated by public OSRM routing servers, which receive your location and this area. Ascend does not store it.',
+            'Opsional. Memakai lokasi perangkatmu; jika gagal, lokasi perkiraan dicari dari alamat IP-mu (get.geojs.io, ipapi.co). Rute dihitung oleh server routing publik OSRM, yang menerima lokasimu dan area ini. Ascend tidak menyimpannya.',
+          ) }}
+        </p>
       </div>
 
       <!-- Ask Ascend About This Area Preview Row (Neutral Grey + Warm Amber COMING SOON) -->
@@ -455,15 +456,15 @@ const biggestPushText = computed(() => {
         <div class="flex items-center justify-between gap-2">
           <p class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">
             <BarChart3 class="w-3.5 h-3.5 text-ink-muted" />
-            <span>{{ settings.t('WHY THIS LABEL', 'MENGAPA LABEL INI') }}</span>
+            <span>{{ settings.homeCopy.value.mapPage.drivesTitle }}</span>
           </p>
           <span class="font-mono text-[8.5px] uppercase tracking-[0.08em] text-ink-muted/80">
-            {{ settings.t('TOP 3 DRIVERS', '3 PENDORONG UTAMA') }}
+            {{ settings.t('TOP 3 FACTORS', '3 FAKTOR UTAMA') }}
           </span>
         </div>
 
         <p class="font-sans text-[13.5px] leading-[1.55] text-ink-secondary">
-          {{ settings.t('Biggest push:', 'Pendorong utama:') }}
+          {{ settings.t('Strongest factor:', 'Faktor terkuat:') }}
           <strong class="font-semibold text-ink-primary">{{ biggestPushText }}.</strong>
         </p>
 
@@ -515,7 +516,7 @@ const biggestPushText = computed(() => {
                     v-if="factorDirection(factor) === 'down'"
                     class="h-full rounded-l-full transition-all duration-500"
                     :class="p.label === 'not_enough_demand' ? 'bg-[#94A3B8]' : 'bg-signal-amber'"
-                    :style="{ width: `${factorBarWidthPct(factor)}%` }"
+                    :style="{ width: `${FACTOR_BAR_WIDTH_PCT}%` }"
                   />
                 </div>
 
@@ -523,7 +524,7 @@ const biggestPushText = computed(() => {
                   <div
                     v-if="factorDirection(factor) === 'up'"
                     class="h-full rounded-r-full bg-mint transition-all duration-500"
-                    :style="{ width: `${factorBarWidthPct(factor)}%` }"
+                    :style="{ width: `${FACTOR_BAR_WIDTH_PCT}%` }"
                   />
                 </div>
               </div>
@@ -538,11 +539,11 @@ const biggestPushText = computed(() => {
                 class="w-2 h-2 rounded-[2px]"
                 :class="p.label === 'not_enough_demand' ? 'bg-[#94A3B8]' : 'bg-signal-amber'"
               />
-              {{ p.label === 'not_enough_demand' ? settings.t('LESS DEMAND', 'PERMINTAAN RENDAH') : settings.t('LESS ROOM', 'RUANG SEMPIT') }}
+              {{ settings.t('LOWERS DEMAND', 'MENURUNKAN PERMINTAAN') }}
             </span>
             <span class="inline-flex items-center gap-1">
               <span class="w-2 h-2 rounded-[2px] bg-mint" />
-              {{ p.label === 'not_enough_demand' ? settings.t('MORE DEMAND', 'PERMINTAAN TINGGI') : settings.t('MORE ROOM', 'RUANG LEGA') }}
+              {{ settings.t('RAISES DEMAND', 'MENAIKKAN PERMINTAAN') }}
             </span>
           </div>
           <span class="font-mono text-[8.5px] uppercase tracking-[0.06em] text-ink-muted/80">
@@ -551,7 +552,7 @@ const biggestPushText = computed(() => {
         </div>
 
         <p class="font-sans text-[11.5px] leading-[1.55] text-ink-muted">
-          {{ settings.t('Direction only. Drivers are not exact amounts. Reasons come from open data on residents, campuses, offices, and transit.', 'Hanya menunjukkan arah, bukan besaran pasti. Alasan berasal dari data terbuka penduduk, kampus, kantor, dan transit.') }}
+          {{ settings.t('These factors explain the estimated demand at this spot, not the label itself. Arrows show direction only, not amounts. Factors come from open data on residents, shops, hotels, campuses, offices, schools, health facilities and transit.', 'Faktor ini menjelaskan perkiraan permintaan di titik ini, bukan labelnya. Panah hanya menunjukkan arah, bukan besaran. Faktor berasal dari data terbuka penduduk, toko, hotel, kampus, kantor, sekolah, fasilitas kesehatan, dan transit.') }}
         </p>
       </div>
 
@@ -780,6 +781,17 @@ const biggestPushText = computed(() => {
           </span>
         </button>
       </div>
+
+      <p class="text-center font-sans text-[10.5px] lg:text-[11px] leading-snug text-ink-muted">
+        {{ settings.homeCopy.value.mapPage.cardFootnote }}
+        <button
+          type="button"
+          class="underline underline-offset-2 hover:text-ink-primary cursor-pointer"
+          @click="emit('openAbout')"
+        >
+          {{ settings.t('About', 'Tentang') }}
+        </button>
+      </p>
 
       <p v-if="limitReached" class="text-center font-sans text-[11.5px] text-signal-amber">
         {{ settings.t('Shortlist is full (max 10 areas). Remove one saved spot first.', 'Daftar pendek penuh (maks 10 area). Hapus satu area terlebih dahulu.') }}

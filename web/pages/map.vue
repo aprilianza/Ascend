@@ -2483,7 +2483,7 @@ const hoverTooltipStyle = computed(() => {
               :size="24"
               class="w-[clamp(21px,2.4vw,26px)] h-[clamp(21px,2.4vw,26px)] transition-all duration-mid ease-signal group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.55)]"
             />
-            <span class="font-display font-bold text-[clamp(11.5px,1.4vw,15px)] tracking-[0.07em] text-ink-primary">
+            <span class="hidden min-[420px]:inline font-display font-bold text-[clamp(11.5px,1.4vw,15px)] tracking-[0.07em] text-ink-primary">
               ASCEND
             </span>
           </NuxtLink>
@@ -3495,6 +3495,9 @@ const hoverTooltipStyle = computed(() => {
             >
               Use approximate device IP
             </button>
+            <span class="basis-full font-sans text-[10.5px] leading-snug text-ink-muted">
+              Sends your IP address to get.geojs.io / ipapi.co to estimate your city-level location.
+            </span>
           </div>
         </div>
       </Transition>
@@ -3960,6 +3963,7 @@ const hoverTooltipStyle = computed(() => {
           @request-location="locateUserPosition(true)"
           @toggle-route="handleToggleRoute"
           @select-travel-mode="handleSelectTravelMode"
+          @open-about="openAboutModal('limits')"
         />
 
         <!-- TAB BODY 1 EMPTY STATE (Wireframe-matched clean Area landing state!) -->
@@ -4080,6 +4084,13 @@ const hoverTooltipStyle = computed(() => {
     </aside>
 
     <!-- ==================== 6. BOTTOM-RIGHT OPEN DATA ATTRIBUTION STRIP ==================== -->
+    <!-- Compact attribution for phones (< sm). Licences (ODbL, CC BY) require it on every screen size. -->
+    <footer
+      v-if="!loading && !error"
+      class="pointer-events-auto absolute bottom-1 right-2 z-20 sm:hidden max-w-[150px] px-2 py-0.5 rounded-md bg-[#090C11]/90 border border-white/[0.08] font-mono text-[7.5px] leading-[1.35] text-right text-ink-muted"
+    >
+      <span v-if="isSatelliteBasemap">Esri World Imagery · </span>© OpenStreetMap contributors · OpenFreeMap · OpenMapTiles · Overture Maps · WorldPop
+    </footer>
     <footer
       v-if="!loading && !error"
       class="pointer-events-auto absolute bottom-1.5 right-3 sm:right-4 z-20 hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#090C11]/90 backdrop-blur-sm border border-white/[0.08] font-mono text-[8.5px] uppercase tracking-[0.09em] text-ink-muted"
