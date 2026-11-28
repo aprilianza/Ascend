@@ -68,8 +68,6 @@ only then replaces `web/public/data/coffee_shop.geojson` and `meta.json`.
 
 Label-rule simulation: `python docs/sim_labels.py`.
 
-Label-rule simulation: `python docs/sim_labels.py`.
-
 ## Data sources and third-party resources
 
 | Source | Version | Licence | Attribution |
