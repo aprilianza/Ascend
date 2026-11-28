@@ -8,7 +8,6 @@ coffee shops are there compared with how many local demand usually supports. Bui
 - `web/`: Nuxt 3 + MapLibre front end (reads the static files in `web/public/data/`)
 - `docs/`: data contract, model report, simulation script, figures
 
-
 ## Pipeline setup
 
 Requires Python 3.11+ (developed on 3.12).
@@ -46,6 +45,7 @@ Label-rule simulation: `python docs/sim_labels.py`.
 | OpenStreetMap (Overpass API) | snapshot, see `meta.json` | ODbL 1.0 | © OpenStreetMap contributors |
 | WorldPop Global2 R2025A, 100 m constrained | 2026 estimate | CC BY 4.0 | WorldPop, doi:10.5258/SOTON/WP00839 |
 | OpenFreeMap basemap | public instance | free, attribution required | OpenFreeMap, OpenMapTiles, © OpenStreetMap contributors |
+| Esri World Imagery (optional satellite view) | live tiles | Esri terms of use, attribution required | Esri, Maxar, Earthstar Geographics |
 
 Details and checks: `pipeline/data/SOURCES.md`.
 
