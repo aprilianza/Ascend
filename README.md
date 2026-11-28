@@ -6,7 +6,7 @@ coffee shops are there compared with how many local demand usually supports. Bui
 
 - `pipeline/`: Python data pipeline (open data → demand model → labels → GeoJSON)
 - `web/`: Nuxt 3 + MapLibre front end (reads the static files in `web/public/data/`)
-- `docs/`: data contract, model report, simulation script, figures
+- `docs/`: JSON schemas, model report, simulation script, figures
 
 ## Pipeline setup
 
@@ -21,7 +21,7 @@ python3 -m venv .venv
 ```
 
 Raw downloads are cached in `pipeline/data/raw/` and `pipeline/data/cache/` (not committed).
-The last step validates the output against the data contract (`docs/data-contract.md`) and
+The last step validates the output against the JSON schemas in `docs/schema/` and
 only then replaces `web/public/data/coffee_shop.geojson` and `meta.json`.
 
 | Step | Module | Output |
@@ -53,7 +53,7 @@ Details and checks: `pipeline/data/SOURCES.md`.
 
 | Item | Status |
 |---|---|
-| Data contract v1.1.0 | Done |
+| Data schema v1.1.0 (`docs/schema/`) | Done |
 | Pipeline: grid, places, features, model, labels, SHAP, export | Done (see `docs/model_report.md`) |
 | Label simulation script | Done |
 | Category sample check of 30 records | In progress |

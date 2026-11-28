@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ascend.local/schema/areas.schema.json",
   "title": "Ascend areas file (coffee_shop.geojson / eatery.geojson)",
-  "description": "Data contract v1.0.0 between the pipeline (07_export) and the web app. In Phase 2 this is also the response body of GET /areas?business_type=<type>. See docs/data-contract.md.",
+  "description": "Data contract v1.0.0 between the pipeline (07_export) and the web app. In Phase 2 this is also the response body of GET /areas?business_type=<type>.",
   "type": "object",
   "additionalProperties": false,
   "required": ["type", "contract_version", "business_type", "is_sample", "generated_at", "features"],

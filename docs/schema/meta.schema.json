@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ascend.local/schema/meta.schema.json",
   "title": "Ascend meta.json",
-  "description": "Data contract v1.0.0. Data versions, model metrics, label parameters, and which business types are available. In Phase 2 this is also the response body of GET /meta. See docs/data-contract.md.",
+  "description": "Data contract v1.0.0. Data versions, model metrics, label parameters, and which business types are available. In Phase 2 this is also the response body of GET /meta.",
   "type": "object",
   "additionalProperties": false,
   "required": [

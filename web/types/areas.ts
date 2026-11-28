@@ -1,6 +1,6 @@
 /**
  * Data contract v1.1.0 — TypeScript mirror of docs/schema/areas.schema.json
- * and docs/schema/meta.schema.json. See docs/data-contract.md.
+ * and docs/schema/meta.schema.json.
  *
  * Rule: if a field changes here, it changes in the JSON Schema and in
  * pipeline/tools/contract.py in the same commit.

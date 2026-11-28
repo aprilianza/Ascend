@@ -114,7 +114,7 @@ def schema_errors(instance: dict, schema_name: str) -> list[str]:
 
 
 def semantic_errors(areas: dict, meta: dict) -> list[str]:
-    """Rules JSON Schema cannot express (see docs/data-contract.md, section 'Aturan isi')."""
+    """Cross-field rules that JSON Schema cannot express."""
     errs: list[str] = []
     params = meta.get("label_params", {})
     alpha = params.get("alpha", 0.05)

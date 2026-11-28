@@ -120,7 +120,7 @@ const nowBarPatternStyle = computed(() => {
   }
 })
 
-// Data contract §6: only the sign of `effect` is used (direction). Every bar has the same
+// Display rule: only the sign of `effect` is used (direction). Every bar has the same
 // width so the card never suggests an amount; factors are already ordered by strength.
 const FACTOR_BAR_WIDTH_PCT = 80
 
