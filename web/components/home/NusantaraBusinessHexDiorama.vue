@@ -23,7 +23,7 @@ const delayStyle = computed(() => ({
 <template>
   <svg
     viewBox="0 0 140 112"
-    :class="props.size === 'wing' ? 'w-full h-auto overflow-visible' : 'w-[122px] sm:w-[132px] h-[98px] sm:h-[104px] overflow-visible'"
+    :class="props.size === 'wing' ? 'w-full h-auto overflow-visible' : 'w-[132px] h-[104px] overflow-visible'"
     fill="none"
     aria-hidden="true"
   >

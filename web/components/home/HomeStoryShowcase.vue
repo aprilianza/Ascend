@@ -2,13 +2,14 @@
 import { ChevronsDown } from 'lucide-vue-next'
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
-const { fitReady, isCompact, homeStickyHeightPx, homeStorySectionHeightPx } = useDesktopFit()
+const { fitReady, isCompact, isTallCompact, homeStickyHeightPx, homeStorySectionHeightPx } = useDesktopFit()
 
 const TOTAL_FRAMES = 72
 const FRAME_ASPECT = 16 / 9
 const CLIP_VERSION = '3to8'
 
 const sectionRef = ref<HTMLElement | null>(null)
+const stageRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const reducedMotion = ref(false)
@@ -116,7 +117,7 @@ function computeVisualState(p: number) {
 
   const zoomT = clamp((p - 0.12) / (0.72 - 0.12), 0, 1)
   const zoomEase = 1 - Math.pow(1 - zoomT, 2.3)
-  const isPortrait = typeof window !== 'undefined' && window.innerWidth < window.innerHeight
+  const isPortrait = !(fitReady.value && isCompact.value) && typeof window !== 'undefined' && window.innerWidth < window.innerHeight
   const startZoom = isPortrait ? 2.55 : 2.18
   const baseScale = startZoom - (startZoom - 1.0) * zoomEase
 
@@ -229,6 +230,13 @@ function measureScrollProgress() {
   if (!sectionRef.value) return
   const rect = sectionRef.value.getBoundingClientRect()
   const vh = window.innerHeight || 900
+  if (fitReady.value && isTallCompact.value) {
+    const stageH = stageRef.value?.getBoundingClientRect().height || Math.min(vh, 260)
+    const startY = Math.min(vh * 0.42, 340)
+    const endY = -(rect.height - stageH)
+    targetProgress = clamp((startY - rect.top) / Math.max(1, startY - endY), 0, 1)
+    return
+  }
   const scrollable = Math.max(1, rect.height - vh)
   targetProgress = clamp(-rect.top / scrollable, 0, 1)
 }
@@ -273,11 +281,14 @@ function onScroll() {
 const videoOpacity = computed(() => {
   if (reducedMotion.value) return 1
   const p = renderedProgress.value
+  if (fitReady.value && isTallCompact.value) {
+    return 0.92 + 0.08 * smoothstep(0.05, 0.22, p)
+  }
   return smoothstep(0.11, 0.22, p)
 })
 
 const introWhisperOpacity = computed(() => {
-  if (reducedMotion.value) return 0
+  if (reducedMotion.value || (fitReady.value && isTallCompact.value)) return 0
   const p = renderedProgress.value
   const fadeIn = 0.25 + 0.75 * smoothstep(0.0, 0.04, p)
   const fadeOut = 1 - smoothstep(0.08, 0.125, p)
@@ -287,6 +298,9 @@ const introWhisperOpacity = computed(() => {
 const exitBlackVeilOpacity = computed(() => {
   if (reducedMotion.value) return 0
   const p = renderedProgress.value
+  if (fitReady.value && isTallCompact.value) {
+    return smoothstep(0.84, 0.99, p) * 0.55
+  }
   // GTA VI style blackout darken starting right as "Busy isn't room." glides up (0.74 -> 0.92)
   return smoothstep(0.74, 0.92, p)
 })
@@ -389,6 +403,7 @@ onBeforeUnmount(() => {
   >
     <!-- Pinned Full-Viewport Cinema Stage -->
     <div
+      ref="stageRef"
       class="w-full overflow-hidden bg-[#020406]"
       :class="reducedMotion ? 'relative h-full' : fitReady && isCompact ? 'sticky top-0' : 'sticky top-0 h-[100svh]'"
       :style="!reducedMotion && fitReady && isCompact && homeStickyHeightPx ? { height: `${homeStickyHeightPx}px` } : undefined"

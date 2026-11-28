@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
-const { fitReady, isCompact, homeStickyHeightPx, homePortalSectionHeightPx } = useDesktopFit()
+const { fitReady, isCompact, isTallCompact, homeStickyHeightPx, homePortalSectionHeightPx } = useDesktopFit()
 
 // 6 airy, luminous concentric hexagons (crisp, serene, 60fps)
 const RING_COUNT = 6
 const PARTICLE_COUNT = 22
 
 const sectionRef = ref<HTMLElement | null>(null)
+const stageRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const reducedMotion = ref(false)
@@ -284,6 +285,13 @@ function measureScrollProgress() {
   if (!sectionRef.value) return
   const rect = sectionRef.value.getBoundingClientRect()
   const vh = window.innerHeight || 900
+  if (fitReady.value && isTallCompact.value) {
+    const stageH = stageRef.value?.getBoundingClientRect().height || Math.min(vh, 260)
+    const startY = vh * 0.72
+    const endY = -(rect.height - stageH)
+    targetP = clamp((startY - rect.top) / Math.max(1, startY - endY), 0, 1)
+    return
+  }
   const scrollable = Math.max(1, rect.height - vh)
   targetP = clamp(-rect.top / scrollable, 0, 1)
 }
@@ -412,6 +420,7 @@ onBeforeUnmount(() => {
   >
     <!-- Smooth Pinned Concentric Hexagon Stage: dark breath -> hexagons -> title -> natural unstick into Solution -->
     <div
+      ref="stageRef"
       class="w-full overflow-hidden"
       :class="reducedMotion ? 'relative h-full' : fitReady && isCompact ? 'sticky top-0' : 'sticky top-0 h-[100svh]'"
       :style="

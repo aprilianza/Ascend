@@ -438,7 +438,7 @@ export const HOME_COPY = {
         bio: 'Leads product direction and demand modeling across 1,976 mapped areas, turning neighborhood counts into clear Opportunity, Fair, and Crowded labels.',
         theme: 'amber' as const,
         iconSet: 'ml' as const,
-        poses: ['/images/team/april-1.webp', '/images/team/april-2.webp'] as const,
+        poses: ['/images/team/april-1.webp?v=2', '/images/team/april-2.webp?v=2'] as const,
       },
       {
         id: 'bill',

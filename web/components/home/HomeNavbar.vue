@@ -43,39 +43,43 @@ onBeforeUnmount(() => {
 
 <template>
   <header
-    :class="fitReady && isCompact ? 'fixed top-4 left-0 z-50 px-6 pointer-events-none' : 'fixed top-4 inset-x-0 z-50 px-6 pointer-events-none'"
-    :style="fitReady && isCompact ? { width: `${HOME_DESIGN_WIDTH}px`, zoom: String(homeZoom) } : undefined"
+    class="fixed inset-x-0 z-50 pointer-events-none"
+    :style="{ top: fitReady && isCompact ? `${Math.max(8, Math.round(16 * homeZoom))}px` : '16px' }"
   >
+    <div
+      class="px-6"
+      :style="fitReady && isCompact ? { width: `${HOME_DESIGN_WIDTH}px`, zoom: String(homeZoom) } : undefined"
+    >
     <nav
       aria-label="Primary navigation"
-      class="pointer-events-auto mx-auto max-w-frame h-[clamp(46px,5.6vw,62px)] px-[clamp(10px,2vw,24px)] rounded-full flex items-center justify-between gap-2 transition-all duration-mid ease-signal backdrop-blur-md"
+      class="pointer-events-auto mx-auto max-w-frame h-[62px] px-6 rounded-full flex items-center justify-between gap-2 transition-all duration-mid ease-signal backdrop-blur-md"
       :class="
         isScrolled
           ? 'bg-[#161A21]/95 border border-[#34404F] shadow-[0_12px_40px_rgba(0,0,0,0.55)]'
           : 'bg-[#161A21]/85 border border-[#232836]'
       "
     >
-      <!-- Left: Brand (Fluid Scale With Safe Floor, City-Agnostic) -->
-      <div class="flex items-center gap-2 lg:gap-4 min-w-0 shrink-0">
+      <!-- Left: Brand (City-Agnostic, Exact Desktop Scale) -->
+      <div class="flex items-center gap-4 min-w-0 shrink-0">
         <NuxtLink
           to="/"
-          class="inline-flex items-center gap-1.5 sm:gap-2.5 group shrink-0"
+          class="inline-flex items-center gap-2.5 group shrink-0"
           aria-label="Ascend Home"
         >
           <UiAscendMark
-            :size="26"
-            class="w-[clamp(22px,2.5vw,28px)] h-[clamp(22px,2.5vw,28px)] transition-all duration-mid ease-signal group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.55)]"
+            :size="28"
+            class="w-7 h-7 transition-all duration-mid ease-signal group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.55)]"
           />
-          <span class="font-display font-bold text-[clamp(12px,1.5vw,16px)] tracking-[0.06em] text-ink-primary">
+          <span class="font-display font-bold text-[16px] tracking-[0.06em] text-ink-primary">
             {{ copy.navbar.brand }}
           </span>
         </NuxtLink>
       </div>
 
-      <!-- Right: Always-Inline Icon Navigation + Settings + Fluid Map CTA -->
-      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      <!-- Right: Always-Inline Icon Navigation + Settings + Map CTA -->
+      <div class="flex items-center gap-2 shrink-0">
         <!-- 3 Icon Navigation Links + Settings Gear with Hover Tooltips -->
-        <div class="flex items-center gap-1 sm:gap-1.5 mr-0.5 sm:mr-1">
+        <div class="flex items-center gap-1.5 mr-1">
           <div
             v-for="link in copy.navbar.links"
             :key="link.id"
@@ -87,7 +91,7 @@ onBeforeUnmount(() => {
               :href="link.href"
               :aria-label="link.label"
               :title="link.label"
-              class="relative inline-flex items-center justify-center w-[clamp(32px,3.6vw,38px)] h-[clamp(32px,3.6vw,38px)] rounded-full border transition-all duration-fast ease-signal"
+              class="relative inline-flex items-center justify-center w-[38px] h-[38px] rounded-full border transition-all duration-fast ease-signal"
               :class="
                 props.activeSection === link.id
                   ? 'border-mint/70 bg-mint/15 text-[#00E5A8] shadow-[0_0_14px_rgba(16,185,129,0.28)]'
@@ -98,7 +102,7 @@ onBeforeUnmount(() => {
             >
               <component
                 :is="navIconMeta[link.id]?.icon ?? Compass"
-                class="w-[clamp(14px,1.5vw,16px)] h-[clamp(14px,1.5vw,16px)]"
+                class="w-4 h-4"
                 :stroke-width="1.9"
               />
               <span
@@ -148,12 +152,12 @@ onBeforeUnmount(() => {
               type="button"
               :aria-label="settings.settingsCopy.value.navTooltip"
               :title="settings.settingsCopy.value.navTooltip"
-              class="relative inline-flex items-center justify-center w-[clamp(32px,3.6vw,38px)] h-[clamp(32px,3.6vw,38px)] rounded-full border border-[#273240] bg-[#0E1319]/80 text-ink-secondary hover:border-[#00E5A8]/65 hover:text-[#00E5A8] hover:bg-[#132224]/90 transition-all duration-fast ease-signal cursor-pointer"
+              class="relative inline-flex items-center justify-center w-[38px] h-[38px] rounded-full border border-[#273240] bg-[#0E1319]/80 text-ink-secondary hover:border-[#00E5A8]/65 hover:text-[#00E5A8] hover:bg-[#132224]/90 transition-all duration-fast ease-signal cursor-pointer"
               @focus="hoveredNavId = 'settings'"
               @blur="hoveredNavId = null"
               @click="emit('openSettings')"
             >
-              <Settings class="w-[clamp(14px,1.5vw,16px)] h-[clamp(14px,1.5vw,16px)]" :stroke-width="1.9" />
+              <Settings class="w-4 h-4" :stroke-width="1.9" />
               <span
                 class="absolute -bottom-1 -right-0.5 px-1 rounded-full bg-[#102721] border border-mint/50 font-mono text-[7px] font-bold uppercase text-mint leading-[12px]"
               >
@@ -235,5 +239,6 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </nav>
+    </div>
   </header>
 </template>

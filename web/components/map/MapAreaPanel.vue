@@ -134,51 +134,51 @@ const biggestPushText = computed(() => {
 
 <template>
   <div class="flex-1 flex flex-col min-h-0">
-    <!-- Scrollable Body (Compact Scale on < lg Bottom Sheet, Spacious on Desktop Dock) -->
-    <div class="flex-1 overflow-y-auto px-3.5 py-2.5 space-y-3.5 lg:px-5 lg:py-4 lg:space-y-5">
+    <!-- Scrollable Body (Consistent Desktop Proportions) -->
+    <div class="flex-1 overflow-y-auto px-5 py-4 space-y-5">
       <!-- Top Back Row + ESC Keycap -->
       <div class="flex items-center justify-between gap-2">
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 text-[11.5px] lg:text-[12px] font-sans text-ink-secondary hover:text-ink-primary transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 text-[12px] font-sans text-ink-secondary hover:text-ink-primary transition-colors cursor-pointer"
           @click="emit('back')"
         >
           <ArrowLeft class="w-3.5 h-3.5" />
           <span>{{ settings.t('Back to map', 'Kembali ke peta') }}</span>
         </button>
 
-        <span class="hidden lg:inline-flex px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/10 font-mono text-[9.5px] tracking-[0.1em] text-ink-muted uppercase">
+        <span class="inline-flex px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/10 font-mono text-[9.5px] tracking-[0.1em] text-ink-muted uppercase">
           ESC
         </span>
       </div>
 
       <!-- Area Identity Header -->
-      <div class="flex items-start gap-2.5 lg:gap-3.5">
-        <div class="scale-90 lg:scale-100 origin-top-left shrink-0">
+      <div class="flex items-start gap-3.5">
+        <div class="shrink-0">
           <MapHexBadge :label="p.label" size="lg" />
         </div>
 
         <div class="min-w-0 flex-1">
           <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <h2 class="font-editorial font-semibold text-[18px] lg:text-[22px] text-ink-primary leading-tight break-words">
+            <h2 class="font-editorial font-semibold text-[22px] text-ink-primary leading-tight break-words">
               {{ districtTitle }}
             </h2>
-            <span class="font-sans text-[11px] lg:text-[12px] text-ink-muted">
+            <span class="font-sans text-[12px] text-ink-muted">
               {{ areaSubtitle }}
             </span>
           </div>
 
-          <div class="mt-1.5 lg:mt-2 flex flex-wrap items-center gap-1.5">
+          <div class="mt-2 flex flex-wrap items-center gap-1.5">
             <UiLabelBadge :label="p.label" size="sm" uppercase />
             <span
               v-if="p.confidence === 'low'"
-              class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-dashed border-[#94A3B8]/65 bg-white/[0.04] font-mono text-[9px] lg:text-[9.5px] font-bold uppercase tracking-[0.06em] text-[#CBD5E1]"
+              class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-dashed border-[#94A3B8]/65 bg-white/[0.04] font-mono text-[9.5px] font-bold uppercase tracking-[0.06em] text-[#CBD5E1]"
             >
               {{ settings.confidenceText.value.low.title }}
             </span>
             <span
               v-if="distanceKm !== null && distanceKm !== undefined"
-              class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-mint/15 border border-mint/40 font-mono text-[9px] lg:text-[9.5px] font-semibold tracking-[0.04em] text-mint"
+              class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-mint/15 border border-mint/40 font-mono text-[9.5px] font-semibold tracking-[0.04em] text-mint"
             >
               <Navigation class="w-2.5 h-2.5" />
               <span>{{ formatDistanceKm(distanceKm) }}</span>
@@ -188,13 +188,13 @@ const biggestPushText = computed(() => {
       </div>
 
       <!-- Label Meaning Summary (4 state-matched copies with bold emphasis & color-matched icon) -->
-      <div class="space-y-1.5 lg:space-y-2">
-        <p class="inline-flex items-center gap-1.5 font-mono text-[9px] lg:text-[9.5px] uppercase tracking-[0.14em] text-ink-muted">
-          <Coffee class="w-3 h-3 lg:w-3.5 lg:h-3.5 shrink-0" :style="{ color: labelInfo.color }" />
+      <div class="space-y-2">
+        <p class="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-muted">
+          <Coffee class="w-3.5 h-3.5 shrink-0" :style="{ color: labelInfo.color }" />
           <span>{{ settings.t('COFFEE SHOP · LABEL FOR THIS AREA', 'KEDAI KOPI · LABEL AREA INI') }}</span>
         </p>
 
-        <p class="font-sans text-[12.5px] lg:text-[13.5px] leading-[1.52] lg:leading-[1.58] text-ink-secondary">
+        <p class="font-sans text-[13.5px] leading-[1.58] text-ink-secondary">
           <template v-if="settings.isId.value">
             {{ localizedLabelInfo.headlineDescription }}
           </template>
@@ -752,12 +752,12 @@ const biggestPushText = computed(() => {
       </div>
     </div>
 
-    <!-- Sticky Bottom Action Bar (Compact on < lg, Spacious on lg+) -->
-    <div class="shrink-0 px-3.5 py-2.5 lg:px-5 lg:py-3.5 border-t border-white/10 bg-[#0D121A]/95 backdrop-blur-md space-y-1.5 lg:space-y-2">
-      <div class="flex items-center gap-2 lg:gap-2.5">
+    <!-- Sticky Bottom Action Bar (Consistent Desktop Proportions) -->
+    <div class="shrink-0 px-5 py-3.5 border-t border-white/10 bg-[#0D121A]/95 backdrop-blur-md space-y-2">
+      <div class="flex items-center gap-2.5">
         <button
           type="button"
-          class="flex-1 h-9 lg:h-11 rounded-full font-sans text-[12px] lg:text-[13px] font-bold inline-flex items-center justify-center gap-1.5 lg:gap-2 transition-all duration-fast ease-signal cursor-pointer"
+          class="flex-1 h-11 rounded-full font-sans text-[13px] font-bold inline-flex items-center justify-center gap-2 transition-all duration-fast ease-signal cursor-pointer"
           :class="
             saved
               ? 'bg-mint/15 border border-mint text-mint hover:bg-mint/20'
@@ -765,14 +765,14 @@ const biggestPushText = computed(() => {
           "
           @click="emit('toggleShortlist')"
         >
-          <BookmarkCheck v-if="saved" class="w-3.5 h-3.5 lg:w-4 lg:h-4" />
-          <Bookmark v-else class="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+          <BookmarkCheck v-if="saved" class="w-4 h-4" />
+          <Bookmark v-else class="w-4 h-4" />
           <span>{{ saved ? settings.t('Saved', 'Tersimpan') : settings.t('Save to shortlist', 'Simpan ke daftar') }}</span>
         </button>
 
         <button
           type="button"
-          class="h-9 lg:h-11 px-3 lg:px-3.5 rounded-full bg-white/[0.04] border border-dashed border-[#334155] hover:border-[#64748B] font-sans text-[11.5px] lg:text-[12px] font-medium text-[#94A3B8] inline-flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          class="h-11 px-3.5 rounded-full bg-white/[0.04] border border-dashed border-[#334155] hover:border-[#64748B] font-sans text-[12px] font-medium text-[#94A3B8] inline-flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
           @click="emit('openAsk')"
         >
           <span>{{ settings.t('Ask Ascend', 'Tanya Ascend') }}</span>
@@ -782,7 +782,7 @@ const biggestPushText = computed(() => {
         </button>
       </div>
 
-      <p class="text-center font-sans text-[10.5px] lg:text-[11px] leading-snug text-ink-muted">
+      <p class="text-center font-sans text-[11px] leading-snug text-ink-muted">
         {{ settings.homeCopy.value.mapPage.cardFootnote }}
         <button
           type="button"

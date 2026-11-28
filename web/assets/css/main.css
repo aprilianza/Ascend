@@ -2991,13 +2991,42 @@
 }
 
 /* =====================================================================
-   USER SETTINGS: CALM ANIMATIONS MODE (Homepage & Map)
+   USER SETTINGS: CALM ANIMATIONS MODE (Homepage & Map — Desktop & Mobile)
+   Softens ambient motion, floating glow pulses, and continuous loops
+   without impairing functional UI interactions or loading spinners.
    ===================================================================== */
+html.ascend-calm-motion {
+  scroll-behavior: auto !important;
+}
+
 html.ascend-calm-motion .open-sign-glow,
 html.ascend-calm-motion .animate-ping,
 html.ascend-calm-motion .animate-pulse,
+html.ascend-calm-motion .animate-dash-flow,
+html.ascend-calm-motion .animate-dash-flow-slow,
+html.ascend-calm-motion .hero-aurora-breathe,
+html.ascend-calm-motion .scene-indo-scan-beam,
+html.ascend-calm-motion .hero-beacon-ping,
+html.ascend-calm-motion .hero-beacon-ping-delayed,
+html.ascend-calm-motion .hero-astrolabe-cw,
+html.ascend-calm-motion .treasure-dash-march,
+html.ascend-calm-motion .treasure-x-shockwave,
+html.ascend-calm-motion .treasure-x-sparks,
 html.ascend-calm-motion .ascend-bubble-a,
 html.ascend-calm-motion .ascend-bubble-b,
+html.ascend-calm-motion .stage-progress-bar,
+html.ascend-calm-motion .room-slot-open,
+html.ascend-calm-motion .crowd-slot-overflow,
+html.ascend-calm-motion .sol-orb-breathe,
+html.ascend-calm-motion .sol-scan-beam,
+html.ascend-calm-motion .sol-filter-progress,
+html.ascend-calm-motion .team-hex-spin-cw,
+html.ascend-calm-motion .team-hex-spin-ccw,
+html.ascend-calm-motion .team-hex-ripple,
+html.ascend-calm-motion .team-hex-breathe,
+html.ascend-calm-motion .team-icon-float-a,
+html.ascend-calm-motion .team-icon-float-b,
+html.ascend-calm-motion .hiw-comet-head,
 html.ascend-calm-motion .hiw-spark-a,
 html.ascend-calm-motion .hiw-spark-b,
 html.ascend-calm-motion .hiw-spark-c,
@@ -3015,8 +3044,21 @@ html.ascend-calm-motion .footer-light-twinkle,
 html.ascend-calm-motion .footer-shaft-breathe,
 html.ascend-calm-motion .summit-gpu-aurora-a,
 html.ascend-calm-motion .summit-gpu-aurora-b,
-html.ascend-calm-motion .summit-gpu-aurora-c {
+html.ascend-calm-motion .summit-gpu-aurora-c,
+html.ascend-calm-motion .wing-float-a,
+html.ascend-calm-motion .wing-float-b,
+html.ascend-calm-motion .diorama-steam-a,
+html.ascend-calm-motion .diorama-steam-b,
+html.ascend-calm-motion .diorama-pulse {
   animation: none !important;
+}
+
+html.ascend-calm-motion .scene-indo-scan-beam,
+html.ascend-calm-motion .sol-scan-beam,
+html.ascend-calm-motion .hero-beacon-ping,
+html.ascend-calm-motion .hero-beacon-ping-delayed,
+html.ascend-calm-motion .team-hex-ripple {
+  opacity: 0 !important;
 }
 
 /* =====================================================================

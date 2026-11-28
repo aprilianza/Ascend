@@ -16,6 +16,7 @@ const emit = defineEmits<{
   replay: []
 }>()
 
+const settings = useAscendSettings()
 const xHovered = ref(false)
 
 function handleReplay() {
@@ -34,7 +35,7 @@ const WAYPOINTS = [
 </script>
 
 <template>
-  <div class="relative w-full mt-2 sm:mt-3 px-0.5">
+  <div class="relative w-full mt-3 px-0.5">
     <svg
       :key="props.cycleKey"
       viewBox="0 0 980 116"
@@ -158,8 +159,8 @@ const WAYPOINTS = [
         </circle>
       </g>
 
-      <!-- Continuous Living Scout Pulse (Active during hold phase) -->
-      <g v-if="props.cyclePhase === 'enter'" class="treasure-comet-loop">
+      <!-- Continuous Living Scout Pulse (Active during hold phase unless Calm Animations is enabled) -->
+      <g v-if="props.cyclePhase === 'enter' && !settings.calmMotion.value" class="treasure-comet-loop">
         <circle r="5.5" fill="rgba(251, 191, 36, 0.36)" filter="url(#treasure-mint-glow)">
           <animateMotion
             :dur="props.energized || xHovered ? '1.8s' : '3.6s'"

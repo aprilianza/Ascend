@@ -204,6 +204,21 @@ const { meta, areas, loading, error, dataVersionLabel, loadAll } = useAscendData
 const shortlist = useShortlist()
 const mapTransition = useMapTransition()
 const settings = useAscendSettings()
+const {
+  viewportW,
+  viewportH,
+  fitReady,
+  isCompact,
+  mapHeaderTopPx,
+  mapEdgeInsetPx,
+  mapHeaderZoom,
+  mapPanelZoom,
+  mapTopOffsetPx,
+  mapBottomOffsetPx,
+  mapRightDockWidthPx,
+  mapRightDockInnerHeightPx,
+  MAP_HEADER_DESIGN_WIDTH,
+} = useDesktopFit()
 
 const localizedLayerOptions = computed<DataLayerOption[]>(() => {
   if (!settings.isId.value) return mapDataLayerOptions
@@ -296,9 +311,6 @@ const hoveredInfo = ref<{
   y: number
 } | null>(null)
 
-const viewportW = ref<number>(1440)
-const viewportH = ref<number>(900)
-
 // Map visual variant + 3D extruded buildings state
 const mapStyleId = ref<MapStyleId>('dark')
 const is3DMode = ref<boolean>(false)
@@ -346,6 +358,10 @@ watch(settings.showNeighborRing, () => {
 
 watch(settings.showHoverPreview, (allowed) => {
   if (!allowed) hoveredInfo.value = null
+})
+
+watch(settings.calmMotion, () => {
+  syncRouteAndReachOnMap()
 })
 
 // Default to AREA tab even before any hexagon is selected (matches wireframe)
@@ -655,12 +671,38 @@ function buildRimColorExpression(layerId: MapDataLayerId) {
   return buildMetricFillColorExpression(layerId)
 }
 
+function buildHollowHexRimFeature(feature: AreaFeature) {
+  const outer = feature.geometry.coordinates[0]
+  if (!outer || outer.length < 4) return null
+  const [cx, cy] = computeFeatureCentroid(feature)
+  const insetRatio = 0.885
+  const inner = outer.map(([lng, lat]) => [
+    cx + (lng - cx) * insetRatio,
+    cy + (lat - cy) * insetRatio,
+  ])
+  return {
+    type: 'Feature' as const,
+    geometry: {
+      type: 'Polygon' as const,
+      coordinates: [outer, [...inner].reverse()],
+    },
+    properties: {
+      h3: feature.properties.h3,
+      label: feature.properties.label,
+    },
+  }
+}
+
 function buildMetricOpacityExpression() {
   const light = isLightBasemap.value
   const sat = isSatelliteBasemap.value
   const d3 = is3DMode.value
   const cond = buildCombinedHighlightCondition(null)
   const isConf = activeLayerId.value === 'confidence'
+  const selH3 = selectedFeature.value?.properties.h3 ?? null
+
+  const wrapClearSelected = (expr: unknown) =>
+    selH3 ? ['case', ['==', ['get', 'h3'], selH3], 0, expr] : expr
 
   const z11Hi = d3 ? (sat ? 0.46 : 0.48) : (sat ? 0.36 : (light ? 0.42 : 0.44))
   const z14Hi = d3 ? (sat ? 0.36 : 0.38) : (sat ? 0.25 : (light ? 0.3 : 0.32))
@@ -675,12 +717,12 @@ function buildMetricOpacityExpression() {
         ['linear'],
         ['zoom'],
         11.5,
-        ['case', cond, z11Val, 0.04],
+        wrapClearSelected(['case', cond, z11Val, 0.04]),
         14.5,
-        ['case', cond, z14Val, 0.03],
+        wrapClearSelected(['case', cond, z14Val, 0.03]),
       ]
     }
-    return ['interpolate', ['linear'], ['zoom'], 11.5, z11Val, 14.5, z14Val]
+    return ['interpolate', ['linear'], ['zoom'], 11.5, wrapClearSelected(z11Val), 14.5, wrapClearSelected(z14Val)]
   }
 
   if (cond) {
@@ -689,15 +731,25 @@ function buildMetricOpacityExpression() {
       ['linear'],
       ['zoom'],
       11.5,
-      ['case', cond, z11Hi, 0.04],
+      wrapClearSelected(['case', cond, z11Hi, 0.04]),
       13.8,
-      ['case', cond, z14Hi, 0.03],
+      wrapClearSelected(['case', cond, z14Hi, 0.03]),
       15.5,
-      ['case', cond, z16Hi, 0.02],
+      wrapClearSelected(['case', cond, z16Hi, 0.02]),
     ]
   }
 
-  return ['interpolate', ['linear'], ['zoom'], 11.5, z11Hi, 13.8, z14Hi, 15.5, z16Hi]
+  return [
+    'interpolate',
+    ['linear'],
+    ['zoom'],
+    11.5,
+    wrapClearSelected(z11Hi),
+    13.8,
+    wrapClearSelected(z14Hi),
+    15.5,
+    wrapClearSelected(z16Hi),
+  ]
 }
 
 function selectRegionFilter(next: RegionFilter) {
@@ -853,6 +905,12 @@ function buildFillOpacityExpression(active: AreaLabel | null) {
   const sat = isSatelliteBasemap.value
   const d3 = is3DMode.value
   const highlightCond = buildCombinedHighlightCondition(active)
+  const selH3 = selectedFeature.value?.properties.h3 ?? null
+
+  // Remove fill color ONLY inside the selected hexagon so streets stay crystal clear;
+  // keep all other hexagons at their normal full colors & opacity!
+  const wrapClearSelected = (expr: unknown) =>
+    selH3 ? ['case', ['==', ['get', 'h3'], selH3], 0, expr] : expr
 
   if (highlightCond) {
     const z11Norm = d3 ? 0.54 : (sat ? 0.38 : (light ? 0.42 : 0.46))
@@ -866,26 +924,26 @@ function buildFillOpacityExpression(active: AreaLabel | null) {
       ['linear'],
       ['zoom'],
       11.5,
-      [
+      wrapClearSelected([
         'case',
         highlightCond,
         ['case', ['==', ['get', 'confidence'], 'low'], z11Low, z11Norm],
         0.04,
-      ],
+      ]),
       13.8,
-      [
+      wrapClearSelected([
         'case',
         highlightCond,
         ['case', ['==', ['get', 'confidence'], 'low'], z14Low, z14Norm],
         0.03,
-      ],
+      ]),
       15.5,
-      [
+      wrapClearSelected([
         'case',
         highlightCond,
         ['case', ['==', ['get', 'confidence'], 'low'], z16Low, z16Norm],
         0.02,
-      ],
+      ]),
     ]
   }
 
@@ -902,46 +960,92 @@ function buildFillOpacityExpression(active: AreaLabel | null) {
     ['linear'],
     ['zoom'],
     11.5,
-    ['case', ['==', ['get', 'confidence'], 'low'], z11Low, z11Norm],
+    wrapClearSelected(['case', ['==', ['get', 'confidence'], 'low'], z11Low, z11Norm]),
     13.8,
-    ['case', ['==', ['get', 'confidence'], 'low'], z14Low, z14Norm],
+    wrapClearSelected(['case', ['==', ['get', 'confidence'], 'low'], z14Low, z14Norm]),
     15.5,
-    ['case', ['==', ['get', 'confidence'], 'low'], z16Low, z16Norm],
+    wrapClearSelected(['case', ['==', ['get', 'confidence'], 'low'], z16Low, z16Norm]),
   ]
 }
 
-// Fluid bounded scale for left controls rail & bottom-left MAP LABELS filter on resized windows
-// (Maintains a comfortable minimum floor so buttons & text never become too small)
+// Fluid bounded scale for left controls rail & bottom-left MAP LABELS filter
+// Fits the composed desktop HUD proportionally on mobile/compact viewports without altering >= 1280px desktop
 const leftRailScale = computed(() => {
-  const byHeight = Math.min(1, Math.max(0.76, (viewportH.value - 90) / 680))
-  const byWidth = Math.min(1, Math.max(0.82, viewportW.value / 1120))
-  return Number(Math.min(byHeight, byWidth).toFixed(3))
+  if (fitReady.value && isCompact.value) return Number(mapPanelZoom.value.toFixed(3))
+  const byHeight = Math.min(1, Math.max(0.8, (viewportH.value - 90) / 680))
+  return Number(byHeight.toFixed(3))
 })
 
 const legendScale = computed(() => {
-  const byHeight = Math.min(1, Math.max(0.76, (viewportH.value - 80) / 700))
-  const byWidth = Math.min(1, Math.max(0.78, viewportW.value / 1080))
-  return Number(Math.min(byHeight, byWidth).toFixed(3))
+  if (fitReady.value && isCompact.value) return Number(mapPanelZoom.value.toFixed(3))
+  const byHeight = Math.min(1, Math.max(0.8, (viewportH.value - 80) / 700))
+  return Number(byHeight.toFixed(3))
+})
+
+const headerDropdownZoomStyle = computed(() => {
+  if (!fitReady.value || !isCompact.value) return undefined
+  const boost = Math.min(1.55, Math.max(1, mapPanelZoom.value / mapHeaderZoom.value))
+  return { zoom: boost.toFixed(3) }
+})
+
+const bottomCenterBarLayout = computed(() => {
+  if (!fitReady.value || !isCompact.value) {
+    return {
+      visible: true,
+      outerStyle: undefined as Record<string, string> | undefined,
+      innerStyle: undefined as Record<string, string> | undefined,
+    }
+  }
+  const legendVisualW = Math.round(274 * legendScale.value)
+  const leftBound = mapEdgeInsetPx.value + legendVisualW + 10
+  const handleVisualW = Math.round(32 * mapPanelZoom.value)
+  const rightBound = drawerOpen.value
+    ? viewportW.value - mapEdgeInsetPx.value - mapRightDockWidthPx.value - handleVisualW - 10
+    : viewportW.value - mapEdgeInsetPx.value - 10
+  const openGap = rightBound - leftBound
+  if (openGap < 165) {
+    return { visible: false, outerStyle: undefined, innerStyle: undefined }
+  }
+  const centerX = Math.round((leftBound + rightBound) / 2)
+  const pillZoom = Math.min(mapPanelZoom.value, Math.max(0.32, (openGap - 12) / 540))
+  return {
+    visible: true,
+    outerStyle: {
+      left: `${centerX}px`,
+      bottom: `${mapBottomOffsetPx.value}px`,
+      transform: 'translateX(-50%)',
+    },
+    innerStyle: {
+      zoom: pillZoom.toFixed(3),
+    },
+  }
 })
 
 function getCameraPadding() {
-  const compactSheet = drawerOpen.value && viewportW.value < 1024
+  const dockPad = drawerOpen.value
+    ? Math.round((isCompact.value ? mapRightDockWidthPx.value : 402) + (isCompact.value ? 22 : 26))
+    : (isCompact.value ? 18 : 28)
   return {
-    top: viewportW.value < 1024 ? 62 : 84,
-    bottom: compactSheet ? Math.min(390, Math.max(255, Math.round(viewportH.value * 0.47))) : 74,
-    left: viewportW.value < 1024 ? 54 : 68,
-    right: drawerOpen.value && viewportW.value >= 1024 ? 428 : 28,
+    top: isCompact.value ? mapTopOffsetPx.value + 12 : 84,
+    bottom: isCompact.value ? mapBottomOffsetPx.value + 20 : 74,
+    left: isCompact.value ? Math.round(54 * leftRailScale.value) + 14 : 68,
+    right: dockPad,
   }
 }
 
 function getRouteBoundsPadding() {
-  const compactSheet = drawerOpen.value && viewportW.value < 1024
-  const legendPad = !legendCollapsed.value && viewportW.value >= 1024 ? 296 : 74
+  const legendPad = !legendCollapsed.value
+    ? Math.round(274 * legendScale.value) + (isCompact.value ? 18 : 22)
+    : Math.round(54 * leftRailScale.value) + 18
+  const dockPad = drawerOpen.value
+    ? Math.round((isCompact.value ? mapRightDockWidthPx.value : 402) + (isCompact.value ? 28 : 42))
+    : (isCompact.value ? 24 : 44)
+  const availableMid = viewportW.value - legendPad - dockPad
   return {
-    top: viewportW.value < 1024 ? 76 : 108,
-    bottom: compactSheet ? Math.min(400, Math.max(265, Math.round(viewportH.value * 0.48))) : 120,
-    left: legendPad,
-    right: drawerOpen.value && viewportW.value >= 1024 ? 444 : 44,
+    top: isCompact.value ? mapTopOffsetPx.value + 18 : 108,
+    bottom: isCompact.value ? mapBottomOffsetPx.value + 34 : 120,
+    left: availableMid >= 120 ? legendPad : (isCompact.value ? Math.round(54 * leftRailScale.value) + 14 : 74),
+    right: dockPad,
   }
 }
 
@@ -981,6 +1085,12 @@ function applyMapFiltersAndSelection() {
     }
   }
 
+  const sel = selectedFeature.value
+  const selH3 = sel?.properties.h3 ?? null
+  const neighborIds = sel && areas.value && settings.showNeighborRing.value
+    ? findNeighborH3Ids(sel, areas.value.features)
+    : []
+
   if (mapInstance.getLayer('areas-color-rim')) {
     mapInstance.setPaintProperty('areas-color-rim', 'line-color', buildRimColorExpression(layerId))
     mapInstance.setPaintProperty(
@@ -993,16 +1103,14 @@ function applyMapFiltersAndSelection() {
     const baseRimOpacity = is3DMode.value
       ? (isSatelliteBasemap.value ? 0.92 : 0.86)
       : (isSatelliteBasemap.value ? 0.68 : (isLightBasemap.value ? 0.54 : 0.26))
-    if (highlightCond) {
-      mapInstance.setPaintProperty('areas-color-rim', 'line-opacity', [
-        'case',
-        highlightCond,
-        is3DMode.value ? 0.95 : 0.82,
-        0.08,
-      ])
-    } else {
-      mapInstance.setPaintProperty('areas-color-rim', 'line-opacity', baseRimOpacity)
-    }
+    const rimExpr = highlightCond
+      ? ['case', highlightCond, is3DMode.value ? 0.95 : 0.82, 0.08]
+      : baseRimOpacity
+    mapInstance.setPaintProperty(
+      'areas-color-rim',
+      'line-opacity',
+      selH3 ? ['case', ['==', ['get', 'h3'], selH3], 0, rimExpr] : rimExpr,
+    )
   }
 
   if (mapInstance.getLayer('areas-outline')) {
@@ -1013,35 +1121,65 @@ function applyMapFiltersAndSelection() {
         ? ['interpolate', ['linear'], ['zoom'], 11, 1.3, 15.5, 2.1]
         : ['interpolate', ['linear'], ['zoom'], 11, 0.75, 15.5, 1.15],
     )
+    const normalOutlineOp = is3DMode.value
+      ? (isSatelliteBasemap.value ? 0.78 : (isLightBasemap.value ? 0.72 : 0.85))
+      : (isSatelliteBasemap.value ? 0.5 : (isLightBasemap.value ? 0.58 : 0.9))
     mapInstance.setPaintProperty(
       'areas-outline',
       'line-opacity',
-      is3DMode.value
-        ? (isSatelliteBasemap.value ? 0.78 : (isLightBasemap.value ? 0.72 : 0.85))
-        : (isSatelliteBasemap.value ? 0.5 : (isLightBasemap.value ? 0.58 : 0.9)),
+      selH3 ? ['case', ['==', ['get', 'h3'], selH3], 0, normalOutlineOp] : normalOutlineOp,
     )
   }
 
-  // 2. Update selected hexagon & exact 6-neighbor ~500 m ring (respecting Settings toggle!)
-  const sel = selectedFeature.value
+  if (mapInstance.getLayer('areas-outline-low')) {
+    mapInstance.setPaintProperty(
+      'areas-outline-low',
+      'line-opacity',
+      selH3 ? ['case', ['==', ['get', 'h3'], selH3], 0, 0.72] : 0.72,
+    )
+  }
+
+  // 2. Update selected hexagon bold outline, outer glow, optional 3D hollow rim, & 6-neighbor ~500 m ring
+  if (mapInstance.getLayer('areas-selected-glow')) {
+    mapInstance.setFilter('areas-selected-glow', [
+      '==',
+      ['get', 'h3'],
+      selH3 ?? '',
+    ])
+  }
   if (mapInstance.getLayer('areas-selected')) {
     mapInstance.setFilter('areas-selected', [
       '==',
       ['get', 'h3'],
-      sel ? sel.properties.h3 : '',
+      selH3 ?? '',
     ])
   }
   if (mapInstance.getLayer('areas-selected-halo')) {
     mapInstance.setFilter('areas-selected-halo', [
       '==',
       ['get', 'h3'],
-      sel ? sel.properties.h3 : '',
+      selH3 ?? '',
     ])
   }
 
+  const rim3dSrc = mapInstance.getSource('selected-hex-3d-rim') as import('maplibre-gl').GeoJSONSource | undefined
+  if (rim3dSrc) {
+    const rimFeat = sel ? buildHollowHexRimFeature(sel) : null
+    rim3dSrc.setData({
+      type: 'FeatureCollection',
+      features: rimFeat ? [rimFeat] : [],
+    })
+  }
+  if (mapInstance.getLayer('areas-selected-3d-rim')) {
+    mapInstance.setLayoutProperty(
+      'areas-selected-3d-rim',
+      'visibility',
+      sel && is3DMode.value ? 'visible' : 'none',
+    )
+  }
+
   if (mapInstance.getLayer('areas-neighbors')) {
-    if (sel && areas.value && settings.showNeighborRing.value) {
-      const neighborIds = findNeighborH3Ids(sel, areas.value.features)
+    if (sel && neighborIds.length > 0) {
       mapInstance.setFilter('areas-neighbors', [
         'in',
         ['get', 'h3'],
@@ -1106,8 +1244,12 @@ const DASH_SEQUENCE: number[][] = [
 function startRouteAnimation(coords: [number, number][]) {
   stopRouteAnimation()
   if (typeof window === 'undefined' || coords.length < 2) return
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (reduced) return
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches || settings.calmMotion.value
+  if (reduced) {
+    const cometSrc = mapInstance?.getSource('route-comet') as import('maplibre-gl').GeoJSONSource | undefined
+    cometSrc?.setData({ type: 'FeatureCollection', features: [] })
+    return
+  }
 
   const startTs = performance.now()
   let lastDashTs = startTs
@@ -1298,11 +1440,12 @@ function selectArea(feature: AreaFeature | null, fly = true) {
     drawerOpen.value = true
     if (fly && mapInstance) {
       const center = computeFeatureCentroid(feature)
+      const targetZoom = isCompact.value ? 14.5 : 15.05
       mapInstance.flyTo({
         center,
-        zoom: Math.max(mapInstance.getZoom(), 15.1),
+        zoom: Math.max(mapInstance.getZoom(), targetZoom),
         padding: getCameraPadding(),
-        duration: 720,
+        duration: settings.calmMotion.value ? 260 : 680,
         essential: true,
       })
     }
@@ -1632,8 +1775,8 @@ function apply3DCameraAndBuildings() {
     map.easeTo({
       pitch: isSatelliteBasemap.value ? 52 : 56,
       bearing: map.getBearing() === 0 ? -18 : map.getBearing(),
-      zoom: Math.max(map.getZoom(), 14.5),
-      duration: 750,
+      zoom: Math.max(map.getZoom(), isCompact.value ? 14.0 : 14.3),
+      duration: settings.calmMotion.value ? 260 : 750,
     })
   } else {
     if (map.getLayer('ascend-3d-buildings')) {
@@ -1646,7 +1789,7 @@ function apply3DCameraAndBuildings() {
     map.easeTo({
       pitch: 0,
       bearing: 0,
-      duration: 600,
+      duration: settings.calmMotion.value ? 240 : 600,
     })
   }
 }
@@ -1676,9 +1819,9 @@ function flyToShortlist(h3: string, center: [number, number]) {
   }
   mapInstance?.flyTo({
     center,
-    zoom: 15.1,
+    zoom: isCompact.value ? 14.5 : 15.05,
     padding: getCameraPadding(),
-    duration: 720,
+    duration: settings.calmMotion.value ? 260 : 680,
   })
 }
 
@@ -1849,6 +1992,12 @@ function mountAscendLayers(map: import('maplibre-gl').Map) {
       data: { type: 'FeatureCollection', features: [] },
     })
   }
+  if (!map.getSource('selected-hex-3d-rim')) {
+    map.addSource('selected-hex-3d-rim', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features: [] },
+    })
+  }
 
   // 1a. TOP-LAYER translucent colorblind-safe patterned hexagon fill (Market Room default layer)
   map.addLayer({
@@ -1947,10 +2096,10 @@ function mountAscendLayers(map: import('maplibre-gl').Map) {
     source: 'areas',
     filter: ['in', ['get', 'h3'], ['literal', []]],
     paint: {
-      'line-color': light ? '#0F172A' : '#F8FAFC',
-      'line-width': 1.85,
+      'line-color': light ? '#1E293B' : '#E2E8F0',
+      'line-width': 1.75,
       'line-dasharray': [3, 2.5],
-      'line-opacity': 0.85,
+      'line-opacity': 0.7,
     },
   })
 
@@ -1967,27 +2116,70 @@ function mountAscendLayers(map: import('maplibre-gl').Map) {
     },
   })
 
-  // 7. Selected hexagon crisp unbroken outline
+  // 7a. Selected hexagon 3D hollow elevated perimeter rim (visible in 3D mode, keeps interior 100% clear!)
+  map.addLayer({
+    id: 'areas-selected-3d-rim',
+    type: 'fill-extrusion',
+    source: 'selected-hex-3d-rim',
+    layout: {
+      visibility: selectedFeature.value && is3DMode.value ? 'visible' : 'none',
+    },
+    paint: {
+      'fill-extrusion-color': light ? '#0F172A' : '#00E5A8',
+      'fill-extrusion-height': 24,
+      'fill-extrusion-base': 0,
+      'fill-extrusion-opacity': light ? 0.88 : 0.9,
+    },
+  })
+
+  // 7b. Selected hexagon ambient outer glow halo
+  map.addLayer({
+    id: 'areas-selected-glow',
+    type: 'line',
+    source: 'areas',
+    filter: ['==', ['get', 'h3'], ''],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    paint: {
+      'line-color': light ? '#FFFFFF' : '#00E5A8',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 11, 9.5, 15, 15],
+      'line-blur': light ? 2.5 : 6.5,
+      'line-opacity': light ? 0.92 : 0.65,
+    },
+  })
+
+  // 7c. Selected hexagon crisp high-contrast casing
   map.addLayer({
     id: 'areas-selected-halo',
     type: 'line',
     source: 'areas',
     filter: ['==', ['get', 'h3'], ''],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
     paint: {
-      'line-color': light ? '#FFFFFF' : '#090D12',
-      'line-width': 5.4,
-      'line-opacity': 0.82,
+      'line-color': light ? '#FFFFFF' : '#071216',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 11, 6.4, 15, 9.2],
+      'line-opacity': 0.95,
     },
   })
 
+  // 7d. Selected hexagon bold razor-sharp primary outline (fill stays 0% so streets shine through!)
   map.addLayer({
     id: 'areas-selected',
     type: 'line',
     source: 'areas',
     filter: ['==', ['get', 'h3'], ''],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
     paint: {
-      'line-color': light ? '#0F172A' : '#FFFFFF',
-      'line-width': 3.2,
+      'line-color': light ? '#0B1324' : '#FFFFFF',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 11, 3.8, 15, 5.6],
     },
   })
 
@@ -2371,23 +2563,12 @@ async function retryLoad() {
   }
 }
 
-function handleResize() {
-  viewportW.value = window.innerWidth
-  viewportH.value = window.innerHeight
-}
-
 onMounted(async () => {
   settings.load()
   shortlist.load()
   if (settings.isMapLight.value && mapStyleId.value === 'dark') {
     mapStyleId.value = 'bright'
   }
-  handleResize()
-  // On mobile viewports, keep drawer closed initially so the full Bandung map shines first
-  if (window.innerWidth < 1024) {
-    drawerOpen.value = false
-  }
-  window.addEventListener('resize', handleResize)
   window.addEventListener('keydown', handleKeydown)
   window.addEventListener('click', handleDocumentClick)
   await loadAll('coffee_shop')
@@ -2401,7 +2582,6 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   stopRouteAnimation()
-  window.removeEventListener('resize', handleResize)
   window.removeEventListener('keydown', handleKeydown)
   window.removeEventListener('click', handleDocumentClick)
   if (rentNoticeTimer) clearTimeout(rentNoticeTimer)
@@ -2419,11 +2599,11 @@ const hoverTooltipStyle = computed(() => {
   const cardH = 114
   const gap = 22
 
-  const safeLeft = 74
-  const safeRight = drawerOpen.value && viewportW.value >= 1024
-    ? viewportW.value - 452
+  const safeLeft = isCompact.value ? Math.round(54 * leftRailScale.value) + 18 : 74
+  const safeRight = drawerOpen.value
+    ? viewportW.value - (isCompact.value ? mapRightDockWidthPx.value + 36 : 452)
     : viewportW.value - 24
-  const safeTop = 88
+  const safeTop = isCompact.value ? mapTopOffsetPx.value + 8 : 88
   const safeBottom = viewportH.value - 24
 
   let tx: number
@@ -2459,32 +2639,40 @@ const hoverTooltipStyle = computed(() => {
     class="relative w-full h-[100svh] bg-[#090C11] overflow-hidden select-none transition-colors duration-200"
     :class="{ 'map-theme-light': settings.isMapLight.value }"
   >
-    <!-- ==================== 1. UNIFIED FULL-WIDTH FLOATING PILL HEADER BAR (SEARCH + REGION + LAYER + FLUID COMPACT SCALE) ==================== -->
-    <header class="absolute top-2.5 lg:top-3 inset-x-2.5 sm:inset-x-4 z-40 pointer-events-none">
+    <!-- ==================== 1. UNIFIED FULL-WIDTH FLOATING PILL HEADER BAR (DESKTOP COMPOSITION FITTED TO MOBILE WEB) ==================== -->
+    <header
+      class="absolute inset-x-0 z-40 pointer-events-none flex justify-center"
+      :style="{
+        top: `${mapHeaderTopPx}px`,
+        paddingLeft: `${mapEdgeInsetPx}px`,
+        paddingRight: `${mapEdgeInsetPx}px`,
+      }"
+    >
       <div
-        class="pointer-events-auto mx-auto max-w-[1680px] h-[clamp(44px,5.4vw,60px)] px-[clamp(8px,1.4vw,14px)] rounded-full bg-[#111620]/95 backdrop-blur-xl border border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.65)] flex items-center justify-between gap-1.5 sm:gap-2"
+        class="pointer-events-auto w-full max-w-[1680px] h-[60px] px-3.5 rounded-full bg-[#111620]/95 backdrop-blur-xl border border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.65)] flex items-center justify-between gap-2"
+        :style="fitReady && isCompact ? { width: `${MAP_HEADER_DESIGN_WIDTH}px`, zoom: String(mapHeaderZoom) } : undefined"
       >
         <!-- Left: Circular Back Button + Brand (City-Agnostic, Zero Hardcoded City Chip) -->
-        <div class="flex items-center gap-1.5 sm:gap-2.5 min-w-0 shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0 shrink-0">
           <NuxtLink
             to="/"
             aria-label="Back to homepage"
             title="Back to homepage"
-            class="w-[clamp(30px,3.4vw,38px)] h-[clamp(30px,3.4vw,38px)] rounded-full bg-[#1A212D] border border-white/10 hover:border-mint/60 flex items-center justify-center text-ink-secondary hover:text-ink-primary transition-colors shrink-0"
+            class="w-[38px] h-[38px] rounded-full bg-[#1A212D] border border-white/10 hover:border-mint/60 flex items-center justify-center text-ink-secondary hover:text-ink-primary transition-colors shrink-0"
           >
             <ChevronLeft class="w-4 h-4" />
           </NuxtLink>
 
           <NuxtLink
             to="/"
-            class="inline-flex items-center gap-1.5 sm:gap-2 group shrink-0"
+            class="inline-flex items-center gap-2 group shrink-0"
             aria-label="Ascend Home"
           >
             <UiAscendMark
-              :size="24"
-              class="w-[clamp(21px,2.4vw,26px)] h-[clamp(21px,2.4vw,26px)] transition-all duration-mid ease-signal group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.55)]"
+              :size="26"
+              class="w-[26px] h-[26px] transition-all duration-mid ease-signal group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.55)]"
             />
-            <span class="hidden min-[420px]:inline font-display font-bold text-[clamp(11.5px,1.4vw,15px)] tracking-[0.07em] text-ink-primary">
+            <span class="font-display font-bold text-[15px] tracking-[0.07em] text-ink-primary">
               ASCEND
             </span>
           </NuxtLink>
@@ -2498,12 +2686,12 @@ const hoverTooltipStyle = computed(() => {
         </div>
 
         <!-- Center: Location Search Bar + REGION (Kawasan) Dropdown + LAYER Switcher -->
-        <div class="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1 justify-center">
-          <!-- Location Search Anchor (Inline Pill on lg+, Icon Trigger + Floating Bar on < lg) -->
-          <div ref="searchAnchor" class="relative shrink-0 lg:shrink lg:w-full lg:max-w-[290px]">
+        <div class="flex items-center gap-2 min-w-0 flex-1 justify-center">
+          <!-- Location Search Anchor (Always Inline Desktop Pill) -->
+          <div ref="searchAnchor" class="relative shrink w-full max-w-[290px]">
             <!-- Desktop Inline Search Input -->
             <div
-              class="hidden lg:flex items-center gap-2 h-[38px] px-3.5 rounded-full bg-[#0A0E14]/90 border transition-all"
+              class="flex items-center gap-2 h-[38px] px-3.5 rounded-full bg-[#0A0E14]/90 border transition-all"
               :class="
                 searchDropdownOpen
                   ? 'border-mint/70 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
@@ -2534,24 +2722,7 @@ const hoverTooltipStyle = computed(() => {
               </button>
             </div>
 
-            <!-- Compact (< lg) Search Icon Trigger -->
-            <button
-              type="button"
-              aria-label="Search mapped locations"
-              :aria-expanded="compactSearchOpen"
-              title="Search district or area"
-              class="lg:hidden w-[clamp(30px,3.4vw,38px)] h-[clamp(30px,3.4vw,38px)] rounded-full border flex items-center justify-center transition-all cursor-pointer"
-              :class="
-                compactSearchOpen
-                  ? 'border-mint bg-mint/15 text-mint shadow-[0_0_16px_rgba(16,185,129,0.3)]'
-                  : 'border-white/15 bg-[#0D131C] text-ink-secondary hover:border-mint/60 hover:text-mint'
-              "
-              @click.stop="toggleCompactSearch"
-            >
-              <Search class="w-3.5 h-3.5" />
-            </button>
-
-            <!-- Live Search Autocomplete Dropdown (Desktop anchored under input; Compact centered below header) -->
+            <!-- Live Search Autocomplete Dropdown (Anchored cleanly below search bar) -->
             <Transition
               enter-active-class="transition duration-150 ease-signal"
               enter-from-class="opacity-0 -translate-y-1.5 scale-95"
@@ -2561,34 +2732,11 @@ const hoverTooltipStyle = computed(() => {
               leave-to-class="opacity-0 -translate-y-1.5 scale-95"
             >
               <div
-                v-if="(searchDropdownOpen && viewportW >= 1024) || (compactSearchOpen && viewportW < 1024)"
-                class="fixed lg:absolute left-3 right-3 sm:left-4 sm:right-4 lg:left-0 lg:right-auto top-[62px] lg:top-[calc(100%+10px)] z-50 lg:w-[340px] max-h-[65vh] overflow-y-auto rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.88)] p-2.5 space-y-2.5 select-text"
+                v-if="searchDropdownOpen"
+                class="absolute left-0 top-[calc(100%+10px)] z-50 w-[340px] max-h-[460px] overflow-y-auto rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.88)] p-2.5 space-y-2.5 select-text"
+                :style="headerDropdownZoomStyle"
                 @click.stop
               >
-                <!-- Compact (< lg) Search Input Inside Floating Popover -->
-                <div class="lg:hidden flex items-center gap-2 h-9 px-3 rounded-xl bg-[#090D14] border border-mint/45">
-                  <Search class="w-3.5 h-3.5 text-mint shrink-0" />
-                  <input
-                    ref="compactSearchInputRef"
-                    v-model="searchQuery"
-                    type="text"
-                    autocomplete="off"
-                    spellcheck="false"
-                    :placeholder="settings.t('Search district or area...', 'Cari kecamatan atau area...')"
-                    :aria-label="settings.t('Search mapped district or neighborhood', 'Cari kecamatan atau area terpetakan')"
-                    class="w-full min-w-0 bg-transparent text-[12.5px] font-sans text-ink-primary placeholder:text-ink-muted focus:outline-none"
-                    @keydown.enter.prevent="handleSearchEnter"
-                  >
-                  <button
-                    v-if="searchQuery"
-                    type="button"
-                    aria-label="Clear search"
-                    class="text-ink-muted hover:text-ink-primary cursor-pointer"
-                    @click="searchQuery = ''; compactSearchInputRef?.focus()"
-                  >
-                    <X class="w-3.5 h-3.5" />
-                  </button>
-                </div>
 
                 <template v-if="hasAnySearchMatch">
                   <!-- Study Zones Matches -->
@@ -2688,7 +2836,7 @@ const hoverTooltipStyle = computed(() => {
               aria-label="Filter study area or district"
               :aria-expanded="regionPickerOpen"
               :title="`Area filter: ${activeRegionLabel}`"
-              class="relative inline-flex items-center justify-center lg:justify-between gap-1.5 h-[clamp(30px,3.4vw,38px)] w-[clamp(30px,3.4vw,38px)] lg:w-auto lg:px-3.5 rounded-full border transition-all cursor-pointer"
+              class="relative inline-flex items-center justify-between gap-1.5 h-[38px] px-3.5 rounded-full border transition-all cursor-pointer"
               :class="
                 regionPickerOpen || activeRegion.kind !== 'all'
                   ? 'border-mint/70 bg-mint/15 text-ink-primary shadow-[0_0_16px_rgba(16,185,129,0.22)]'
@@ -2697,19 +2845,14 @@ const hoverTooltipStyle = computed(() => {
               @click.stop="regionPickerOpen = !regionPickerOpen; layerPickerOpen = false; searchDropdownOpen = false; compactSearchOpen = false; goodToKnowOpen = false"
             >
               <MapPin class="w-3.5 h-3.5 shrink-0" :class="activeRegion.kind !== 'all' ? 'text-mint' : 'text-ink-muted'" />
-              <span
-                v-if="activeRegion.kind !== 'all'"
-                class="lg:hidden absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-mint border border-[#0A0E14]"
-                aria-hidden="true"
-              />
-              <span class="hidden lg:inline font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-muted">
+              <span class="font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-muted">
                 {{ settings.t('AREA', 'KAWASAN') }}
               </span>
-              <span class="hidden lg:inline font-sans text-[12px] font-semibold text-ink-primary max-w-[104px] truncate">
+              <span class="font-sans text-[12px] font-semibold text-ink-primary max-w-[104px] truncate">
                 {{ activeRegionLabel }}
               </span>
               <ChevronDown
-                class="hidden lg:inline w-3.5 h-3.5 text-ink-muted transition-transform duration-150 shrink-0"
+                class="w-3.5 h-3.5 text-ink-muted transition-transform duration-150 shrink-0"
                 :class="regionPickerOpen ? 'rotate-180 text-mint' : ''"
               />
             </button>
@@ -2726,7 +2869,8 @@ const hoverTooltipStyle = computed(() => {
                 v-if="regionPickerOpen"
                 role="menu"
                 aria-label="Study zones and districts"
-                class="fixed lg:absolute left-3 right-3 sm:left-auto sm:right-4 lg:left-0 lg:right-auto top-[62px] lg:top-[calc(100%+10px)] z-50 sm:w-[300px] rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.88)] p-2.5 space-y-2.5 select-text"
+                class="absolute left-0 top-[calc(100%+10px)] z-50 w-[300px] rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.88)] p-2.5 space-y-2.5 select-text"
+                :style="headerDropdownZoomStyle"
                 @click.stop
               >
                 <!-- Study Zones Section -->
@@ -2834,7 +2978,7 @@ const hoverTooltipStyle = computed(() => {
               aria-label="Switch hexagon data layer"
               :aria-expanded="layerPickerOpen"
               :title="`Map layer: ${activeLayerMeta.title}`"
-              class="relative inline-flex items-center justify-center lg:justify-between gap-1.5 h-[clamp(30px,3.4vw,38px)] w-[clamp(30px,3.4vw,38px)] lg:w-auto lg:px-3.5 rounded-full border transition-all cursor-pointer"
+              class="relative inline-flex items-center justify-between gap-1.5 h-[38px] px-3.5 rounded-full border transition-all cursor-pointer"
               :class="
                 layerPickerOpen || activeLayerId !== 'labels'
                   ? 'border-mint/70 bg-mint/15 text-ink-primary shadow-[0_0_16px_rgba(16,185,129,0.22)]'
@@ -2843,19 +2987,14 @@ const hoverTooltipStyle = computed(() => {
               @click.stop="layerPickerOpen = !layerPickerOpen; regionPickerOpen = false; searchDropdownOpen = false; compactSearchOpen = false; goodToKnowOpen = false"
             >
               <Layers class="w-3.5 h-3.5 shrink-0" :style="{ color: activeLayerMeta.accent }" />
-              <span
-                v-if="activeLayerId !== 'labels'"
-                class="lg:hidden absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-mint border border-[#0A0E14]"
-                aria-hidden="true"
-              />
-              <span class="hidden lg:inline font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-muted">
+              <span class="font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-muted">
                 {{ settings.t('LAYER', 'LAPISAN') }}
               </span>
-              <span class="hidden lg:inline font-sans text-[12px] font-semibold text-ink-primary max-w-[100px] truncate">
+              <span class="font-sans text-[12px] font-semibold text-ink-primary max-w-[100px] truncate">
                 {{ activeLayerMeta.shortTitle }}
               </span>
               <ChevronDown
-                class="hidden lg:inline w-3.5 h-3.5 text-ink-muted transition-transform duration-150 shrink-0"
+                class="w-3.5 h-3.5 text-ink-muted transition-transform duration-150 shrink-0"
                 :class="layerPickerOpen ? 'rotate-180 text-mint' : ''"
               />
             </button>
@@ -2872,7 +3011,8 @@ const hoverTooltipStyle = computed(() => {
                 v-if="layerPickerOpen"
                 role="menu"
                 aria-label="Hexagon data layers"
-                class="fixed lg:absolute left-3 right-3 sm:left-auto sm:right-4 lg:right-0 lg:left-auto top-[62px] lg:top-[calc(100%+10px)] z-50 sm:w-[300px] rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.88)] p-2.5 space-y-1 select-text"
+                class="absolute right-0 top-[calc(100%+10px)] z-50 w-[300px] rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.88)] p-2.5 space-y-1 select-text"
+                :style="headerDropdownZoomStyle"
                 @click.stop
               >
                 <p class="px-2 pt-0.5 pb-1 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
@@ -2946,15 +3086,15 @@ const hoverTooltipStyle = computed(() => {
           </div>
         </div>
 
-        <!-- Right: Business Type Switcher (Compact < 2xl, Full Pills 2xl+) + (i) + Shortlist + About -->
-        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- Right: Business Type Switcher + (i) + Settings + Shortlist + About (Full Desktop Parity) -->
+        <div class="flex items-center gap-2 shrink-0">
           <!-- Business Type Selector Capsule -->
-          <div class="hidden sm:flex items-center gap-1 p-1 rounded-full bg-[#0A0E14]/90 border border-white/[0.08]">
+          <div class="flex items-center gap-1 p-1 rounded-full bg-[#0A0E14]/90 border border-white/[0.08]">
             <button
               type="button"
               aria-label="Coffee shop (Live)"
               title="Coffee shop · Live open-data coverage"
-              class="inline-flex items-center justify-center gap-1.5 h-[clamp(26px,2.9vw,32px)] w-[clamp(26px,2.9vw,32px)] 2xl:w-auto 2xl:px-3.5 rounded-full bg-mint text-[#071510] font-sans text-[12px] font-bold shadow-[0_0_16px_rgba(16,185,129,0.35)]"
+              class="inline-flex items-center justify-center gap-1.5 h-8 w-8 2xl:w-auto 2xl:px-3.5 rounded-full bg-mint text-[#071510] font-sans text-[12px] font-bold shadow-[0_0_16px_rgba(16,185,129,0.35)]"
             >
               <Coffee class="w-3.5 h-3.5 shrink-0" />
               <span class="hidden 2xl:inline">{{ HOME_COPY.hero.businessCoffee }}</span>
@@ -2965,7 +3105,7 @@ const hoverTooltipStyle = computed(() => {
               disabled
               aria-label="Eatery (Coming soon)"
               title="Eatery · Coming soon in Phase 2"
-              class="relative inline-flex items-center justify-center gap-1.5 h-[clamp(26px,2.9vw,32px)] w-[clamp(26px,2.9vw,32px)] 2xl:w-auto 2xl:px-3 rounded-full border border-dashed border-[#334155]/90 bg-white/[0.02] text-[#94A3B8] font-sans text-[12px] cursor-not-allowed"
+              class="relative inline-flex items-center justify-center gap-1.5 h-8 w-8 2xl:w-auto 2xl:px-3 rounded-full border border-dashed border-[#334155]/90 bg-white/[0.02] text-[#94A3B8] font-sans text-[12px] cursor-not-allowed"
             >
               <UtensilsCrossed class="w-3.5 h-3.5 opacity-65 shrink-0" />
               <span class="2xl:hidden absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-signal-amber border border-[#0A0E14]" aria-hidden="true" />
@@ -2983,7 +3123,7 @@ const hoverTooltipStyle = computed(() => {
               :aria-label="settings.t('Good to know', 'Perlu diketahui')"
               :aria-expanded="goodToKnowOpen"
               :title="settings.t('Good to know · What Ascend does not do', 'Perlu diketahui · Batasan Ascend')"
-              class="w-[clamp(30px,3.4vw,38px)] h-[clamp(30px,3.4vw,38px)] rounded-full border flex items-center justify-center transition-all duration-fast ease-signal cursor-pointer"
+              class="w-[38px] h-[38px] rounded-full border flex items-center justify-center transition-all duration-fast ease-signal cursor-pointer"
               :class="
                 goodToKnowOpen
                   ? 'border-mint bg-mint/15 text-mint shadow-[0_0_16px_rgba(16,185,129,0.32)]'
@@ -2991,7 +3131,7 @@ const hoverTooltipStyle = computed(() => {
               "
               @click.stop="goodToKnowOpen = !goodToKnowOpen; regionPickerOpen = false; layerPickerOpen = false; searchDropdownOpen = false; compactSearchOpen = false"
             >
-              <Info class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <Info class="w-4 h-4" />
             </button>
 
             <!-- Floating Good to Know Popover -->
@@ -3007,7 +3147,8 @@ const hoverTooltipStyle = computed(() => {
                 v-if="goodToKnowOpen"
                 role="dialog"
                 :aria-label="settings.t('Good to know', 'Perlu diketahui')"
-                class="absolute -right-12 sm:right-0 top-[calc(100%+12px)] z-50 w-[290px] sm:w-[336px] rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.88)] space-y-3 select-text"
+                class="absolute right-0 top-[calc(100%+12px)] z-50 w-[336px] rounded-2xl bg-[#0E141D]/95 backdrop-blur-xl border border-white/15 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.88)] space-y-3 select-text"
+                :style="headerDropdownZoomStyle"
               >
                 <div class="flex items-center justify-between gap-2">
                   <span class="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-mint">
@@ -3065,7 +3206,7 @@ const hoverTooltipStyle = computed(() => {
             type="button"
             :aria-label="settings.settingsCopy.value.navTooltip"
             :title="`${settings.settingsCopy.value.navTooltip} · ${settings.settingsCopy.value.navTooltipHintMap}`"
-            class="relative w-[clamp(30px,3.4vw,38px)] h-[clamp(30px,3.4vw,38px)] rounded-full border flex items-center justify-center transition-all duration-fast ease-signal cursor-pointer"
+            class="relative mr-0.5 w-[38px] h-[38px] rounded-full border flex items-center justify-center transition-all duration-fast ease-signal cursor-pointer"
             :class="
               settingsOpen
                 ? 'border-mint bg-mint/15 text-mint shadow-[0_0_16px_rgba(16,185,129,0.32)]'
@@ -3073,21 +3214,21 @@ const hoverTooltipStyle = computed(() => {
             "
             @click.stop="settingsOpen = true; goodToKnowOpen = false; regionPickerOpen = false; layerPickerOpen = false; searchDropdownOpen = false; compactSearchOpen = false"
           >
-            <Settings class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <Settings class="w-4 h-4" />
             <span
-              class="absolute -bottom-1 -right-0.5 px-1 rounded-full border font-mono text-[7px] font-bold uppercase leading-[12px]"
+              class="absolute -bottom-0.5 -right-0.5 px-1 rounded-full border font-mono text-[7px] font-bold uppercase leading-[11px]"
               :class="settings.isMapLight.value ? 'bg-emerald-50 border-emerald-600/50 text-emerald-700' : 'bg-[#102721] border-mint/50 text-mint'"
             >
               {{ settings.locale.value }}
             </span>
           </button>
 
-          <!-- Shortlist Pill (Icon-Only Circle With Count Badge on < xl, Full Pill on xl+) -->
+          <!-- Full Desktop Shortlist Pill -->
           <button
             type="button"
             :aria-label="settings.t('Open shortlist', 'Buka daftar pendek')"
             :title="`${settings.t('Shortlist', 'Daftar pendek')} (${shortlist.items.value.length})`"
-            class="relative inline-flex items-center justify-center gap-1.5 h-[clamp(30px,3.4vw,38px)] w-[clamp(30px,3.4vw,38px)] xl:w-auto xl:px-3.5 rounded-full bg-[#0D131C] border transition-all font-sans text-[12px] font-semibold cursor-pointer"
+            class="relative inline-flex items-center justify-center gap-1.5 h-[38px] px-3.5 rounded-full bg-[#0D131C] border transition-all font-sans text-[12px] font-semibold cursor-pointer whitespace-nowrap"
             :class="
               drawerOpen && rightTab === 'shortlist'
                 ? 'border-mint/70 text-mint shadow-[0_0_18px_rgba(16,185,129,0.2)]'
@@ -3096,26 +3237,20 @@ const hoverTooltipStyle = computed(() => {
             @click="openShortlistTab"
           >
             <Bookmark class="w-3.5 h-3.5 shrink-0" />
-            <span class="hidden xl:inline">{{ settings.t('Shortlist', 'Daftar') }}</span>
-            <span class="hidden xl:inline font-mono text-[11px] text-mint">({{ shortlist.items.value.length }})</span>
-            <span
-              v-if="shortlist.items.value.length > 0"
-              class="xl:hidden absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-mint text-[#071510] font-mono text-[9px] font-bold flex items-center justify-center"
-            >
-              {{ shortlist.items.value.length }}
-            </span>
+            <span>{{ settings.t('Shortlist', 'Daftar') }}</span>
+            <span class="font-mono text-[11px] text-mint">({{ shortlist.items.value.length }})</span>
           </button>
 
-          <!-- About Mint CTA (Icon-Only Circle on < xl, Full Pill on xl+) -->
+          <!-- Full Desktop About Mint CTA -->
           <button
             type="button"
             :aria-label="settings.t('About Ascend', 'Tentang Ascend')"
             :title="settings.t('About Ascend · Methodology & data', 'Tentang Ascend · Metodologi & data')"
-            class="btn-mint h-[clamp(30px,3.4vw,38px)] w-[clamp(30px,3.4vw,38px)] xl:w-auto xl:px-4 text-[12px] font-bold shadow-[0_0_20px_rgba(16,185,129,0.35)] cursor-pointer"
+            class="btn-mint h-[38px] px-4 text-[12px] font-bold shadow-[0_0_20px_rgba(16,185,129,0.35)] cursor-pointer whitespace-nowrap"
             @click="openAboutModal('labels')"
           >
-            <BookOpen class="w-3.5 h-3.5 xl:hidden" :stroke-width="2.2" />
-            <span class="hidden xl:inline">{{ settings.t('About', 'Tentang') }}</span>
+            <BookOpen class="hidden" :stroke-width="2.2" />
+            <span>{{ settings.t('About', 'Tentang') }}</span>
           </button>
         </div>
       </div>
@@ -3205,11 +3340,15 @@ const hoverTooltipStyle = computed(() => {
       </div>
     </div>
 
-    <!-- ==================== 2. LEFT FLOATING MAP CONTROLS (FLUID BOUNDED SCALE, ZERO OVERLAP WITH LEGEND) ==================== -->
+    <!-- ==================== 2. LEFT FLOATING MAP CONTROLS (FLUID DESKTOP-FIT SCALE, ZERO OVERLAP WITH LEGEND) ==================== -->
     <div
       v-if="!loading && !error"
-      class="absolute top-[62px] lg:top-[84px] left-2.5 lg:left-4 z-20 flex flex-col items-center gap-2 origin-top-left transition-transform duration-200"
-      :style="{ transform: `scale(${leftRailScale})` }"
+      class="absolute z-20 flex flex-col items-center gap-2 origin-top-left transition-transform duration-200"
+      :style="{
+        top: `${mapTopOffsetPx}px`,
+        left: `${mapEdgeInsetPx}px`,
+        transform: `scale(${leftRailScale})`,
+      }"
     >
       <div class="flex flex-col items-center p-1.5 rounded-2xl bg-[#111620]/95 backdrop-blur-md border border-white/10 shadow-xl gap-1">
         <button
@@ -3529,11 +3668,14 @@ const hoverTooltipStyle = computed(() => {
     <!-- ==================== 5. BOTTOM-LEFT COLLAPSIBLE INTERACTIVE LEGEND (DYNAMIC PER LAYER + FAST (i) HOVER INFO) ==================== -->
     <aside
       v-if="!loading && !error"
-      v-show="!drawerOpen || viewportW >= 1024"
       aria-label="Map layer legend"
-      class="absolute bottom-4 lg:bottom-7 left-2.5 lg:left-4 w-[256px] sm:w-[274px] rounded-2xl bg-[#10151E]/95 backdrop-blur-md border border-white/10 shadow-2xl overflow-visible origin-bottom-left transition-transform duration-200"
+      class="absolute w-[274px] rounded-2xl bg-[#10151E]/95 backdrop-blur-md border border-white/10 shadow-2xl overflow-visible origin-bottom-left transition-transform duration-200"
       :class="hoveredLegendTip ? 'z-40' : 'z-20'"
-      :style="{ transform: `scale(${legendScale})` }"
+      :style="{
+        bottom: `${mapBottomOffsetPx}px`,
+        left: `${mapEdgeInsetPx}px`,
+        transform: `scale(${legendScale})`,
+      }"
       @mouseleave="hoveredLegendTip = null"
     >
       <!-- Instant Fast-Hover (i) Quick Info Card Floating Cleanly Beside Top of Legend -->
@@ -3811,10 +3953,21 @@ const hoverTooltipStyle = computed(() => {
 
     <!-- ==================== SELECTED ~500 M COUNTING RING PILL + 4. ASK ASCEND PREVIEW BAR ==================== -->
     <div
-      v-if="!loading && !error"
-      class="pointer-events-none hidden xl:flex flex-col items-center gap-2.5 absolute bottom-8 left-1/2 z-20 transition-all duration-300"
-      :class="drawerOpen ? '-translate-x-[calc(50%+84px)]' : '-translate-x-1/2'"
+      v-if="!loading && !error && bottomCenterBarLayout.visible"
+      class="pointer-events-none absolute z-20 transition-all duration-300"
+      :class="
+        fitReady && isCompact
+          ? ''
+          : drawerOpen
+            ? 'bottom-8 left-1/2 -translate-x-[calc(50%+84px)]'
+            : 'bottom-8 left-1/2 -translate-x-1/2'
+      "
+      :style="bottomCenterBarLayout.outerStyle"
     >
+      <div
+        class="flex flex-col items-center gap-2.5"
+        :style="bottomCenterBarLayout.innerStyle"
+      >
       <!-- Selected Area 500 m Scope Pill (Screen M2!) -->
       <Transition
         enter-active-class="transition duration-250 ease-signal"
@@ -3826,7 +3979,7 @@ const hoverTooltipStyle = computed(() => {
       >
         <div
           v-if="selectedFeature"
-          class="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10151E]/95 backdrop-blur-md border border-white/15 shadow-xl"
+          class="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10151E]/95 backdrop-blur-md border border-white/15 shadow-xl whitespace-nowrap"
         >
           <span class="w-2 h-2 rounded-full bg-mint shadow-[0_0_8px_rgba(16,185,129,0.9)]" aria-hidden="true" />
           <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-primary">
@@ -3838,7 +3991,7 @@ const hoverTooltipStyle = computed(() => {
       <!-- Bottom Ask Ascend Coming Soon Pill -->
       <button
         type="button"
-        class="pointer-events-auto inline-flex items-center gap-3 h-11 px-4 rounded-full bg-[#111620]/95 backdrop-blur-md border border-dashed border-[#334155]/90 hover:border-[#64748B] shadow-2xl transition-colors cursor-pointer"
+        class="pointer-events-auto inline-flex items-center gap-3 h-11 px-4 rounded-full bg-[#111620]/95 backdrop-blur-md border border-dashed border-[#334155]/90 hover:border-[#64748B] shadow-2xl transition-colors cursor-pointer whitespace-nowrap"
         @click="openAskTab"
       >
         <Sparkles class="w-4 h-4 text-[#94A3B8] shrink-0" />
@@ -3849,57 +4002,66 @@ const hoverTooltipStyle = computed(() => {
           {{ settings.t('COMING SOON', 'SEGERA HADIR') }}
         </span>
       </button>
+      </div>
     </div>
 
-    <!-- ==================== 3. UNIFIED 3-TAB COLLAPSIBLE RIGHT DOCK (DESKTOP) / COMPACT HALF-HEIGHT SHEET (< lg) ==================== -->
+    <!-- ==================== 3. UNIFIED 3-TAB COLLAPSIBLE RIGHT DOCK (EXACT DESKTOP DOCK SCALED FOR MOBILE WEB) ==================== -->
     <aside
       v-if="!loading && !error"
       aria-label="Area inspector and shortlist panel"
-      class="fixed z-30 select-text transition-transform duration-300 ease-signal
-             inset-x-2 sm:inset-x-3 bottom-2 h-[48vh] min-h-[268px] max-h-[404px] rounded-2xl
-             lg:inset-x-auto lg:top-[84px] lg:bottom-[34px] lg:right-4 lg:h-auto lg:min-h-0 lg:max-h-none lg:w-[402px] lg:rounded-2xl"
+      class="fixed z-30 select-text transition-transform duration-300 ease-signal rounded-2xl"
       :class="
-        drawerOpen
-          ? 'translate-y-0 lg:translate-x-0'
-          : 'translate-y-[112%] lg:translate-y-0 lg:translate-x-[calc(100%+16px)]'
+        fitReady && isCompact
+          ? (drawerOpen ? 'translate-x-0' : 'translate-x-[calc(100%+10px)]')
+          : (drawerOpen ? 'top-[84px] bottom-[34px] right-4 w-[402px] translate-x-0' : 'top-[84px] bottom-[34px] right-4 w-[402px] translate-x-[calc(100%+16px)]')
+      "
+      :style="
+        fitReady && isCompact
+          ? {
+              top: `${mapTopOffsetPx}px`,
+              bottom: `${mapBottomOffsetPx}px`,
+              right: `${mapEdgeInsetPx}px`,
+              width: `${mapRightDockWidthPx}px`,
+            }
+          : undefined
       "
     >
+      <div
+        class="relative w-[402px] h-full"
+        :style="
+          fitReady && isCompact
+            ? {
+                height: mapRightDockInnerHeightPx ? `${mapRightDockInnerHeightPx}px` : '100%',
+                zoom: String(mapPanelZoom),
+              }
+            : undefined
+        "
+      >
       <!-- Desktop Square Rounded-Left Edge Arrow Handle (Always visible both when open AND docked on right edge when closed!) -->
       <button
         type="button"
         :aria-label="drawerOpen ? 'Collapse side panel' : 'Expand side panel'"
         :title="drawerOpen ? 'Hide side panel' : 'Open side panel'"
-        class="hidden lg:flex items-center justify-center absolute top-1/2 -translate-y-1/2 -left-8 w-8 h-14 rounded-l-xl bg-[#111620]/95 backdrop-blur-xl border-y border-l border-white/15 hover:border-mint/65 text-ink-secondary hover:text-mint shadow-[-8px_0_24px_rgba(0,0,0,0.55)] z-40 transition-colors cursor-pointer"
+        class="flex items-center justify-center absolute top-1/2 -translate-y-1/2 -left-8 w-8 h-14 rounded-l-xl bg-[#111620]/95 backdrop-blur-xl border-y border-l border-white/15 hover:border-mint/65 text-ink-secondary hover:text-mint shadow-[-8px_0_24px_rgba(0,0,0,0.55)] z-40 transition-colors cursor-pointer"
         @click="drawerOpen = !drawerOpen"
       >
         <ChevronRight v-if="drawerOpen" class="w-4 h-4" />
         <ChevronLeft v-else class="w-4 h-4" />
       </button>
 
-      <!-- Main Glass Drawer Shell (Zero X button; clean edge toggle on desktop & tap-bar on compact) -->
+      <!-- Main Glass Drawer Shell (Zero X button; clean edge toggle on every viewport!) -->
       <div class="w-full h-full flex flex-col rounded-2xl bg-[#10151E]/95 backdrop-blur-xl border border-white/15 shadow-[0_24px_75px_rgba(0,0,0,0.78)] overflow-hidden">
-        <!-- Compact Top Grab Bar (Tap to collapse cleanly, no X icon) -->
-        <button
-          type="button"
-          aria-label="Collapse panel"
-          class="lg:hidden w-full flex flex-col items-center justify-center gap-0.5 pt-1.5 pb-0.5 text-ink-muted hover:text-ink-primary cursor-pointer"
-          @click="drawerOpen = false"
-        >
-          <span class="w-9 h-1 rounded-full bg-white/25" aria-hidden="true" />
-          <ChevronDown class="w-3 h-3 opacity-70" />
-        </button>
-
-        <!-- 3-Tab Pill Switcher Header (Compact on < lg, Spacious on lg+) -->
+        <!-- 3-Tab Pill Switcher Header (Exact Desktop Proportions) -->
         <div
           role="tablist"
           aria-label="Map panel views"
-          class="shrink-0 flex items-center gap-1.5 px-3 py-2 lg:px-3.5 lg:py-3 border-b border-white/10 bg-[#0D121A]/90"
+          class="shrink-0 flex items-center gap-1.5 px-3.5 py-3 border-b border-white/10 bg-[#0D121A]/90"
         >
           <button
             type="button"
             role="tab"
             :aria-selected="rightTab === 'area'"
-            class="h-7 lg:h-8 px-3 lg:px-3.5 rounded-full font-mono text-[9.5px] lg:text-[10px] font-bold uppercase tracking-[0.11em] transition-all cursor-pointer shrink-0"
+            class="h-8 px-3.5 rounded-full font-mono text-[10px] font-bold uppercase tracking-[0.11em] transition-all cursor-pointer shrink-0"
             :class="
               rightTab === 'area'
                 ? 'bg-mint text-[#071510] shadow-[0_0_16px_rgba(16,185,129,0.35)]'
@@ -3914,7 +4076,7 @@ const hoverTooltipStyle = computed(() => {
             type="button"
             role="tab"
             :aria-selected="rightTab === 'shortlist'"
-            class="h-7 lg:h-8 px-2.5 lg:px-3 rounded-full font-mono text-[9.5px] lg:text-[10px] font-bold uppercase tracking-[0.08em] transition-all cursor-pointer shrink-0"
+            class="h-8 px-3 rounded-full font-mono text-[10px] font-bold uppercase tracking-[0.08em] transition-all cursor-pointer shrink-0"
             :class="
               rightTab === 'shortlist'
                 ? 'bg-mint text-[#071510] shadow-[0_0_16px_rgba(16,185,129,0.35)]'
@@ -3929,7 +4091,7 @@ const hoverTooltipStyle = computed(() => {
             type="button"
             role="tab"
             :aria-selected="rightTab === 'ask'"
-            class="flex-1 min-w-0 h-7 lg:h-8 px-2 lg:px-2.5 rounded-full border border-dashed font-mono text-[8.5px] lg:text-[9px] uppercase tracking-[0.07em] transition-all cursor-pointer inline-flex items-center justify-center gap-1"
+            class="flex-1 min-w-0 h-8 px-2.5 rounded-full border border-dashed font-mono text-[9px] uppercase tracking-[0.07em] transition-all cursor-pointer inline-flex items-center justify-center gap-1"
             :class="
               rightTab === 'ask'
                 ? 'bg-white/[0.08] border-[#94A3B8]/70 text-[#E2E8F0]'
@@ -4082,33 +4244,37 @@ const hoverTooltipStyle = computed(() => {
           </button>
         </div>
       </div>
+      </div>
     </aside>
 
     <!-- ==================== 6. BOTTOM-RIGHT OPEN DATA ATTRIBUTION STRIP ==================== -->
-    <!-- Compact attribution for phones (< sm). Licences (ODbL, CC BY) require it on every screen size. -->
+    <!-- Always visible on every screen size (scaled via desktop-fit zoom on compact) for ODbL / CC BY attribution. -->
     <footer
       v-if="!loading && !error"
-      class="pointer-events-auto absolute bottom-1 right-2 z-20 sm:hidden max-w-[150px] px-2 py-0.5 rounded-md bg-[#090C11]/90 border border-white/[0.08] font-mono text-[7.5px] leading-[1.35] text-right text-ink-muted"
+      class="pointer-events-none absolute z-20"
+      :style="{
+        bottom: fitReady && isCompact ? '3px' : '6px',
+        right: `${mapEdgeInsetPx}px`,
+      }"
     >
-      <span v-if="isSatelliteBasemap">Esri World Imagery · </span>© OpenStreetMap contributors · OpenFreeMap · OpenMapTiles · Overture Maps · WorldPop
-    </footer>
-    <footer
-      v-if="!loading && !error"
-      class="pointer-events-auto absolute bottom-1.5 right-3 sm:right-4 z-20 hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#090C11]/90 backdrop-blur-sm border border-white/[0.08] font-mono text-[8.5px] uppercase tracking-[0.09em] text-ink-muted"
-    >
-      <template v-if="isSatelliteBasemap">
-        <span>ESRI WORLD IMAGERY</span>
+      <div
+        class="pointer-events-auto flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#090C11]/90 backdrop-blur-sm border border-white/[0.08] font-mono text-[8.5px] uppercase tracking-[0.09em] text-ink-muted whitespace-nowrap"
+        :style="fitReady && isCompact ? { zoom: String(Math.max(0.45, mapHeaderZoom)) } : undefined"
+      >
+        <template v-if="isSatelliteBasemap">
+          <span>ESRI WORLD IMAGERY</span>
+          <span>·</span>
+        </template>
+        <span>OPENFREEMAP</span>
         <span>·</span>
-      </template>
-      <span>OPENFREEMAP</span>
-      <span>·</span>
-      <span>OPENMAPTILES</span>
-      <span>·</span>
-      <span>© OPENSTREETMAP CONTRIBUTORS</span>
-      <span>·</span>
-      <span>OVERTURE MAPS FOUNDATION</span>
-      <span>·</span>
-      <span>WORLDPOP</span>
+        <span>OPENMAPTILES</span>
+        <span>·</span>
+        <span>© OPENSTREETMAP CONTRIBUTORS</span>
+        <span>·</span>
+        <span>OVERTURE MAPS FOUNDATION</span>
+        <span>·</span>
+        <span>WORLDPOP</span>
+      </div>
     </footer>
 
     <!-- Shared About Ascend Modal (6-Tab Redesign backed by real meta.json) -->

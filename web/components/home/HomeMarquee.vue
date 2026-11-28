@@ -40,7 +40,7 @@ onBeforeUnmount(() => {
 <template>
   <!-- Borderless Seamless 8-Station Enlarged 3D-Hex Interactive Strip + Scroll Cue Underneath -->
   <section
-    class="relative w-full overflow-hidden select-none pt-3 pb-7 sm:pb-9"
+    class="relative w-full overflow-hidden select-none pt-3 pb-9"
     style="background: linear-gradient(180deg, #070C10 0%, #060A0E 58%, #020406 100%);"
     aria-label="Interactive Nusantara small business models on hexagonal areas"
   >
@@ -51,7 +51,7 @@ onBeforeUnmount(() => {
     />
 
     <!-- Enlarged Clickable 8-Station 3D-Hex Business Grid (Click any to swap into Left/Right Hero stage!) -->
-    <div class="relative z-10 mx-auto max-w-frame px-3 sm:px-6">
+    <div class="relative z-10 mx-auto max-w-frame px-6">
       <div class="grid grid-cols-8 gap-2 items-end">
         <button
           v-for="(st, idx) in BUSINESS_STATIONS"
@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
           </span>
 
           <!-- Enlarged Polished 3D-Hex Business Diorama -->
-          <div class="relative h-[96px] sm:h-[104px] w-full flex items-end justify-center">
+          <div class="relative h-[104px] w-full flex items-end justify-center">
             <HomeNusantaraBusinessHexDiorama
               :station-id="st.id"
               :highlighted="Boolean(activeWingBadge(st.id)) || hoveredStation === st.id"
@@ -91,7 +91,7 @@ onBeforeUnmount(() => {
           <!-- Station Label & Hint -->
           <div class="flex flex-col items-center">
             <span
-              class="font-mono text-[10.5px] sm:text-[11px] font-semibold tracking-[0.15em] uppercase transition-colors duration-fast"
+              class="font-mono text-[11px] font-semibold tracking-[0.15em] uppercase transition-colors duration-fast"
               :class="
                 hoveredStation === st.id
                   ? 'text-[#00E5A8]'

@@ -146,7 +146,7 @@ function hexRight(cx: number, topY: number): string {
 </script>
 
 <template>
-  <footer class="relative w-full bg-[#090D12] overflow-hidden pt-10 sm:pt-14 pb-20 sm:pb-24">
+  <footer class="relative w-full bg-[#090D12] overflow-hidden pt-14 pb-24">
     <!-- Full-Width Refreshing Aurora Horizon Wash Behind & Beneath Metadata Card -->
     <div
       class="pointer-events-none absolute inset-x-0 bottom-0 h-64"
@@ -270,8 +270,8 @@ function hexRight(cx: number, topY: number): string {
     </svg>
 
     <!-- Suspended Translucent Metadata Bar Floating Cleanly Over the Living Hexagonal Sea -->
-    <div class="relative z-10 mx-auto w-full max-w-[1060px] px-4 sm:px-6 pointer-events-none">
-      <div class="pointer-events-auto rounded-xl bg-[#0B0F16]/90 backdrop-blur-md border border-white/15 px-5 sm:px-7 py-5 shadow-[0_24px_70px_rgba(0,0,0,0.88),0_0_40px_rgba(16,185,129,0.08)] space-y-4">
+    <div class="relative z-10 mx-auto w-full max-w-[1060px] px-6 pointer-events-none">
+      <div class="pointer-events-auto rounded-xl bg-[#0B0F16]/90 backdrop-blur-md border border-white/15 px-7 py-5 shadow-[0_24px_70px_rgba(0,0,0,0.88),0_0_40px_rgba(16,185,129,0.08)] space-y-4">
         <!-- Row 1: ASCEND Mark & Wordmark + Modal Links -->
         <div class="flex flex-row items-center justify-between gap-3">
           <NuxtLink to="/" class="inline-flex items-center gap-2.5 self-start group">

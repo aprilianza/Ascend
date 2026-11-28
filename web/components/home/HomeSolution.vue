@@ -5,6 +5,7 @@ import { LABEL_META } from '~/utils/uiCopy'
 
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
+const { fitReady, isCompact, homeSolutionOverlapPx, homeSolutionPadTopPx } = useDesktopFit()
 
 type FilterKey = 'all' | 'opportunity' | 'fair' | 'crowded' | 'not_enough_demand' | 'low_confidence'
 
@@ -79,7 +80,13 @@ const reducedMotion = ref<boolean>(false)
 let cycleTimer: ReturnType<typeof setTimeout> | null = null
 let viewObserver: IntersectionObserver | null = null
 
-const isAutoRunning = computed(() => !reducedMotion.value && isInView.value)
+const isAutoRunning = computed(() => !reducedMotion.value && !settings.calmMotion.value && isInView.value)
+
+watch(settings.calmMotion, (calm) => {
+  if (calm && viewMode.value === 'seen') {
+    applyAutoStep(1)
+  }
+})
 const currentStepDurationMs = computed(() => autoSteps[stepIndex.value]?.durationMs ?? 4800)
 
 const inspectedCell = computed(() =>
@@ -341,10 +348,16 @@ const summaryStats = computed(() => {
   <section
     id="solusi"
     ref="sectionRef"
-    class="relative z-20 motion-safe:-mt-[24vh] sm:motion-safe:-mt-[28vh] motion-safe:pt-[22vh] sm:motion-safe:pt-[24vh] motion-reduce:mt-0 motion-reduce:pt-16 pb-20 sm:pb-24"
-    style="background: linear-gradient(180deg, rgba(15, 17, 21, 0) 0%, rgba(15, 17, 21, 0) 26%, rgba(15, 17, 21, 0.85) 48%, #0F1115 62%, #0F1115 100%);"
+    class="relative z-20 pb-24"
+    :class="fitReady && isCompact ? 'motion-reduce:mt-0 motion-reduce:pt-16' : 'motion-safe:-mt-[28vh] motion-safe:pt-[24vh] motion-reduce:mt-0 motion-reduce:pt-16'"
+    :style="[
+      { background: fitReady && isCompact ? '#0F1115' : 'linear-gradient(180deg, rgba(15, 17, 21, 0) 0%, rgba(15, 17, 21, 0) 26%, rgba(15, 17, 21, 0.85) 48%, #0F1115 62%, #0F1115 100%)' },
+      fitReady && isCompact && homeSolutionPadTopPx !== null
+        ? { marginTop: `${homeSolutionOverlapPx ?? 0}px`, paddingTop: `${homeSolutionPadTopPx}px` }
+        : undefined,
+    ]"
   >
-    <div class="mx-auto max-w-frame px-5 sm:px-8">
+    <div class="mx-auto max-w-frame px-8">
       <div class="grid grid-cols-12 gap-8 items-start">
         <!-- Left 4 cols -->
         <div v-reveal="{ variant: 'up' }" class="col-span-4 sticky top-28">
@@ -451,16 +464,16 @@ const summaryStats = computed(() => {
             <!-- Glass diagonal top specular reflection -->
             <div class="solution-glass-reflection" aria-hidden="true" />
 
-            <div class="relative z-10 p-5 sm:p-7">
+            <div class="relative z-10 p-7">
               <!-- Card Top Header: Title + Auto-Cycling Mode Indicator -->
               <div class="flex flex-row items-center justify-between gap-4 pb-5 border-b border-white/10">
                 <div>
-                  <h3 class="font-editorial font-semibold text-ink-primary text-[21px] sm:text-[23px] leading-snug">
+                  <h3 class="font-editorial font-semibold text-ink-primary text-[23px] leading-snug">
                     {{ HOME_COPY.solution.cardTitle }}
                   </h3>
                 </div>
 
-                <div class="flex items-center self-start sm:self-auto shrink-0">
+                <div class="flex items-center self-auto shrink-0">
                   <div
                     class="inline-flex items-center p-1 rounded-full bg-[#090D13]/80 border border-white/10 backdrop-blur-md"
                     role="tablist"
@@ -470,7 +483,7 @@ const summaryStats = computed(() => {
                       type="button"
                       role="tab"
                       :aria-selected="viewMode === 'seen'"
-                      class="relative overflow-hidden px-3.5 py-1.5 rounded-full font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.08em] transition-all duration-fast ease-signal cursor-pointer"
+                      class="relative overflow-hidden px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-[0.08em] transition-all duration-fast ease-signal cursor-pointer"
                       :class="
                         viewMode === 'seen'
                           ? 'bg-white/15 text-ink-primary border border-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]'
@@ -491,7 +504,7 @@ const summaryStats = computed(() => {
                       type="button"
                       role="tab"
                       :aria-selected="viewMode === 'counted'"
-                      class="px-3.5 py-1.5 rounded-full font-mono text-[10px] sm:text-[11px] uppercase font-bold tracking-[0.08em] transition-all duration-fast ease-signal cursor-pointer"
+                      class="px-3.5 py-1.5 rounded-full font-mono text-[11px] uppercase font-bold tracking-[0.08em] transition-all duration-fast ease-signal cursor-pointer"
                       :class="
                         viewMode === 'counted'
                           ? 'bg-mint text-ink-dark shadow-[0_0_20px_rgba(16,185,129,0.4)]'
@@ -511,7 +524,7 @@ const summaryStats = computed(() => {
 
                 <!-- Subtle live geospatial radar sweep across hex field -->
                 <div
-                  v-if="viewMode === 'counted' && !reducedMotion"
+                  v-if="viewMode === 'counted' && !reducedMotion && !settings.calmMotion.value"
                   class="pointer-events-none absolute inset-y-0 left-0 w-44 sol-scan-beam"
                   style="background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.09) 50%, transparent 100%);"
                   aria-hidden="true"

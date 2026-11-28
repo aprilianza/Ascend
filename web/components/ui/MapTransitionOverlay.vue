@@ -406,19 +406,19 @@ onBeforeUnmount(() => {
         <!-- EYE-CATCHING GPU-COMPOSITED SILKY AURORA SKY CURTAINS (ZERO HEAVY SVG BLUR!) -->
         <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div
-            class="absolute -top-24 -left-24 w-[68vw] h-[46vh] rounded-full blur-[90px] opacity-40 ldr-aurora-a"
+            class="absolute -top-24 -left-24 w-[68%] h-[46%] rounded-full blur-[90px] opacity-40 ldr-aurora-a"
             style="background: radial-gradient(ellipse at center, rgba(0, 229, 168, 0.34), rgba(16, 185, 129, 0.14) 55%, transparent 78%);"
           />
           <div
-            class="absolute -top-16 -right-24 w-[64vw] h-[44vh] rounded-full blur-[95px] opacity-35 ldr-aurora-b"
+            class="absolute -top-16 -right-24 w-[64%] h-[44%] rounded-full blur-[95px] opacity-35 ldr-aurora-b"
             style="background: radial-gradient(ellipse at center, rgba(20, 184, 166, 0.32), rgba(245, 158, 11, 0.14) 55%, transparent 78%);"
           />
           <div
-            class="absolute top-[22vh] left-1/2 -translate-x-1/2 w-[72vw] h-[36vh] rounded-full blur-[80px] opacity-30 ldr-aurora-c"
+            class="absolute top-[22%] left-1/2 -translate-x-1/2 w-[72%] h-[36%] rounded-full blur-[80px] opacity-30 ldr-aurora-c"
             style="background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.24), rgba(20, 184, 166, 0.08) 54%, transparent 76%);"
           />
           <div
-            class="absolute inset-x-0 bottom-0 h-[34vh]"
+            class="absolute inset-x-0 bottom-0 h-[34%]"
             style="background: radial-gradient(ellipse 74% 86% at 50% 100%, rgba(16, 185, 129, 0.18), rgba(20, 184, 166, 0.06) 54%, transparent 82%);"
           />
         </div>
@@ -445,7 +445,7 @@ onBeforeUnmount(() => {
         <svg
           viewBox="0 0 1440 360"
           preserveAspectRatio="xMidYMin slice"
-          class="pointer-events-none absolute inset-x-0 top-0 w-full h-[46vh] z-0"
+          class="pointer-events-none absolute inset-x-0 top-0 w-full h-[46%] z-0"
           fill="none"
           aria-hidden="true"
         >
@@ -505,7 +505,8 @@ onBeforeUnmount(() => {
 
         <!-- ==================== LOWER-HORIZON ROTATING SCENE VARIANTS (STRICTLY BELOW TITLE & PROGRESS BAR!) ==================== -->
         <div
-          class="pointer-events-none absolute inset-x-0 bottom-0 h-[31vh] sm:h-[33vh] z-10 overflow-hidden"
+          class="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden"
+          :class="fitReady && isCompact ? 'h-[24%]' : 'h-[28%]'"
           aria-hidden="true"
         >
           <!-- VARIANT 0: CLEAN AIRY ANIMATED 3D HEX PILLARS (18 SPACED PILLARS, SMOOTH UP-DOWN WAVE, ZERO DIAGONAL SLASH LINE!) -->
@@ -757,9 +758,9 @@ onBeforeUnmount(() => {
           </svg>
         </div>
 
-        <!-- LEFT WING: NUSANTARA COFFEE SHOP ("KEDAI KOPI") & CYCLING SME SCALE BADGES (CLEANLY CLEAR OF CENTER) -->
+        <!-- LEFT WING: NUSANTARA COFFEE SHOP ("KEDAI KOPI") & CYCLING SME SCALE BADGES (VERTICALLY CENTERED!) -->
         <div
-          class="pointer-events-none flex flex-col items-center gap-2.5 absolute left-8 bottom-[35vh] z-20 w-[184px] loader-wing-float-a"
+          class="pointer-events-none flex flex-col items-center gap-2.5 absolute left-8 top-1/2 -translate-y-1/2 z-20 w-[184px] loader-wing-float-a"
           aria-hidden="true"
         >
           <div class="relative w-[124px] h-[106px] flex items-center justify-center">
@@ -794,9 +795,9 @@ onBeforeUnmount(() => {
           </span>
         </div>
 
-        <!-- RIGHT WING: NUSANTARA SPATIAL COMPASS & 7-HEX (~500 M) COUNTING RADAR -->
+        <!-- RIGHT WING: NUSANTARA SPATIAL COMPASS & 7-HEX (~500 M) COUNTING RADAR (VERTICALLY CENTERED!) -->
         <div
-          class="pointer-events-none flex flex-col items-center gap-2.5 absolute right-8 bottom-[35vh] z-20 w-[184px] loader-wing-float-b"
+          class="pointer-events-none flex flex-col items-center gap-2.5 absolute right-8 top-1/2 -translate-y-1/2 z-20 w-[184px] loader-wing-float-b"
           aria-hidden="true"
         >
           <div class="relative w-[122px] h-[114px] flex items-center justify-center">
@@ -892,11 +893,14 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <!-- CENTER STAGE: CLEAN UPPER-CENTER ZONE WITH ZERO COLLISION AGAINST LOWER ANIMATIONS -->
-        <div class="relative z-20 flex-1 flex flex-col items-center justify-center px-5 sm:px-8 pb-[14vh] sm:pb-[17vh]">
-          <div class="relative inline-flex flex-col items-stretch w-fit max-w-full">
-            <!-- Exact Homepage Pearl-White Sculptural Stepped ASCEND Wordmark -->
-            <div class="relative inline-flex items-baseline justify-center pr-6 sm:pr-10">
+        <!-- CENTER STAGE: TRUE OPTICAL CENTER (HORIZONTALLY & VERTICALLY BALANCED ON DESKTOP AND MOBILE WEB) -->
+        <div
+          class="relative z-20 flex-1 flex flex-col items-center justify-center px-8"
+          :class="fitReady && isCompact ? 'pb-[4%]' : 'pb-[6%]'"
+        >
+          <div class="relative inline-flex flex-col items-center w-fit max-w-full">
+            <!-- Exact Homepage Pearl-White Sculptural Stepped ASCEND Wordmark (Symmetrically Centered!) -->
+            <div class="relative inline-flex items-baseline justify-center px-5">
               <div
                 class="pointer-events-none absolute -inset-x-10 -inset-y-4 rounded-full blur-3xl opacity-35"
                 style="background: radial-gradient(ellipse 68% 54% at 50% 52%, rgba(0, 229, 168, 0.28), rgba(16, 185, 129, 0.12) 55%, transparent 80%);"
@@ -906,8 +910,11 @@ onBeforeUnmount(() => {
               <span
                 v-for="item in letters"
                 :key="item.char"
-                class="font-display font-extrabold leading-[0.86] tracking-[-0.035em] text-[clamp(44px,9.6vw,122px)]"
-                :class="isEnter ? 'loader-step-letter' : 'loader-step-letter-fast'"
+                class="font-display font-extrabold leading-[0.86] tracking-[-0.035em]"
+                :class="[
+                  fitReady && isCompact ? 'text-[113px]' : 'text-[clamp(44px,9.6vw,122px)]',
+                  isEnter ? 'loader-step-letter' : 'loader-step-letter-fast',
+                ]"
                 :style="{
                   transform: `translateY(${(5 - item.step) * 0.036}em)`,
                   '--letter-delay': `${isEnter ? item.delayMs : 0}ms`,
@@ -920,7 +927,7 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- LOADING INDICATOR #1: HOMEPAGE TREASURE-HUNT TRAIL LOCKED CLEANLY BELOW ASCEND -> AMBER X -->
-            <div class="relative w-full mt-2 sm:mt-3 px-0.5" aria-hidden="true">
+            <div class="relative w-full mt-3 px-0.5" aria-hidden="true">
               <svg viewBox="0 0 980 116" class="w-full h-auto overflow-visible" fill="none">
                 <defs>
                   <linearGradient id="ldr-trail-grad" x1="0%" y1="50%" x2="100%" y2="30%">
@@ -1065,9 +1072,9 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <!-- LOADING INDICATOR #2: TAGLINE + SMOOTH PROGRESS BAR + ROTATING FOUNDER TIP CARD -->
-          <div class="relative z-20 mt-2 sm:mt-3 w-full max-w-[468px] text-center">
-            <p class="font-sans text-[15px] sm:text-[18px] text-[#E2E8F0] tracking-[-0.01em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+          <!-- LOADING INDICATOR #2: TAGLINE + SMOOTH PROGRESS BAR + ROTATING FOUNDER TIP CARD (SYMMETRICALLY CENTERED) -->
+          <div class="relative z-20 mt-3 mx-auto w-full max-w-[490px] flex flex-col items-center text-center">
+            <p class="font-sans text-[18px] text-[#E2E8F0] tracking-[-0.01em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
               <template v-if="isEnter">
                 {{ settings.t('Find where a new shop', 'Temukan tempat usaha baru yang') }}
                 <span class="font-editorial italic font-semibold text-mint">
@@ -1099,7 +1106,7 @@ onBeforeUnmount(() => {
               />
             </div>
 
-            <div class="mt-2.5 flex items-center justify-between gap-3 font-sans text-[12px] sm:text-[13px]">
+            <div class="mt-2.5 w-full flex items-center justify-between gap-3 font-sans text-[13px]">
               <span class="text-[#CBD5E1] truncate">
                 {{ statusMessage }}
               </span>
@@ -1126,7 +1133,7 @@ onBeforeUnmount(() => {
                   class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-[#0D1520]/90 border border-white/10 backdrop-blur-md shadow-lg max-w-full"
                 >
                   <UiKawungIcon :size="13" class="text-mint shrink-0" />
-                  <span class="font-sans text-[11.5px] sm:text-[12px] leading-snug text-ink-secondary text-left">
+                  <span class="font-sans text-[12px] leading-snug text-ink-secondary text-left">
                     {{ activeTipText }}
                   </span>
                 </div>
@@ -1403,6 +1410,35 @@ onBeforeUnmount(() => {
   25% { opacity: 0.88; }
   68% { transform: translate3d(7px, -32px, 0); opacity: 0.7; }
   100% { transform: translate3d(-5px, -68px, 0); opacity: 0; }
+}
+
+:global(html.ascend-calm-motion) .ldr-aurora-a,
+:global(html.ascend-calm-motion) .ldr-aurora-b,
+:global(html.ascend-calm-motion) .ldr-aurora-c,
+:global(html.ascend-calm-motion) .ldr-bob-a,
+:global(html.ascend-calm-motion) .ldr-bob-b,
+:global(html.ascend-calm-motion) .ldr-bob-c,
+:global(html.ascend-calm-motion) .ldr-bob-d,
+:global(html.ascend-calm-motion) .ldr-horizon-sonar,
+:global(html.ascend-calm-motion) .ldr-route-stream,
+:global(html.ascend-calm-motion) .ldr-wave-glide-a,
+:global(html.ascend-calm-motion) .ldr-wave-glide-b,
+:global(html.ascend-calm-motion) .loader-wing-float-a,
+:global(html.ascend-calm-motion) .loader-wing-float-b,
+:global(html.ascend-calm-motion) .loader-steam-a,
+:global(html.ascend-calm-motion) .loader-steam-b,
+:global(html.ascend-calm-motion) .loader-steam-c,
+:global(html.ascend-calm-motion) .loader-spin-cw,
+:global(html.ascend-calm-motion) .loader-spin-ccw,
+:global(html.ascend-calm-motion) .loader-radar-sweep,
+:global(html.ascend-calm-motion) .loader-wp-sonar,
+:global(html.ascend-calm-motion) .loader-x-shockwave,
+:global(html.ascend-calm-motion) .loader-twinkle,
+:global(html.ascend-calm-motion) .loader-flare,
+:global(html.ascend-calm-motion) .loader-shoot-a,
+:global(html.ascend-calm-motion) .loader-shoot-b,
+:global(html.ascend-calm-motion) .loader-firefly {
+  animation: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

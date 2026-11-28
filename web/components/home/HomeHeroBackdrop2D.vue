@@ -48,6 +48,7 @@ const props = withDefaults(
 
 const rootRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const settings = useAscendSettings()
 
 // Scene 0 (Indonesia Outline) smooth opacity driven by exact same 60fps clock as canvas scenes!
 const indonesiaOpacity = ref(1)
@@ -116,7 +117,7 @@ function smoothstep(t: number): number {
 
 // Compute exact silky crossfade weights (0..1) for all 5 sequential scenes
 function getSceneWeights(elapsedMs: number): [number, number, number, number, number] {
-  if (prefersReducedMotion) return [1, 0, 0, 0, 0]
+  if (prefersReducedMotion || settings.calmMotion.value) return [1, 0, 0, 0, 0]
 
   const totalCycle = SCENE_COUNT * SCENE_DURATION_MS
   const cyclePos = ((elapsedMs % totalCycle) + totalCycle) % totalCycle
@@ -1005,8 +1006,8 @@ function renderFrame(now: number) {
       if (p.x > width + 16) p.x = -14
     }
 
-    const flicker = prefersReducedMotion
-      ? 0.65
+    const flicker = prefersReducedMotion || settings.calmMotion.value
+      ? 0.55
       : 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(now * p.speed + p.phase))
     const a = p.baseAlpha * flicker
     const rgb = p.tone === 'amber'
@@ -1031,10 +1032,25 @@ function renderFrame(now: number) {
     ctx.fill()
   }
 
-  if (!prefersReducedMotion) {
+  if (!prefersReducedMotion && !settings.calmMotion.value) {
     rafId = window.requestAnimationFrame(renderFrame)
   }
 }
+
+watch(settings.calmMotion, (calm) => {
+  if (calm) {
+    if (rafId !== null) {
+      window.cancelAnimationFrame(rafId)
+      rafId = null
+    }
+    ripples.length = 0
+    cellAlphas.clear()
+    indonesiaOpacity.value = 1
+    scheduleRender()
+  } else if (isVisible) {
+    scheduleRender()
+  }
+})
 
 function scheduleRender() {
   if (rafId === null && isVisible) {
@@ -1102,7 +1118,7 @@ function handlePointerMove(e: PointerEvent) {
 
 function handlePointerDown(e: PointerEvent) {
   const root = rootRef.value
-  if (!root || prefersReducedMotion) return
+  if (!root || prefersReducedMotion || settings.calmMotion.value) return
   const rect = root.getBoundingClientRect()
   if (
     e.clientX >= rect.left
@@ -1263,26 +1279,28 @@ onBeforeUnmount(() => {
               class="animate-dash-flow-slow"
             />
 
-            <circle r="2.2" fill="#00E5A8" filter="url(#indo-outline-glow)">
-              <animateMotion dur="6.2s" repeatCount="indefinite">
-                <mpath href="#indo-route-1" />
-              </animateMotion>
-            </circle>
-            <circle r="2.2" fill="#34D399" filter="url(#indo-outline-glow)">
-              <animateMotion dur="6.8s" begin="1s" repeatCount="indefinite">
-                <mpath href="#indo-route-2" />
-              </animateMotion>
-            </circle>
-            <circle r="2.1" fill="#FBBF24" filter="url(#indo-outline-glow)">
-              <animateMotion dur="7.8s" begin="1.5s" repeatCount="indefinite">
-                <mpath href="#indo-route-3" />
-              </animateMotion>
-            </circle>
-            <circle r="2" fill="#00E5A8" filter="url(#indo-outline-glow)">
-              <animateMotion dur="9.2s" begin="0.5s" repeatCount="indefinite">
-                <mpath href="#indo-route-4" />
-              </animateMotion>
-            </circle>
+            <template v-if="!settings.calmMotion.value">
+              <circle r="2.2" fill="#00E5A8" filter="url(#indo-outline-glow)">
+                <animateMotion dur="6.2s" repeatCount="indefinite">
+                  <mpath href="#indo-route-1" />
+                </animateMotion>
+              </circle>
+              <circle r="2.2" fill="#34D399" filter="url(#indo-outline-glow)">
+                <animateMotion dur="6.8s" begin="1s" repeatCount="indefinite">
+                  <mpath href="#indo-route-2" />
+                </animateMotion>
+              </circle>
+              <circle r="2.1" fill="#FBBF24" filter="url(#indo-outline-glow)">
+                <animateMotion dur="7.8s" begin="1.5s" repeatCount="indefinite">
+                  <mpath href="#indo-route-3" />
+                </animateMotion>
+              </circle>
+              <circle r="2" fill="#00E5A8" filter="url(#indo-outline-glow)">
+                <animateMotion dur="9.2s" begin="0.5s" repeatCount="indefinite">
+                  <mpath href="#indo-route-4" />
+                </animateMotion>
+              </circle>
+            </template>
           </g>
 
           <g v-for="city in INDONESIA_CITIES" :key="city.id">

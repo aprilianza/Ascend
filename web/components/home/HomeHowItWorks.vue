@@ -191,10 +191,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="cara-kerja" ref="sectionRef" class="relative py-20 sm:py-28 bg-ground overflow-x-clip">
-    <div class="mx-auto max-w-frame px-5 sm:px-8">
+  <section id="cara-kerja" ref="sectionRef" class="relative py-28 bg-ground overflow-x-clip">
+    <div class="mx-auto max-w-frame px-8">
       <!-- Centered Editorial Header Directly Above the Luminous Spine -->
-      <div class="mx-auto max-w-3xl text-center mb-16 sm:mb-20">
+      <div class="mx-auto max-w-3xl text-center mb-20">
         <p
           v-reveal="{ variant: 'up' }"
           class="inline-flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-mint mb-3.5"
@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
         </p>
         <h2
           v-reveal="{ variant: 'up', delay: 80 }"
-          class="font-editorial font-semibold text-ink-primary text-[34px] sm:text-[46px] leading-[1.12] tracking-[-0.015em]"
+          class="font-editorial font-semibold text-ink-primary text-[46px] leading-[1.12] tracking-[-0.015em]"
         >
           {{ HOME_COPY.howItWorks.headlinePrefix }}
           <span class="editorial-mint">{{ HOME_COPY.howItWorks.headlineAccent }}</span>
@@ -249,7 +249,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- 4 Alternating Illuminated Steps with Opposite-Side Visual Illustrations -->
-        <div class="flex flex-col gap-10 sm:gap-14 lg:gap-16">
+        <div class="flex flex-col gap-16">
           <div
             v-for="(step, idx) in HOME_COPY.howItWorks.steps"
             :key="step.num"
@@ -362,7 +362,7 @@ onBeforeUnmount(() => {
               </svg>
             </div>
 
-            <!-- 1. EXPLANATION CARD (Alternates Left/Right on Desktop Composition) -->
+            <!-- 1. EXPLANATION CARD: Calm Warm-Slate Editorial Narrative Panel (Distinct from Visual Blueprint Stage) -->
             <div
               :class="
                 idx % 2 === 0
@@ -373,49 +373,44 @@ onBeforeUnmount(() => {
               <div
                 class="relative rounded-2xl overflow-hidden transition-all duration-300 will-change-[opacity,transform]"
                 :style="{
-                  opacity: (0.38 + stepGlow(idx, step.num) * 0.62).toFixed(3),
-                  transform: `translateY(${((1 - stepGlow(idx, step.num)) * 12).toFixed(1)}px)`,
-                  background: 'linear-gradient(150deg, #141A23 0%, #0F141B 100%)',
+                  opacity: (0.48 + stepGlow(idx, step.num) * 0.52).toFixed(3),
+                  transform: `translateY(${((1 - stepGlow(idx, step.num)) * 10).toFixed(1)}px)`,
+                  background: 'linear-gradient(155deg, #1A2230 0%, #131924 100%)',
                   border: stepGlow(idx, step.num) > 0.45
-                    ? `1px solid rgba(16, 185, 129, ${(0.18 + stepGlow(idx, step.num) * 0.44).toFixed(3)})`
-                    : '1px solid rgba(35, 43, 56, 0.85)',
+                    ? '1px solid rgba(148, 163, 184, 0.28)'
+                    : '1px solid rgba(71, 85, 105, 0.32)',
                   boxShadow: stepGlow(idx, step.num) > 0.45
-                    ? `0 18px 46px rgba(0, 0, 0, 0.48), 0 0 ${(stepGlow(idx, step.num) * 28).toFixed(1)}px rgba(16, 185, 129, 0.14)`
-                    : '0 10px 26px rgba(0, 0, 0, 0.28)',
+                    ? '0 18px 42px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
+                    : '0 10px 24px rgba(0, 0, 0, 0.28)',
                 }"
               >
-                <!-- Razor-Bright Luminous Top-Edge Rim Beam -->
+                <!-- Clean Vertical Emerald Accent Spine Facing the Center Timeline (Instant Narrative Cue, Zero Glare) -->
                 <div
-                  class="pointer-events-none absolute inset-x-0 top-0 h-[2px] transition-all duration-500"
+                  class="pointer-events-none absolute inset-y-4 w-[3px] rounded-full transition-opacity duration-400"
+                  :class="idx % 2 === 0 ? 'right-0' : 'left-0'"
                   :style="{
-                    opacity: stepGlow(idx, step.num).toFixed(3),
-                    transformOrigin: idx % 2 === 0 ? 'right center' : 'left center',
-                    transform: `scaleX(${stepGlow(idx, step.num).toFixed(3)})`,
-                    background: 'linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, #10B981 32%, #A7F3D0 50%, #34D399 72%, rgba(16, 185, 129, 0.12) 100%)',
-                    boxShadow: '0 0 16px 2px rgba(0, 229, 168, 0.72)',
+                    opacity: (0.35 + stepGlow(idx, step.num) * 0.65).toFixed(3),
+                    background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.25) 0%, #10B981 50%, rgba(20, 184, 166, 0.25) 100%)',
                   }"
                   aria-hidden="true"
                 />
 
-                <!-- Soft inner directional emerald wash radiating from the spine connector edge -->
-                <div
-                  class="pointer-events-none absolute inset-0 transition-opacity duration-500"
-                  :style="{
-                    opacity: (stepGlow(idx, step.num) * 0.75).toFixed(3),
-                    background: idx % 2 === 0
-                      ? 'radial-gradient(ellipse 68% 72% at 100% 35%, rgba(16, 185, 129, 0.14), transparent 72%)'
-                      : 'radial-gradient(ellipse 68% 72% at 0% 35%, rgba(16, 185, 129, 0.14), transparent 72%)',
-                  }"
+                <!-- Whisper-Subtle Editorial Step Watermark Numeral -->
+                <span
+                  class="pointer-events-none select-none absolute -bottom-3 font-display font-extrabold text-[84px] leading-none tracking-[-0.04em] text-white/[0.032]"
+                  :class="idx % 2 === 0 ? 'right-5' : 'right-5'"
                   aria-hidden="true"
-                />
+                >
+                  {{ step.num }}
+                </span>
 
-                <div class="relative z-10 p-6 sm:p-7">
+                <div class="relative z-10 p-7">
                   <div class="flex items-center justify-between gap-3">
-                    <span class="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.16em] text-mint">
+                    <span class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/10 font-mono text-[10px] uppercase tracking-[0.16em] text-[#A7F3D0]">
                       <UiKawungIcon
-                        :size="12"
-                        class="transition-opacity duration-300"
-                        :style="{ opacity: (0.4 + stepGlow(idx, step.num) * 0.6).toFixed(2) }"
+                        :size="11"
+                        class="text-mint transition-opacity duration-300"
+                        :style="{ opacity: (0.55 + stepGlow(idx, step.num) * 0.45).toFixed(2) }"
                       />
                       <span>{{ step.eyebrow }}</span>
                     </span>
@@ -424,7 +419,7 @@ onBeforeUnmount(() => {
                       class="w-8 h-8 rounded-xl border flex items-center justify-center transition-all duration-300"
                       :class="
                         stepGlow(idx, step.num) > 0.55
-                          ? 'bg-mint/15 border-mint/45 text-mint shadow-[0_0_16px_rgba(16,185,129,0.28)]'
+                          ? 'bg-white/[0.07] border-mint/40 text-mint'
                           : 'bg-[#121821] border-[#263040] text-ink-muted'
                       "
                     >
@@ -432,17 +427,17 @@ onBeforeUnmount(() => {
                     </span>
                   </div>
 
-                  <h3 class="mt-3.5 font-editorial font-semibold text-ink-primary text-[22px] sm:text-[24px] leading-snug">
+                  <h3 class="mt-4 font-editorial font-semibold text-[#F8FAFC] text-[25px] leading-snug tracking-[-0.01em]">
                     {{ step.title }}
                   </h3>
-                  <p class="mt-2.5 font-sans text-[14.5px] leading-[1.66] text-ink-secondary">
+                  <p class="mt-2.5 font-sans text-[14.5px] leading-[1.7] text-[#B8C5D6]">
                     {{ step.description }}
                   </p>
                 </div>
               </div>
             </div>
 
-            <!-- 2. OPPOSITE-SIDE VISUAL ILLUSTRATION (Right on Step 01/03, Left on Step 02/04) -->
+            <!-- 2. OPPOSITE-SIDE VISUAL ILLUSTRATION: Recessed Deep-Teal Geospatial Blueprint Viewport -->
             <div
               :class="
                 idx % 2 === 0
@@ -453,26 +448,41 @@ onBeforeUnmount(() => {
               <div
                 class="relative rounded-2xl overflow-hidden transition-all duration-300 will-change-[opacity,transform]"
                 :style="{
-                  opacity: (0.42 + stepGlow(idx, step.num) * 0.58).toFixed(3),
-                  transform: `translateY(${((1 - stepGlow(idx, step.num)) * 14).toFixed(1)}px)`,
-                  background: 'linear-gradient(160deg, #0D141C 0%, #0A0F16 100%)',
+                  opacity: (0.48 + stepGlow(idx, step.num) * 0.52).toFixed(3),
+                  transform: `translateY(${((1 - stepGlow(idx, step.num)) * 12).toFixed(1)}px)`,
+                  background: 'radial-gradient(ellipse 92% 88% at 50% 42%, #0B1A1D 0%, #071015 68%, #050A0F 100%)',
                   border: stepGlow(idx, step.num) > 0.45
-                    ? `1px solid rgba(52, 211, 153, ${(0.16 + stepGlow(idx, step.num) * 0.34).toFixed(3)})`
-                    : '1px solid rgba(35, 43, 56, 0.78)',
-                  boxShadow: stepGlow(idx, step.num) > 0.45
-                    ? `0 18px 42px rgba(0, 0, 0, 0.46), 0 0 ${(stepGlow(idx, step.num) * 24).toFixed(1)}px rgba(20, 184, 166, 0.12)`
-                    : '0 8px 24px rgba(0, 0, 0, 0.25)',
+                    ? `1px dashed rgba(20, 184, 166, ${(0.28 + stepGlow(idx, step.num) * 0.28).toFixed(3)})`
+                    : '1px dashed rgba(51, 65, 85, 0.65)',
+                  boxShadow: 'inset 0 2px 24px rgba(0, 0, 0, 0.65), 0 12px 32px rgba(0, 0, 0, 0.34)',
                 }"
               >
-                <!-- Subtle Top Glass Highlight -->
+                <!-- Blueprint Dot-Matrix Substrate -->
                 <div
-                  class="pointer-events-none absolute inset-x-0 top-0 h-px"
-                  style="background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.55) 50%, transparent 100%);"
+                  class="pointer-events-none absolute inset-0 opacity-45"
+                  style="background-image: radial-gradient(rgba(20, 184, 166, 0.24) 1px, transparent 1px); background-size: 16px 16px;"
                   aria-hidden="true"
                 />
 
+                <!-- Four Crisp Viewfinder Corner Brackets (Signals Visual Instrument vs Prose Card!) -->
+                <span class="pointer-events-none absolute top-2 left-2 w-3 h-3 border-t-[1.5px] border-l-[1.5px] border-mint/65 rounded-tl-[2px]" aria-hidden="true" />
+                <span class="pointer-events-none absolute top-2 right-2 w-3 h-3 border-t-[1.5px] border-r-[1.5px] border-mint/65 rounded-tr-[2px]" aria-hidden="true" />
+                <span class="pointer-events-none absolute bottom-2 left-2 w-3 h-3 border-b-[1.5px] border-l-[1.5px] border-mint/65 rounded-bl-[2px]" aria-hidden="true" />
+                <span class="pointer-events-none absolute bottom-2 right-2 w-3 h-3 border-b-[1.5px] border-r-[1.5px] border-mint/65 rounded-br-[2px]" aria-hidden="true" />
+
+                <!-- Compact Blueprint Instrument Chrome Header Strip -->
+                <div class="relative z-10 flex items-center justify-between px-4 py-2 border-b border-teal-500/15 bg-[#050C10]/70">
+                  <span class="inline-flex items-center gap-1.5 font-mono text-[8.5px] uppercase tracking-[0.16em] text-[#5EEAD4]/90">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#14B8A6]" aria-hidden="true" />
+                    <span>FIG {{ step.num }} · {{ settings.t('VISUAL PREVIEW', 'ILUSTRASI VISUAL') }}</span>
+                  </span>
+                  <span class="font-mono text-[8px] uppercase tracking-[0.12em] text-ink-muted/80">
+                    {{ settings.t('OPEN DATA MODEL', 'MODEL DATA TERBUKA') }}
+                  </span>
+                </div>
+
                 <!-- STEP 01 VISUAL: Open Map Sources Streaming Into a Hexagonal Neighborhood Grid -->
-                <div v-if="step.icon === 'database'" class="p-4 sm:p-5">
+                <div v-if="step.icon === 'database'" class="relative z-10 p-5">
                   <div class="flex items-center justify-between gap-2 mb-2.5">
                     <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-mint/90">
                       OPEN SOURCES → MAPPED AREAS
@@ -571,7 +581,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- STEP 02 VISUAL: 7-Hexagon ~500m Demand Ring Surrounded by Everyday Activity Drivers -->
-                <div v-else-if="step.icon === 'compass'" class="p-4 sm:p-5">
+                <div v-else-if="step.icon === 'compass'" class="relative z-10 p-5">
                   <div class="flex items-center justify-between gap-2 mb-2.5">
                     <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-mint/90">
                       THIS AREA + 6 NEIGHBORS (~500 M)
@@ -664,7 +674,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- STEP 03 VISUAL: Actual Supply vs Expected Demand Comparison -> 4 Colorblind-Safe Labels -->
-                <div v-else-if="step.icon === 'scale'" class="p-4 sm:p-5 space-y-3.5">
+                <div v-else-if="step.icon === 'scale'" class="relative z-10 p-5 space-y-3.5">
                   <div class="flex items-center justify-between gap-2">
                     <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-mint/90">
                       SUPPLY VS DEMAND CHECK
@@ -698,7 +708,7 @@ onBeforeUnmount(() => {
                   </div>
 
                   <!-- 4 Patterned Colorblind-Safe Outcome Labels -->
-                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div class="grid grid-cols-4 gap-2">
                     <div class="rounded-xl px-2.5 py-2 bg-mint/15 border border-mint/60 shadow-[0_0_18px_rgba(16,185,129,0.2)]">
                       <span
                         class="block w-full h-2 rounded-sm mb-1.5"
@@ -742,7 +752,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <!-- STEP 04 VISUAL: Plain-English Area Card Preview Showing Top 3 Demand Drivers -->
-                <div v-else class="p-4 sm:p-5 space-y-3">
+                <div v-else class="relative z-10 p-5 space-y-3">
                   <div class="flex items-center justify-between gap-2">
                     <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-mint/90">
                       WHAT DRIVES DEMAND AT THIS SPOT
@@ -809,7 +819,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Band: "What Ascend does not do" (Single-Row Smoked Frosted-Glass Surface) -->
-      <div class="mt-16 sm:mt-20 relative">
+      <div class="mt-20 relative">
         <!-- Ambient Backlight Orbs Behind the Frosted Glass (gives genuine optical refraction depth) -->
         <div
           class="pointer-events-none absolute -top-10 -left-8 w-64 h-64 rounded-full blur-3xl opacity-45"
@@ -844,13 +854,13 @@ onBeforeUnmount(() => {
             aria-hidden="true"
           />
 
-          <div class="relative z-10 p-6 sm:p-8">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-white/10">
+          <div class="relative z-10 p-8">
+            <div class="flex flex-row items-center justify-between gap-2 pb-5 border-b border-white/10">
               <div>
                 <p class="font-mono text-[10.5px] uppercase tracking-[0.16em] text-signal-coral mb-1.5">
                   {{ HOME_COPY.howItWorks.doesNotEyebrow }}
                 </p>
-                <h3 class="font-editorial font-semibold text-ink-primary text-[22px] sm:text-[26px] leading-snug">
+                <h3 class="font-editorial font-semibold text-ink-primary text-[26px] leading-snug">
                   {{ HOME_COPY.howItWorks.doesNotTitle }}
                 </h3>
               </div>

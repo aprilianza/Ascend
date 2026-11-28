@@ -13,6 +13,58 @@ import {
 } from 'lucide-vue-next'
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
+const isCalm = computed(() => settings.calmMotion.value)
+
+// Unique Geospatial Observatory Backdrop Data for Act 1 Demand Route (Strictly behind foreground route!)
+const routeBgContours = [
+  { id: 'c1', d: 'M 0 190 Q 380 250 760 220 T 1440 310', pulseColor: '#00E5A8', dur: '11s', begin: '0s' },
+  { id: 'c2', d: 'M 0 285 Q 410 345 790 318 T 1440 415', pulseColor: '#14B8A6', dur: '14s', begin: '2.4s' },
+  { id: 'c3', d: 'M 0 385 Q 430 442 810 418 T 1440 520', pulseColor: '#34D399', dur: '12.5s', begin: '5.1s' },
+  { id: 'c4', d: 'M 0 490 Q 450 545 830 522 T 1440 628', pulseColor: '#F59E0B', dur: '15.5s', begin: '1.2s' },
+  { id: 'c5', d: 'M 0 600 Q 460 648 840 626 T 1440 732', pulseColor: '#00E5A8', dur: '13s', begin: '3.8s' },
+  { id: 'c6', d: 'M 0 715 Q 470 756 850 735 T 1440 830', pulseColor: '#14B8A6', dur: '16s', begin: '6.5s' },
+]
+
+function routeBgHexPts(cx: number, cy: number, r: number): string {
+  const pts: string[] = []
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI / 3) * i - Math.PI / 6
+    pts.push(`${(cx + Math.cos(a) * r).toFixed(1)},${(cy + Math.sin(a) * r).toFixed(1)}`)
+  }
+  return pts.join(' ')
+}
+
+const routeBgHexes = [
+  { cx: 118, cy: 112, r: 22, color: '#10B981', delay: '0s', dur: '5.8s' },
+  { cx: 158, cy: 136, r: 17, color: '#14B8A6', delay: '1.4s', dur: '6.6s' },
+  { cx: 92, cy: 448, r: 24, color: '#00E5A8', delay: '0.8s', dur: '6.2s' },
+  { cx: 138, cy: 482, r: 16, color: '#F59E0B', delay: '2.7s', dur: '7.4s' },
+  { cx: 215, cy: 678, r: 26, color: '#10B981', delay: '1.9s', dur: '6.8s' },
+  { cx: 268, cy: 710, r: 18, color: '#14B8A6', delay: '3.4s', dur: '5.9s' },
+  { cx: 528, cy: 134, r: 19, color: '#34D399', delay: '2.1s', dur: '6.4s' },
+  { cx: 942, cy: 146, r: 24, color: '#14B8A6', delay: '0.5s', dur: '6.1s' },
+  { cx: 992, cy: 176, r: 17, color: '#00E5A8', delay: '2.3s', dur: '7.2s' },
+  { cx: 1255, cy: 168, r: 28, color: '#10B981', delay: '1.1s', dur: '6.5s' },
+  { cx: 1312, cy: 204, r: 19, color: '#F59E0B', delay: '3.0s', dur: '7.6s' },
+  { cx: 1326, cy: 468, r: 24, color: '#34D399', delay: '1.6s', dur: '6.0s' },
+  { cx: 1272, cy: 504, r: 17, color: '#14B8A6', delay: '4.0s', dur: '6.9s' },
+  { cx: 1185, cy: 752, r: 25, color: '#10B981', delay: '2.5s', dur: '6.3s' },
+]
+
+const routeBgMotes = [
+  { x: 112, y: 274, r: 2.0, color: '#34D399', delay: '0s', dur: '7.2s' },
+  { x: 356, y: 126, r: 1.8, color: '#00E5A8', delay: '1.3s', dur: '8.4s' },
+  { x: 562, y: 242, r: 2.2, color: '#6EE7B7', delay: '2.6s', dur: '6.9s' },
+  { x: 874, y: 186, r: 2.1, color: '#14B8A6', delay: '0.7s', dur: '7.8s' },
+  { x: 1094, y: 268, r: 1.9, color: '#FBBF24', delay: '3.1s', dur: '9.1s' },
+  { x: 1344, y: 312, r: 2.2, color: '#34D399', delay: '1.8s', dur: '7.5s' },
+  { x: 186, y: 558, r: 1.9, color: '#14B8A6', delay: '2.2s', dur: '8.2s' },
+  { x: 468, y: 696, r: 2.3, color: '#00E5A8', delay: '0.4s', dur: '6.7s' },
+  { x: 692, y: 452, r: 1.7, color: '#6EE7B7', delay: '3.8s', dur: '7.9s' },
+  { x: 966, y: 438, r: 2.0, color: '#34D399', delay: '1.5s', dur: '8.6s' },
+  { x: 1218, y: 636, r: 2.2, color: '#FBBF24', delay: '2.9s', dur: '7.3s' },
+  { x: 1368, y: 682, r: 1.8, color: '#00E5A8', delay: '0.9s', dur: '8.8s' },
+]
 
 const routeWrapRef = ref<HTMLElement | null>(null)
 const gateWrapRef = ref<HTMLElement | null>(null)
@@ -627,11 +679,11 @@ onBeforeUnmount(() => {
     <!-- ==================== ACT 1: SCROLL-DRAWN DESCENDING DEMAND ROUTE (FADES IN AFTER TEAM, FADES OUT AT TAIL) ==================== -->
     <div
       ref="routeWrapRef"
-      class="relative w-full max-w-[1440px] mx-auto pt-12 sm:pt-16 pb-0 px-5 sm:px-8 transition-opacity duration-300"
+      class="relative w-full max-w-[1440px] mx-auto pt-16 pb-0 px-8 transition-opacity duration-300"
       :style="{ opacity: routeEntryFade }"
     >
       <!-- Subtle top-left context pill matching reference artwork -->
-      <div class="relative z-20 flex items-center justify-between gap-4 mb-6 md:mb-0">
+      <div class="relative z-20 flex items-center justify-between gap-4 mb-0">
         <div
           class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E141D]/90 border border-white/10 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-secondary shadow-lg transition-all duration-500"
           :style="{
@@ -650,9 +702,29 @@ onBeforeUnmount(() => {
 
       <!-- DESKTOP INTERACTIVE SCROLL-DRAWN ROUTE CANVAS (1440 x 880) -->
       <div class="block relative w-full aspect-[1440/880] max-h-[860px] mx-auto">
+        <!-- UNIQUE ANIMATED GEOSPATIAL OBSERVATORY BACKDROP (GPU AURORA VEILS WITH SEAMLESS EDGE FEATHER) -->
+        <div
+          class="pointer-events-none absolute -inset-x-12 -inset-y-8 overflow-hidden z-0"
+          style="mask-image: radial-gradient(ellipse 88% 82% at 50% 50%, black 42%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 88% 82% at 50% 50%, black 42%, transparent 100%);"
+          aria-hidden="true"
+        >
+          <div
+            class="route-bg-aurora-a absolute -top-10 left-[8%] w-[48%] h-[58%] rounded-full blur-[88px]"
+            style="background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.2), rgba(20, 184, 166, 0.08) 54%, transparent 78%);"
+          />
+          <div
+            class="route-bg-aurora-b absolute top-[26%] right-[4%] w-[46%] h-[54%] rounded-full blur-[92px]"
+            style="background: radial-gradient(ellipse at center, rgba(20, 184, 166, 0.19), rgba(245, 158, 11, 0.07) 52%, transparent 78%);"
+          />
+          <div
+            class="route-bg-aurora-c absolute bottom-[-6%] left-[32%] w-[44%] h-[46%] rounded-full blur-[82px]"
+            style="background: radial-gradient(ellipse at center, rgba(0, 229, 168, 0.15), rgba(16, 185, 129, 0.05) 56%, transparent 80%);"
+          />
+        </div>
+
         <svg
           viewBox="0 0 1440 880"
-          class="w-full h-full overflow-visible select-none"
+          class="relative z-10 w-full h-full overflow-visible select-none"
           fill="none"
           aria-hidden="true"
         >
@@ -703,21 +775,125 @@ onBeforeUnmount(() => {
               <stop offset="100%" stop-color="#243142" stop-opacity="0" />
             </linearGradient>
             <linearGradient id="ascend-contour-fade" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#2B3748" stop-opacity="0" />
-              <stop offset="22%" stop-color="#2B3748" stop-opacity="0.45" />
-              <stop offset="78%" stop-color="#2B3748" stop-opacity="0.45" />
-              <stop offset="100%" stop-color="#2B3748" stop-opacity="0" />
+              <stop offset="0%" stop-color="#14B8A6" stop-opacity="0" />
+              <stop offset="20%" stop-color="#14B8A6" stop-opacity="0.28" />
+              <stop offset="50%" stop-color="#10B981" stop-opacity="0.34" />
+              <stop offset="80%" stop-color="#14B8A6" stop-opacity="0.24" />
+              <stop offset="100%" stop-color="#14B8A6" stop-opacity="0" />
             </linearGradient>
+            <linearGradient id="route-contour-energy" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#00E5A8" stop-opacity="0" />
+              <stop offset="30%" stop-color="#14B8A6" stop-opacity="0.55" />
+              <stop offset="65%" stop-color="#34D399" stop-opacity="0.65" />
+              <stop offset="100%" stop-color="#00E5A8" stop-opacity="0" />
+            </linearGradient>
+            <pattern id="route-bg-hex-lattice" width="64" height="55.4" patternUnits="userSpaceOnUse">
+              <path
+                d="M 32 1 L 62 16 L 62 39.4 L 32 54.4 L 2 39.4 L 2 16 Z"
+                fill="none"
+                stroke="#14B8A6"
+                stroke-opacity="0.11"
+                stroke-width="0.9"
+              />
+            </pattern>
+            <radialGradient id="route-hex-mask-grad" cx="50%" cy="50%" r="54%">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.92" />
+              <stop offset="62%" stop-color="#FFFFFF" stop-opacity="0.45" />
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+            </radialGradient>
+            <mask id="route-hex-fade-mask">
+              <rect width="1440" height="880" fill="url(#route-hex-mask-grad)" />
+            </mask>
           </defs>
 
-          <!-- Sweeping dark topographic Bandung valley contour lines -->
-          <g stroke="url(#ascend-contour-fade)" stroke-width="1">
-            <path d="M 0 190 Q 380 250 760 220 T 1440 310" />
-            <path d="M 0 285 Q 410 345 790 318 T 1440 415" />
-            <path d="M 0 385 Q 430 442 810 418 T 1440 520" />
-            <path d="M 0 490 Q 450 545 830 522 T 1440 628" />
-            <path d="M 0 600 Q 460 648 840 626 T 1440 732" />
-            <path d="M 0 715 Q 470 756 850 735 T 1440 830" />
+          <!-- BACKDROP LAYER 1: Soft Masked Hexagonal Geospatial Lattice -->
+          <rect
+            x="0"
+            y="0"
+            width="1440"
+            height="880"
+            fill="url(#route-bg-hex-lattice)"
+            mask="url(#route-hex-fade-mask)"
+            opacity="0.72"
+          />
+
+          <!-- BACKDROP LAYER 2: Dual Rotating Orbital Geospatial Compass Rings & Meridian Crosshairs -->
+          <g opacity="0.55">
+            <line x1="720" y1="60" x2="720" y2="820" stroke="#14B8A6" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="3 9" />
+            <line x1="120" y1="440" x2="1320" y2="440" stroke="#14B8A6" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="3 9" />
+            <g class="route-bg-orbit-cw">
+              <circle cx="720" cy="440" r="356" stroke="#10B981" stroke-opacity="0.14" stroke-width="1.1" stroke-dasharray="6 14" />
+              <polygon points="720,78 725,84 720,90 715,84" fill="#34D399" fill-opacity="0.55" />
+              <polygon points="720,790 725,796 720,802 715,796" fill="#14B8A6" fill-opacity="0.45" />
+            </g>
+            <g class="route-bg-orbit-ccw">
+              <circle cx="720" cy="440" r="248" stroke="#14B8A6" stroke-opacity="0.16" stroke-width="1" stroke-dasharray="2 10" />
+              <circle cx="968" cy="440" r="3.2" fill="#00E5A8" fill-opacity="0.6" />
+              <circle cx="472" cy="440" r="2.8" fill="#FBBF24" fill-opacity="0.5" />
+            </g>
+          </g>
+
+          <!-- BACKDROP LAYER 3: Ambient Breathing Geospatial Signal Hexagons in Background Quadrants -->
+          <g>
+            <g
+              v-for="(hx, hIdx) in routeBgHexes"
+              :key="`rbg-hex-${hIdx}`"
+              class="route-bg-hex-pulse"
+              :style="{ animationDelay: hx.delay, animationDuration: hx.dur }"
+            >
+              <polygon
+                :points="routeBgHexPts(hx.cx, hx.cy, hx.r)"
+                :fill="hx.color"
+                fill-opacity="0.08"
+                :stroke="hx.color"
+                stroke-opacity="0.34"
+                stroke-width="1.1"
+              />
+              <circle :cx="hx.cx" :cy="hx.cy" r="1.8" :fill="hx.color" fill-opacity="0.62" />
+            </g>
+          </g>
+
+          <!-- BACKDROP LAYER 4: Sweeping Luminous Topographic Bandung Valley Contours + Flowing Signal Waves -->
+          <g>
+            <g stroke="url(#ascend-contour-fade)" stroke-width="1.15">
+              <path v-for="ct in routeBgContours" :key="ct.id" :d="ct.d" />
+            </g>
+            <g stroke="url(#route-contour-energy)" stroke-width="1.4" stroke-linecap="round">
+              <path
+                v-for="(ct, cIdx) in routeBgContours"
+                :key="`${ct.id}-flow`"
+                :d="ct.d"
+                stroke-dasharray="26 240"
+                :class="cIdx % 2 === 0 ? 'route-contour-flow-a' : 'route-contour-flow-b'"
+                opacity="0.52"
+              />
+            </g>
+            <!-- Delicate gliding radar glints riding the background elevation contours -->
+            <g v-if="!isCalm">
+              <circle
+                v-for="(ct, cIdx) in routeBgContours.filter((_, idx) => idx % 2 === 0)"
+                :key="`${ct.id}-glint`"
+                :r="cIdx === 1 ? 2.4 : 2.0"
+                :fill="ct.pulseColor"
+                opacity="0.62"
+              >
+                <animateMotion :dur="ct.dur" :begin="ct.begin" repeatCount="indefinite" :path="ct.d" />
+              </circle>
+            </g>
+          </g>
+
+          <!-- BACKDROP LAYER 5: Floating Bioluminescent Fireflies / Starlight Motes -->
+          <g>
+            <circle
+              v-for="(m, mIdx) in routeBgMotes"
+              :key="`rbg-mote-${mIdx}`"
+              :cx="m.x"
+              :cy="m.y"
+              :r="m.r"
+              :fill="m.color"
+              class="route-bg-mote"
+              :style="{ animationDelay: m.delay, animationDuration: m.dur }"
+            />
           </g>
 
           <!-- Subtle secondary curved return guideline -->
@@ -803,7 +979,7 @@ onBeforeUnmount(() => {
           </g>
 
           <!-- Ambient Sparkle Pulses Streaming Down the Active Route once lit -->
-          <g v-if="routeProgress > 0.35" filter="url(#ascend-route-glow)">
+          <g v-if="routeProgress > 0.35 && !isCalm" filter="url(#ascend-route-glow)">
             <circle r="2.6" fill="#34D399" opacity="0.78">
               <animateMotion dur="7.5s" repeatCount="indefinite" :path="mainRoutePathD" />
             </circle>
@@ -969,7 +1145,7 @@ onBeforeUnmount(() => {
     <!-- ==================== TRANSITION GATE: FADING END-OF-LINE + SCROLL-DOWN PROMPT BEFORE SIGNBOARD ==================== -->
     <div
       ref="gateWrapRef"
-      class="relative z-20 mx-auto w-full max-w-[760px] px-5 min-h-[200px] sm:min-h-[240px] flex flex-col items-center justify-center select-none"
+      class="relative z-20 mx-auto w-full max-w-[760px] px-5 min-h-[240px] flex flex-col items-center justify-center select-none"
     >
       <div
         class="flex flex-col items-center text-center gap-3.5 will-change-[opacity,transform]"
@@ -1026,7 +1202,7 @@ onBeforeUnmount(() => {
         }"
         aria-hidden="true"
       >
-        <div class="w-[2px] h-12 sm:h-16 bg-gradient-to-b from-transparent via-mint/70 to-[#00E5A8] shadow-[0_0_16px_#10B981]" />
+        <div class="w-[2px] h-16 bg-gradient-to-b from-transparent via-mint/70 to-[#00E5A8] shadow-[0_0_16px_#10B981]" />
         <span
           class="w-2.5 h-2.5 -mt-1 rounded-full bg-[#00E5A8] shadow-[0_0_20px_rgba(0,229,168,0.95)]"
           :style="{ transform: `scale(${0.45 + signboardReveal * 0.55})` }"
@@ -1035,7 +1211,7 @@ onBeforeUnmount(() => {
 
       <!-- FLOATING SIGNBOARD (CTA BOX) - REVEALS SMOOTHLY AFTER SCROLL-DOWN GATE -->
       <div
-        class="relative z-20 mx-auto w-full max-w-[760px] px-5 sm:px-8 will-change-[opacity,transform]"
+        class="relative z-20 mx-auto w-full max-w-[760px] px-8 will-change-[opacity,transform]"
         :style="{
           opacity: signboardReveal,
           transform: `translate3d(0, ${((1 - signboardReveal) * 42).toFixed(1)}px, 0) scale(${(0.93 + signboardReveal * 0.07).toFixed(4)})`,
@@ -1043,7 +1219,7 @@ onBeforeUnmount(() => {
         }"
       >
         <div
-          class="relative rounded-2xl bg-[#101620]/95 backdrop-blur-xl border border-mint/35 px-6 sm:px-10 py-10 sm:py-12 text-center shadow-[0_0_80px_rgba(16,185,129,0.18),0_28px_80px_rgba(0,0,0,0.84)] overflow-hidden"
+          class="relative rounded-2xl bg-[#101620]/95 backdrop-blur-xl border border-mint/35 px-10 py-12 text-center shadow-[0_0_80px_rgba(16,185,129,0.18),0_28px_80px_rgba(0,0,0,0.84)] overflow-hidden"
         >
           <!-- Subtle sweeping emerald shimmer line along top rim -->
           <span
@@ -1108,7 +1284,7 @@ onBeforeUnmount(() => {
 
       <!-- INTERACTIVE AURORA BANDUNG SUMMIT + SYMMETRIC NUSANTARA PAVILIONS -->
       <div
-        class="relative z-10 w-full -mt-4 sm:-mt-8 transition-opacity duration-500"
+        class="relative z-10 w-full -mt-8 transition-opacity duration-500"
         :style="{ opacity: Math.max(0.18, summitRise) }"
       >
         <!-- SILKY 60FPS GPU-COMPOSITED AURORA BOREALIS CURTAINS (SEAMLESS TOP FADE, ZERO HARD CUTOFF!) -->
@@ -2527,7 +2703,154 @@ onBeforeUnmount(() => {
   }
 }
 
+/* Act 1 Demand Route — Unique Geospatial Observatory Backdrop Animations */
+.route-bg-aurora-a {
+  animation: route-aurora-drift-a 16s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.route-bg-aurora-b {
+  animation: route-aurora-drift-b 19s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.route-bg-aurora-c {
+  animation: route-aurora-drift-c 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.route-bg-orbit-cw {
+  transform-box: view-box;
+  transform-origin: 720px 440px;
+  animation: route-orbit-spin 84s linear infinite;
+}
+
+.route-bg-orbit-ccw {
+  transform-box: view-box;
+  transform-origin: 720px 440px;
+  animation: route-orbit-spin-rev 62s linear infinite;
+}
+
+.route-bg-hex-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: route-hex-breathe 6.4s ease-in-out infinite;
+}
+
+.route-contour-flow-a {
+  animation: route-contour-slide 11s linear infinite;
+}
+
+.route-contour-flow-b {
+  animation: route-contour-slide-rev 14s linear infinite;
+}
+
+.route-bg-mote {
+  animation: route-mote-float 7.6s ease-in-out infinite;
+}
+
+@keyframes route-aurora-drift-a {
+  0%, 100% { transform: translate3d(-18px, -6px, 0) scale(1); opacity: 0.72; }
+  50% { transform: translate3d(34px, 14px, 0) scale(1.09); opacity: 1; }
+}
+
+@keyframes route-aurora-drift-b {
+  0%, 100% { transform: translate3d(20px, 8px, 0) scale(1.04); opacity: 0.68; }
+  50% { transform: translate3d(-32px, -14px, 0) scale(0.95); opacity: 0.98; }
+}
+
+@keyframes route-aurora-drift-c {
+  0%, 100% { transform: translate3d(-14px, 6px, 0) scale(0.96); opacity: 0.65; }
+  50% { transform: translate3d(22px, -10px, 0) scale(1.08); opacity: 0.95; }
+}
+
+@keyframes route-orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes route-orbit-spin-rev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes route-hex-breathe {
+  0%, 100% { opacity: 0.34; transform: scale(0.94); }
+  50% { opacity: 0.92; transform: scale(1.06); }
+}
+
+@keyframes route-contour-slide {
+  from { stroke-dashoffset: 266; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes route-contour-slide-rev {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 266; }
+}
+
+@keyframes route-mote-float {
+  0%, 100% { opacity: 0.16; transform: translate3d(0, 6px, 0) scale(0.85); }
+  50% { opacity: 0.82; transform: translate3d(4px, -12px, 0) scale(1.18); }
+}
+
+:global(html.ascend-calm-motion) .route-bg-aurora-a,
+:global(html.ascend-calm-motion) .route-bg-aurora-b,
+:global(html.ascend-calm-motion) .route-bg-aurora-c,
+:global(html.ascend-calm-motion) .route-bg-orbit-cw,
+:global(html.ascend-calm-motion) .route-bg-orbit-ccw,
+:global(html.ascend-calm-motion) .route-bg-hex-pulse,
+:global(html.ascend-calm-motion) .route-contour-flow-a,
+:global(html.ascend-calm-motion) .route-contour-flow-b,
+:global(html.ascend-calm-motion) .route-bg-mote,
+:global(html.ascend-calm-motion) .summit-gpu-aurora-a,
+:global(html.ascend-calm-motion) .summit-gpu-aurora-b,
+:global(html.ascend-calm-motion) .summit-gpu-aurora-c,
+:global(html.ascend-calm-motion) .summit-click-burst-a,
+:global(html.ascend-calm-motion) .summit-click-burst-b,
+:global(html.ascend-calm-motion) .summit-scroll-bounce,
+:global(html.ascend-calm-motion) .summit-star-twinkle,
+:global(html.ascend-calm-motion) .summit-flare-pulse,
+:global(html.ascend-calm-motion) .summit-shooting-a,
+:global(html.ascend-calm-motion) .summit-shooting-b,
+:global(html.ascend-calm-motion) .summit-radar-spin-cw,
+:global(html.ascend-calm-motion) .summit-radar-spin-ccw,
+:global(html.ascend-calm-motion) .summit-orbit-cw,
+:global(html.ascend-calm-motion) .summit-orbit-ccw,
+:global(html.ascend-calm-motion) .summit-compass-cw,
+:global(html.ascend-calm-motion) .summit-compass-ccw,
+:global(html.ascend-calm-motion) .summit-needle-seek,
+:global(html.ascend-calm-motion) .summit-beacon-breathe,
+:global(html.ascend-calm-motion) .summit-beacon-sonar,
+:global(html.ascend-calm-motion) .summit-beam-breathe,
+:global(html.ascend-calm-motion) .summit-ridge-sweep-a,
+:global(html.ascend-calm-motion) .summit-ridge-sweep-b,
+:global(html.ascend-calm-motion) .summit-mist-drift-a,
+:global(html.ascend-calm-motion) .summit-mist-drift-b,
+:global(html.ascend-calm-motion) .summit-peak-pulse,
+:global(html.ascend-calm-motion) .summit-tier-wave,
+:global(html.ascend-calm-motion) .summit-tile-float,
+:global(html.ascend-calm-motion) .summit-flank-float-a,
+:global(html.ascend-calm-motion) .summit-flank-float-b,
+:global(html.ascend-calm-motion) .summit-flank-float-c,
+:global(html.ascend-calm-motion) .summit-steam-a,
+:global(html.ascend-calm-motion) .summit-steam-b,
+:global(html.ascend-calm-motion) .summit-steam-c,
+:global(html.ascend-calm-motion) .summit-eq-bar,
+:global(html.ascend-calm-motion) .summit-firefly {
+  animation: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .route-bg-aurora-a,
+  .route-bg-aurora-b,
+  .route-bg-aurora-c,
+  .route-bg-orbit-cw,
+  .route-bg-orbit-ccw,
+  .route-bg-hex-pulse,
+  .route-contour-flow-a,
+  .route-contour-flow-b,
+  .route-bg-mote,
   .summit-gpu-aurora-a,
   .summit-gpu-aurora-b,
   .summit-gpu-aurora-c,

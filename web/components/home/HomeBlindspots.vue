@@ -25,10 +25,10 @@ const dotGrid = computed(() => {
 </script>
 
 <template>
-  <section id="masalah" class="relative pt-8 pb-20 sm:pt-10 sm:pb-24 bg-ground bg-signal-dots overflow-x-clip">
+  <section id="masalah" class="relative z-20 pt-10 pb-24 bg-ground bg-signal-dots overflow-x-clip">
     <!-- Minimalist Nusantara Primary-Mint Section Divider -->
-    <div class="mx-auto max-w-frame px-5 sm:px-8 mb-14 sm:mb-16" aria-hidden="true">
-      <div class="w-full flex items-center justify-center gap-2 sm:gap-3">
+    <div class="mx-auto max-w-frame px-8 mb-16" aria-hidden="true">
+      <div class="w-full flex items-center justify-center gap-3">
         <div
           class="h-px flex-1"
           style="background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.28) 24%, rgba(16, 185, 129, 0.72) 100%);"
@@ -64,9 +64,9 @@ const dotGrid = computed(() => {
       </div>
     </div>
 
-    <div class="mx-auto max-w-frame px-5 sm:px-8">
+    <div class="mx-auto max-w-frame px-8">
       <!-- Section Heading (Josefin Sans 600, 40/46, "eye" mint italic) -->
-      <div class="max-w-2xl mb-12 sm:mb-14">
+      <div class="max-w-2xl mb-14">
         <p
           v-reveal="{ variant: 'up' }"
           class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mint mb-3"
@@ -74,7 +74,7 @@ const dotGrid = computed(() => {
           <span class="w-1.5 h-1.5 rounded-full bg-mint shadow-[0_0_8px_rgba(16,185,129,0.85)]" aria-hidden="true" />
           <span>{{ HOME_COPY.blindspots.eyebrow }}</span>
         </p>
-        <h2 v-reveal="{ variant: 'up', delay: 80 }" class="font-editorial font-semibold text-ink-primary text-[34px] sm:text-[42px] leading-[1.15] tracking-[-0.01em]">
+        <h2 v-reveal="{ variant: 'up', delay: 80 }" class="font-editorial font-semibold text-ink-primary text-[42px] leading-[1.15] tracking-[-0.01em]">
           {{ HOME_COPY.blindspots.headlinePrefix }}
           <span class="editorial-mint">{{ HOME_COPY.blindspots.headlineAccent }}</span>
           {{ HOME_COPY.blindspots.headlineSuffix }}
@@ -82,7 +82,7 @@ const dotGrid = computed(() => {
       </div>
 
       <!-- Three asymmetric chamfered cards with uncropped hover lift, primary-mint highlight, sheen sweep, and animated illustrations -->
-      <div class="flex flex-col gap-6 sm:gap-7">
+      <div class="flex flex-col gap-7">
         <div
           v-for="(item, idx) in HOME_COPY.blindspots.items"
           :key="item.index"

@@ -528,7 +528,7 @@ export const HOME_COPY_ID = {
         bio: 'Memimpin arah produk dan pemodelan permintaan di 1.976 area terpetakan, mengubah hitungan lingkungan menjadi label Peluang, Seimbang, dan Padat.',
         theme: 'amber' as const,
         iconSet: 'ml' as const,
-        poses: ['/images/team/april-1.webp', '/images/team/april-2.webp'] as const,
+        poses: ['/images/team/april-1.webp?v=2', '/images/team/april-2.webp?v=2'] as const,
       },
       {
         id: 'bill',

@@ -46,7 +46,7 @@ function clearCycleTimers() {
 
 function scheduleNextCycle() {
   clearCycleTimers()
-  if (reducedMotion) return
+  if (reducedMotion || settings.calmMotion.value) return
 
   exitTimeout = setTimeout(() => {
     cyclePhase.value = 'exit'
@@ -64,6 +64,15 @@ function replayAscendCycle() {
   cycleKey.value++
   scheduleNextCycle()
 }
+
+watch(settings.calmMotion, (calm) => {
+  if (calm) {
+    clearCycleTimers()
+    cyclePhase.value = 'enter'
+  } else if (!reducedMotion) {
+    scheduleNextCycle()
+  }
+})
 
 // =========================================================================
 // 2. CLEAN 2D STEP-RISING ASCEND WORDMARK (Synchronized with underline timing!)
@@ -180,7 +189,7 @@ const totalAreasFormatted = computed(() => {
 <template>
   <section
     id="beranda"
-    :class="fitReady && isCompact ? 'min-h-[700px] pt-24' : 'min-h-[calc(100svh-160px)] pt-24'"
+    :class="fitReady && isCompact ? 'min-h-[740px] pt-24' : 'min-h-[calc(100svh-160px)] pt-24'"
     class="relative w-full bg-[#050C0F] overflow-x-clip flex flex-col justify-between"
   >
     <!-- 5 FLUID 60FPS BACKDROP SCENES + SMART TEXT-DIMMING VARIED-STYLE LUHUR MINT HEX CURSOR -->
@@ -195,7 +204,7 @@ const totalAreasFormatted = computed(() => {
     />
 
     <!-- ROCK-SOLID CENTERED FOREGROUND HERO STACK (Zero layout shift!) -->
-    <div class="relative z-20 mx-auto w-full max-w-frame px-4 sm:px-8 flex-1 flex flex-col items-center justify-between text-center pt-1 sm:pt-2 pb-4 sm:pb-6">
+    <div class="relative z-20 mx-auto w-full max-w-frame px-8 flex-1 flex flex-col items-center justify-between text-center pt-2 pb-6">
       <!-- TOP CLUSTER: Ornate Nusantara Filigree Eyebrow + Synced 15s ASCEND Wordmark + Treasure-Hunt Underline -->
       <div class="w-full flex flex-col items-center">
         <!-- Eyebrow flanked by glowing Nusantara botanical filigree wings -->
@@ -249,10 +258,10 @@ const totalAreasFormatted = computed(() => {
         </div>
 
         <!-- BOLD 2D STEP-RISING ASCEND WORDMARK + SYNCED 15s TREASURE-HUNT UNDERLINE LOCKED PROPORTIONALLY BELOW -->
-        <div class="inline-flex flex-col items-stretch w-fit max-w-full mt-1 sm:mt-2">
+        <div class="inline-flex flex-col items-stretch w-fit max-w-full mt-2">
           <div
             :key="`wordmark-${cycleKey}`"
-            class="relative inline-flex items-baseline justify-center select-none cursor-default pr-6 sm:pr-12"
+            class="relative inline-flex items-baseline justify-center select-none cursor-default pr-12"
             :class="{ 'ascend-2d-hovered': wordmarkHovered }"
             aria-label="ASCEND"
             @mouseenter="wordmarkHovered = true"
@@ -268,14 +277,15 @@ const totalAreasFormatted = computed(() => {
             <span
               v-for="(item, idx) in wordmarkLetters"
               :key="`${item.char}-${cycleKey}`"
-              class="font-display font-extrabold leading-[0.86] tracking-[-0.035em] text-[clamp(46px,11vw,152px)]"
-              :class="
+              class="font-display font-extrabold leading-[0.86] tracking-[-0.035em]"
+              :class="[
+                fitReady && isCompact ? 'text-[152px]' : 'text-[clamp(46px,11vw,152px)]',
                 cyclePhase === 'exit'
                   ? 'ascend-letter-sync-exit'
                   : cycleKey === 0
                     ? 'ascend-letter-sync-enter'
-                    : 'ascend-letter-sync-reenter'
-              "
+                    : 'ascend-letter-sync-reenter',
+              ]"
               :style="{
                 '--step-y': `${(5 - item.step) * 0.036}em`,
                 '--step-delay': `${item.enterDelayMs}ms`,
@@ -306,7 +316,7 @@ const totalAreasFormatted = computed(() => {
       </div>
 
       <!-- MIDDLE CLUSTER: 2-Line Headline, Subtitle, Segmented Pill (Live Mint vs Coming Soon Warm Amber) -->
-      <div class="w-full max-w-[980px] flex flex-col items-center -mt-1 sm:-mt-2">
+      <div class="w-full max-w-[980px] flex flex-col items-center -mt-2">
         <h1 class="font-display font-extrabold text-ink-primary tracking-[-0.03em] leading-[1.08] text-[40px] drop-shadow-[0_6px_22px_rgba(0,0,0,0.85)]">
           <span class="block whitespace-nowrap">{{ HOME_COPY.hero.headlineLine1 }}</span>
           <span class="block mt-0.5">
@@ -317,12 +327,12 @@ const totalAreasFormatted = computed(() => {
           </span>
         </h1>
 
-        <p class="mt-2.5 sm:mt-3 font-sans text-[13.5px] sm:text-[15.5px] leading-[1.6] text-[#B8C7C4] max-w-[520px]">
+        <p class="mt-3 font-sans text-[15.5px] leading-[1.6] text-[#B8C7C4] max-w-[520px]">
           {{ HOME_COPY.hero.subtitle }}
         </p>
 
         <!-- Segmented Business Type Pill (Coffee shop = Primary Mint LIVE, Eatery = Warm Amber COMING SOON) -->
-        <div class="relative mt-4 sm:mt-5 inline-flex flex-col items-center">
+        <div class="relative mt-5 inline-flex flex-col items-center">
           <div
             class="inline-flex items-center p-1 rounded-full bg-[#0A181C]/90 border border-[#1E3B42] backdrop-blur-md shadow-[0_12px_34px_rgba(0,0,0,0.55)] max-w-full"
             role="group"
@@ -330,7 +340,7 @@ const totalAreasFormatted = computed(() => {
           >
             <button
               type="button"
-              class="inline-flex items-center px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-sans text-[12.5px] sm:text-[13.5px] whitespace-nowrap transition-all duration-fast ease-signal bg-mint text-ink-dark font-bold shadow-[0_0_24px_rgba(16,185,129,0.5)]"
+              class="inline-flex items-center px-5 py-2 rounded-full font-sans text-[13.5px] whitespace-nowrap transition-all duration-fast ease-signal bg-mint text-ink-dark font-bold shadow-[0_0_24px_rgba(16,185,129,0.5)]"
               aria-pressed="true"
               @mouseenter="eateryTipVisible = false"
             >
@@ -339,7 +349,7 @@ const totalAreasFormatted = computed(() => {
 
             <button
               type="button"
-              class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-sans text-[12.5px] sm:text-[13.5px] whitespace-nowrap transition-all duration-fast ease-signal"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full font-sans text-[13.5px] whitespace-nowrap transition-all duration-fast ease-signal"
               :class="
                 eateryTipVisible
                   ? 'bg-[#191F29] text-[#E2E8F0] font-semibold'
@@ -372,7 +382,7 @@ const totalAreasFormatted = computed(() => {
               v-if="eateryTipVisible"
               id="eatery-coming-soon-tip"
               role="tooltip"
-              class="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-40 w-[300px] sm:w-[390px] rounded-xl bg-[#11151C]/95 border border-[#334155]/85 backdrop-blur-md px-3.5 py-2.5 text-left shadow-[0_16px_40px_rgba(0,0,0,0.78)]"
+              class="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-40 w-[390px] rounded-xl bg-[#11151C]/95 border border-[#334155]/85 backdrop-blur-md px-3.5 py-2.5 text-left shadow-[0_16px_40px_rgba(0,0,0,0.78)]"
               @mouseenter="showEateryTip"
               @mouseleave="scheduleHideEateryTip"
             >
@@ -406,7 +416,7 @@ const totalAreasFormatted = computed(() => {
       </div>
 
       <!-- BOTTOM CLUSTER: Neutral-Grey Disabled Ask Ascend Bar (only COMING SOON label stays amber) -->
-      <div class="w-full max-w-[960px] flex flex-col items-center mt-4 sm:mt-5 pb-3">
+      <div class="w-full max-w-[960px] flex flex-col items-center mt-5 pb-3">
         <div
           class="relative w-full max-w-[650px] flex flex-col items-center"
           @mouseleave="scheduleHideChatTip"
@@ -416,14 +426,14 @@ const totalAreasFormatted = computed(() => {
             @submit.prevent="submitChatPreview"
           >
             <div class="relative flex-1 min-w-0 group">
-              <div class="relative h-11 sm:h-12 rounded-full bg-[#10141B]/90 border border-[#2C3544] group-focus-within:border-[#475569] pl-4 pr-3 flex items-center gap-2.5 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+              <div class="relative h-12 rounded-full bg-[#10141B]/90 border border-[#2C3544] group-focus-within:border-[#475569] pl-4 pr-3 flex items-center gap-2.5 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
                 <Search class="w-4 h-4 text-[#64748B] shrink-0" :stroke-width="2" />
                 <input
                   v-model="chatQuery"
                   type="text"
                   :placeholder="HOME_COPY.hero.chatPlaceholder"
                   aria-label="Ask Ascend preview input"
-                  class="flex-1 min-w-0 bg-transparent font-sans text-[12.5px] sm:text-[13.5px] text-[#CBD5E1] placeholder:text-[#64748B] focus:outline-none"
+                  class="flex-1 min-w-0 bg-transparent font-sans text-[13.5px] text-[#CBD5E1] placeholder:text-[#64748B] focus:outline-none"
                   @focus="showChatTip()"
                 >
                 <span
@@ -437,7 +447,7 @@ const totalAreasFormatted = computed(() => {
 
             <button
               type="submit"
-              class="relative h-11 sm:h-12 px-5 sm:px-6 rounded-full border border-[#334155] bg-[#141922]/90 hover:bg-[#1E2532] hover:border-[#475569] text-[#94A3B8] hover:text-[#E2E8F0] shadow-[0_8px_22px_rgba(0,0,0,0.35)] transition-all duration-200 ease-signal flex flex-col items-center justify-center shrink-0 leading-none group cursor-pointer"
+              class="relative h-12 px-6 rounded-full border border-[#334155] bg-[#141922]/90 hover:bg-[#1E2532] hover:border-[#475569] text-[#94A3B8] hover:text-[#E2E8F0] shadow-[0_8px_22px_rgba(0,0,0,0.35)] transition-all duration-200 ease-signal flex flex-col items-center justify-center shrink-0 leading-none group cursor-pointer"
               aria-label="Preview Ask Ascend"
               aria-describedby="ask-ascend-coming-soon-tip"
               @mouseenter="showChatTip()"
@@ -452,7 +462,7 @@ const totalAreasFormatted = computed(() => {
             </button>
           </form>
 
-          <div class="relative z-10 mt-2.5 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+          <div class="relative z-10 mt-2.5 flex flex-wrap items-center justify-center gap-2.5">
             <button
               v-for="chip in HOME_COPY.hero.chatChips"
               :key="chip.id"

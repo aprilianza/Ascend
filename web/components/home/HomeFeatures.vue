@@ -58,10 +58,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section id="fitur" class="relative py-20 sm:py-24 bg-ground bg-signal-dots">
-    <div class="mx-auto max-w-frame px-5 sm:px-8">
+  <section id="fitur" class="relative py-24 bg-ground bg-signal-dots">
+    <div class="mx-auto max-w-frame px-8">
       <!-- Header -->
-      <div class="max-w-3xl mb-12 sm:mb-14">
+      <div class="max-w-3xl mb-14">
         <p
           v-reveal="{ variant: 'up' }"
           class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mint mb-3"
@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
           <span class="w-1.5 h-1.5 rounded-full bg-mint shadow-[0_0_8px_rgba(16,185,129,0.85)]" aria-hidden="true" />
           <span>{{ HOME_COPY.features.eyebrow }}</span>
         </p>
-        <h2 v-reveal="{ variant: 'up', delay: 80 }" class="font-editorial font-semibold text-ink-primary text-[32px] sm:text-[42px] leading-[1.15] tracking-[-0.01em]">
+        <h2 v-reveal="{ variant: 'up', delay: 80 }" class="font-editorial font-semibold text-ink-primary text-[42px] leading-[1.15] tracking-[-0.01em]">
           {{ HOME_COPY.features.headlinePrefix }}
           <span class="editorial-mint">{{ HOME_COPY.features.headlineAccent }}</span>{{ HOME_COPY.features.headlineSuffix }}
         </h2>
@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
                     </span>
                   </div>
 
-                  <h3 class="mt-4 font-editorial font-semibold text-ink-primary text-[22px] sm:text-[24px] leading-snug inline-flex items-center gap-2.5">
+                  <h3 class="mt-4 font-editorial font-semibold text-ink-primary text-[24px] leading-snug inline-flex items-center gap-2.5">
                     <span>{{ card.title }}</span>
                     <span
                       class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-mint/20 border border-mint/60 text-mint shadow-[0_0_12px_rgba(16,185,129,0.35)] shrink-0"
@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
                     </span>
                   </h3>
 
-                  <p class="mt-2.5 font-sans text-[13.5px] sm:text-[14px] leading-[1.64] text-ink-secondary">
+                  <p class="mt-2.5 font-sans text-[14px] leading-[1.64] text-ink-secondary">
                     {{ card.description }}
                   </p>
                 </div>

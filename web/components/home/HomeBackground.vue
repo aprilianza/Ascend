@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
+const { fitReady, isCompact, homeBackgroundOverlapPx, homeBackgroundPadTopPx } = useDesktopFit()
 
 type StageId = 'crowded' | 'fair' | 'opportunity'
 
@@ -23,7 +24,7 @@ let viewObserver: IntersectionObserver | null = null
 const activeStage = computed(() => stages.value[activeIndex.value] ?? stages.value[2]!)
 
 const isAutoRunning = computed(() =>
-  !reducedMotion.value && !isHoverPaused.value && isInView.value,
+  !reducedMotion.value && !settings.calmMotion.value && !isHoverPaused.value && isInView.value,
 )
 
 const stageTheme = computed(() => {
@@ -126,10 +127,16 @@ onBeforeUnmount(() => {
   <section
     id="latar-belakang"
     ref="sectionRef"
-    class="gta-overlap-rise relative z-20 pb-20 sm:pb-24"
-    style="background: linear-gradient(180deg, rgba(10, 13, 18, 0) 0%, rgba(11, 14, 19, 0.72) 14%, rgba(15, 17, 21, 0.95) 32%, #0F1115 50%, #0F1115 100%);"
+    class="relative z-20 pb-24"
+    :class="fitReady && isCompact ? '' : 'gta-overlap-rise'"
+    :style="[
+      { background: fitReady && isCompact ? 'linear-gradient(180deg, #020406 0%, #0B0E13 18%, #0F1115 44%, #0F1115 100%)' : 'linear-gradient(180deg, rgba(10, 13, 18, 0) 0%, rgba(11, 14, 19, 0.72) 14%, rgba(15, 17, 21, 0.95) 32%, #0F1115 50%, #0F1115 100%)' },
+      fitReady && isCompact && homeBackgroundPadTopPx !== null
+        ? { marginTop: `${homeBackgroundOverlapPx ?? 0}px`, paddingTop: `${homeBackgroundPadTopPx}px` }
+        : undefined,
+    ]"
   >
-    <div id="busy-header" class="mx-auto max-w-frame px-5 sm:px-8">
+    <div id="busy-header" class="mx-auto max-w-frame px-8">
       <!-- Row 1: Precision-Aligned Left Headline & Right Editorial Explanation -->
       <div class="grid grid-cols-12 gap-10 items-stretch">
         <!-- Left Column: Street Reality + "Busy isn't room." -->
@@ -162,7 +169,7 @@ onBeforeUnmount(() => {
             {{ HOME_COPY.background.rightEyebrow }}
           </p>
 
-          <p class="font-sans text-[16.5px] sm:text-[18px] lg:text-[19.5px] leading-[1.68] text-ink-secondary max-w-[540px]">
+          <p class="font-sans text-[19.5px] leading-[1.68] text-ink-secondary max-w-[540px]">
             {{ HOME_COPY.background.body }}
           </p>
         </div>
@@ -171,7 +178,7 @@ onBeforeUnmount(() => {
       <!-- Row 2: Ultra-Clean Full-Width Animated "BUSY ... ROOM" Spectrum Band Below Both Texts -->
       <div
         v-reveal="{ variant: 'up', delay: 180 }"
-        class="mt-12 sm:mt-14 pt-8 border-t border-[#232836]/80"
+        class="mt-14 pt-8 border-t border-[#232836]/80"
         @mouseenter="isHoverPaused = true"
         @mouseleave="isHoverPaused = false"
       >
@@ -192,13 +199,13 @@ onBeforeUnmount(() => {
 
             <span class="inline text-[#34404F]" aria-hidden="true">·</span>
 
-            <p class="font-sans text-[14px] sm:text-[15px] text-ink-secondary">
+            <p class="font-sans text-[15px] text-ink-secondary">
               {{ activeStage.meaning }}
             </p>
           </div>
 
           <!-- Minimal Inline Stage Pills -->
-          <div class="inline-flex items-center gap-1 self-start md:self-auto" role="tablist" aria-label="Area balance states">
+          <div class="inline-flex items-center gap-1 self-auto" role="tablist" aria-label="Area balance states">
             <button
               v-for="(stage, idx) in stages"
               :key="stage.id"

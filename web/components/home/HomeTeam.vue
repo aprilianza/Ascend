@@ -173,11 +173,16 @@ function clearPoseTimer() {
 
 function startPoseCycle() {
   clearPoseTimer()
-  if (reducedMotion.value) return
+  if (reducedMotion.value || settings.calmMotion.value) return
   poseTimer = setInterval(() => {
     poseIndex.value = poseIndex.value === 0 ? 1 : 0
   }, 1450)
 }
+
+watch(settings.calmMotion, (calm) => {
+  if (calm) clearPoseTimer()
+  else if (activeMemberId.value) startPoseCycle()
+})
 
 function activateMember(id: string) {
   if (activeMemberId.value === id) return
@@ -242,10 +247,10 @@ const scrollCueStyle = computed(() => {
   <section
     id="tim"
     ref="sectionRef"
-    class="relative pt-20 pb-28 sm:pt-28 sm:pb-36 bg-ground bg-signal-dots overflow-x-clip"
+    class="relative pt-28 pb-36 bg-ground bg-signal-dots overflow-x-clip"
   >
     <div
-      class="mx-auto max-w-frame px-5 sm:px-8 will-change-[opacity,transform]"
+      class="mx-auto max-w-frame px-8 will-change-[opacity,transform]"
       :style="teamStageStyle"
     >
       <!-- Header -->
@@ -263,7 +268,7 @@ const scrollCueStyle = computed(() => {
             <span class="editorial-mint">{{ HOME_COPY.team.headlineAccent }}</span>
           </h2>
         </div>
-        <div class="flex flex-col sm:items-end gap-1">
+        <div class="flex flex-col items-end gap-1">
           <span class="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted">
             4 MEMBERS · ROSUN GANK
           </span>
@@ -579,6 +584,11 @@ const scrollCueStyle = computed(() => {
     transform: translateY(4px);
     opacity: 1;
   }
+}
+
+:global(html.ascend-calm-motion) .team-scroll-drop,
+:global(html.ascend-calm-motion) .team-scroll-chevron {
+  animation: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
