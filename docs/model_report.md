@@ -17,7 +17,7 @@ Reproduce everything below with `python -m pipeline.run` (seed 42). Raw numbers:
 Source versions, filters and the `operating_status` finding: `pipeline/data/SOURCES.md`.
 
 **Category sample check (target error ≤ 15%): not met, 20% (6 of 30).** Desk check of 30 random
-records on Google Maps (category, closed status, position) by Aprilianza, assisted by Claude Code,
+records on Google Maps (category, closed status, position) by Nopri, assisted by Claude Code,
 28 Nov 2026; results in `docs/sample_check_coffee.csv`. A record is an error when it is not a coffee
 shop or is permanently closed.
 
