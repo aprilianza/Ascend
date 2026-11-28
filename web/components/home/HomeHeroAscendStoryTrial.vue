@@ -18,7 +18,7 @@ const rightMeta = computed(() => BUSINESS_STATIONS.find(s => s.id === props.righ
 <template>
   <!-- LEFT & RIGHT 3D-HEX BUYER-SELLER SHOWCASE WINGS (Positioned closer to center bar, clickable to swap!) -->
   <div
-    class="pointer-events-none hidden xl:block absolute inset-0 z-30 overflow-hidden select-none"
+    class="pointer-events-none block absolute inset-0 z-30 overflow-hidden select-none"
     aria-hidden="false"
   >
     <!-- LEFT WING SHOWCASE (Positioned closer to central search capsule on xl/2xl!) -->

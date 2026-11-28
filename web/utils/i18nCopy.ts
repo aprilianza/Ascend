@@ -375,7 +375,7 @@ export const HOME_COPY_ID = {
         description:
           'Jelajahi hampir dua ribu area heksagon di zona cakupan aktif dengan label aman buta warna serta penanda tingkat keyakinan data.',
         status: 'available' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: true,
         href: '/map',
@@ -387,7 +387,7 @@ export const HOME_COPY_ID = {
         description:
           'Klik heksagon mana saja untuk membandingkan kedai dalam 500 m, kapasitas permintaan setempat, dan tiga faktor pendorong utamanya.',
         status: 'available' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: true,
         href: '/map',
@@ -399,7 +399,7 @@ export const HOME_COPY_ID = {
         description:
           'Simpan hingga sepuluh kandidat lokasi secara lokal di browser tanpa akun, lalu lompat kembali hanya dengan satu klik.',
         status: 'available' as const,
-        cols: 'md:col-span-4',
+        cols: 'col-span-4',
         layout: 'vertical' as const,
         chamfer: false,
         href: '/map',
@@ -411,7 +411,7 @@ export const HOME_COPY_ID = {
         description:
           'Masukkan harga jual per cup, biaya bahan, dan sewa bulananmu sendiri untuk melihat target cup harian di samping tingkat persaingan.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-4',
+        cols: 'col-span-4',
         layout: 'vertical' as const,
         chamfer: false,
         href: null,
@@ -423,7 +423,7 @@ export const HOME_COPY_ID = {
         description:
           'Jelaskan target pembeli dan kecamatan incaranmu agar asisten memfilter area yang sesuai serta mengarahkan tampilan peta.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-4',
+        cols: 'col-span-4',
         layout: 'vertical' as const,
         chamfer: false,
         href: null,
@@ -435,7 +435,7 @@ export const HOME_COPY_ID = {
         description:
           'Jajarkan dua hingga tiga area pilihan untuk menimbang ruang pasar, tingkat keyakinan data, dan pemicu permintaan lokal.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: false,
         href: null,
@@ -447,7 +447,7 @@ export const HOME_COPY_ID = {
         description:
           'Catat penawaran harga sewamu secara privat di browser dan bandingkan dengan ruang pasar setempat sebelum menandatangani kontrak.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: false,
         href: null,

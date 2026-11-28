@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
 
     <!-- Enlarged Clickable 8-Station 3D-Hex Business Grid (Click any to swap into Left/Right Hero stage!) -->
     <div class="relative z-10 mx-auto max-w-frame px-3 sm:px-6">
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-2 items-end">
+      <div class="grid grid-cols-8 gap-2 items-end">
         <button
           v-for="(st, idx) in BUSINESS_STATIONS"
           :key="st.id"
@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
           class="group relative flex flex-col items-center justify-end gap-1 py-2 px-1 rounded-2xl transition-all duration-200 ease-signal cursor-pointer focus:outline-none"
           :class="[
             activeWingBadge(st.id)
-              ? 'xl:bg-[#0D1E22]/65 xl:ring-1 xl:ring-[#00E5A8]/35 hover:bg-[#0B171C]/50'
+              ? 'bg-[#0D1E22]/65 ring-1 ring-[#00E5A8]/35 hover:bg-[#0B171C]/50'
               : 'hover:bg-[#0B171C]/50',
             launchedId === st.id ? 'station-click-launch' : 'hover:-translate-y-1',
           ]"
@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
           <!-- Active stage indicator pill ONLY shown at xl+ where Left/Right Hero wings are visible! -->
           <span
             v-if="activeWingBadge(st.id)"
-            class="hidden xl:inline-flex absolute top-1.5 right-2 px-1.5 py-0.5 rounded-full bg-mint/15 border border-mint/45 font-mono text-[7.5px] font-bold tracking-[0.1em] text-[#00E5A8] uppercase"
+            class="inline-flex absolute top-1.5 right-2 px-1.5 py-0.5 rounded-full bg-mint/15 border border-mint/45 font-mono text-[7.5px] font-bold tracking-[0.1em] text-[#00E5A8] uppercase"
           >
             {{ activeWingBadge(st.id) }}
           </span>
@@ -96,14 +96,14 @@ onBeforeUnmount(() => {
                 hoveredStation === st.id
                   ? 'text-[#00E5A8]'
                   : activeWingBadge(st.id)
-                    ? 'text-[#A2B6BB] xl:text-[#00E5A8]'
+                    ? 'text-[#00E5A8]'
                     : 'text-[#A2B6BB]'
               "
             >
               {{ st.label }}
             </span>
             <span
-              class="hidden xl:block font-sans text-[9.5px] transition-opacity duration-fast leading-tight mt-0.5"
+              class="block font-sans text-[9.5px] transition-opacity duration-fast leading-tight mt-0.5"
               :class="
                 activeWingBadge(st.id) || hoveredStation === st.id
                   ? 'text-[#98BCB5] opacity-100'

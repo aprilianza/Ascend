@@ -215,13 +215,13 @@ onBeforeUnmount(() => {
       <div ref="timelineRef" class="relative py-4">
         <!-- Base unlit vertical spine track -->
         <div
-          class="pointer-events-none absolute top-0 bottom-0 left-5 lg:left-1/2 lg:-translate-x-1/2 w-[1.5px] bg-gradient-to-b from-transparent via-[#232B38] to-transparent"
+          class="pointer-events-none absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1.5px] bg-gradient-to-b from-transparent via-[#232B38] to-transparent"
           aria-hidden="true"
         />
 
         <!-- Dynamic scroll-filled luminous Luhur Mint energy beam -->
         <div
-          class="pointer-events-none absolute top-0 left-5 lg:left-1/2 lg:-translate-x-1/2 w-[2px] rounded-full will-change-[height]"
+          class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[2px] rounded-full will-change-[height]"
           :style="{
             height: `${(smoothProgress * 100).toFixed(3)}%`,
             background: 'linear-gradient(180deg, rgba(20, 184, 166, 0.25) 0%, #10B981 48%, #34D399 88%, #ECFDF5 100%)',
@@ -233,7 +233,7 @@ onBeforeUnmount(() => {
         <!-- Blazing Scroll Comet Head + Drifting Emerald Sparks ("percikan") Riding the Beam Tip -->
         <div
           v-if="!reducedMotion && smoothProgress > 0.02 && smoothProgress < 0.995"
-          class="pointer-events-none absolute left-5 lg:left-1/2 z-20"
+          class="pointer-events-none absolute left-1/2 z-20"
           :style="{ top: `${(smoothProgress * 100).toFixed(3)}%` }"
           aria-hidden="true"
         >
@@ -254,13 +254,13 @@ onBeforeUnmount(() => {
             v-for="(step, idx) in HOME_COPY.howItWorks.steps"
             :key="step.num"
             :ref="el => setRowRef(el, idx)"
-            class="relative grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-0 items-center"
+            class="relative grid grid-cols-12 gap-0 items-center"
             @mouseenter="hoveredStep = step.num"
             @mouseleave="hoveredStep = null"
           >
             <!-- Primary Horizontal Connector Arm (Desktop: Center Hexagon -> Explanation Card) -->
             <div
-              class="pointer-events-none hidden lg:block absolute top-1/2 -translate-y-1/2 h-[1.5px] z-10 overflow-hidden"
+              class="pointer-events-none block absolute top-1/2 -translate-y-1/2 h-[1.5px] z-10 overflow-hidden"
               :style="
                 idx % 2 === 0
                   ? { left: '41.6667%', right: 'calc(50% + 21px)' }
@@ -281,7 +281,7 @@ onBeforeUnmount(() => {
 
             <!-- Complementary Horizontal Connector Arm (Desktop: Center Hexagon -> Opposite Visual Diagram) -->
             <div
-              class="pointer-events-none hidden lg:block absolute top-1/2 -translate-y-1/2 h-[1.5px] z-10 overflow-hidden"
+              class="pointer-events-none block absolute top-1/2 -translate-y-1/2 h-[1.5px] z-10 overflow-hidden"
               :style="
                 idx % 2 === 0
                   ? { left: 'calc(50% + 21px)', right: '41.6667%' }
@@ -300,24 +300,11 @@ onBeforeUnmount(() => {
               />
             </div>
 
-            <!-- Mobile Horizontal Connector Arm (Left Spine -> Explanation Card) -->
-            <div
-              class="pointer-events-none lg:hidden absolute top-[84px] -translate-y-1/2 left-[39px] w-4 h-[1.5px] z-10 overflow-hidden"
-              aria-hidden="true"
-            >
-              <div class="w-full h-full bg-[#232B38]" />
-              <div
-                class="absolute inset-0 bg-mint"
-                :style="{
-                  transformOrigin: 'left center',
-                  transform: `scaleX(${stepGlow(idx, step.num).toFixed(3)})`,
-                }"
-              />
-            </div>
+            <span class="hidden" aria-hidden="true" />
 
             <!-- Center Hexagon Ignition Node + Sparks -->
             <div
-              class="absolute left-5 lg:left-1/2 top-[84px] lg:top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center"
+              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center"
               aria-hidden="true"
             >
               <!-- Soft radial ambient emerald glow behind ignited hexagon -->
@@ -375,13 +362,12 @@ onBeforeUnmount(() => {
               </svg>
             </div>
 
-            <!-- 1. EXPLANATION CARD (Always First on Mobile/Compact; Alternates Left/Right on Desktop) -->
+            <!-- 1. EXPLANATION CARD (Alternates Left/Right on Desktop Composition) -->
             <div
-              class="pl-14 lg:pl-0"
               :class="
                 idx % 2 === 0
-                  ? 'lg:col-span-5 lg:col-start-1 lg:row-start-1'
-                  : 'lg:col-span-5 lg:col-start-8 lg:row-start-1'
+                  ? 'col-span-5 col-start-1 row-start-1'
+                  : 'col-span-5 col-start-8 row-start-1'
               "
             >
               <div
@@ -456,13 +442,12 @@ onBeforeUnmount(() => {
               </div>
             </div>
 
-            <!-- 2. OPPOSITE-SIDE VISUAL ILLUSTRATION (Right on Step 01/03, Left on Step 02/04; Stacks Cleanly Below on < lg) -->
+            <!-- 2. OPPOSITE-SIDE VISUAL ILLUSTRATION (Right on Step 01/03, Left on Step 02/04) -->
             <div
-              class="pl-14 lg:pl-0"
               :class="
                 idx % 2 === 0
-                  ? 'lg:col-span-5 lg:col-start-8 lg:row-start-1'
-                  : 'lg:col-span-5 lg:col-start-1 lg:row-start-1'
+                  ? 'col-span-5 col-start-8 row-start-1'
+                  : 'col-span-5 col-start-1 row-start-1'
               "
             >
               <div
@@ -778,7 +763,7 @@ onBeforeUnmount(() => {
                           Close to a campus
                         </span>
                       </div>
-                      <span class="hidden sm:flex items-center gap-1 shrink-0" aria-hidden="true">
+                      <span class="flex items-center gap-1 shrink-0" aria-hidden="true">
                         <span class="w-10 h-1.5 rounded-full bg-gradient-to-r from-[#14B8A6] to-[#00E5A8]" />
                         <span class="font-mono text-[8.5px] uppercase text-mint">LIFTS</span>
                       </span>
@@ -794,7 +779,7 @@ onBeforeUnmount(() => {
                           Good bus and transit access
                         </span>
                       </div>
-                      <span class="hidden sm:flex items-center gap-1 shrink-0" aria-hidden="true">
+                      <span class="flex items-center gap-1 shrink-0" aria-hidden="true">
                         <span class="w-7 h-1.5 rounded-full bg-gradient-to-r from-[#14B8A6] to-[#34D399]" />
                         <span class="font-mono text-[8.5px] uppercase text-[#5EEAD4]">LIFTS</span>
                       </span>
@@ -810,7 +795,7 @@ onBeforeUnmount(() => {
                           Few offices nearby
                         </span>
                       </div>
-                      <span class="hidden sm:flex items-center gap-1 shrink-0" aria-hidden="true">
+                      <span class="flex items-center gap-1 shrink-0" aria-hidden="true">
                         <span class="w-5 h-1.5 rounded-full bg-signal-amber/80" />
                         <span class="font-mono text-[8.5px] uppercase text-signal-amber">LOWERS</span>
                       </span>
@@ -874,8 +859,8 @@ onBeforeUnmount(() => {
               </span>
             </div>
 
-            <!-- Single-Row 4-Column Frosted Glass Tiles on Desktop -->
-            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <!-- Single-Row 4-Column Frosted Glass Tiles -->
+            <div class="mt-6 grid grid-cols-4 gap-3.5">
               <div
                 v-for="(item, idx) in HOME_COPY.howItWorks.doesNotItems"
                 :key="idx"

@@ -2,6 +2,7 @@
 import { ChevronsDown } from 'lucide-vue-next'
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
+const { fitReady, isCompact, homeStickyHeightPx, homeStorySectionHeightPx } = useDesktopFit()
 
 const TOTAL_FRAMES = 72
 const FRAME_ASPECT = 16 / 9
@@ -383,12 +384,14 @@ onBeforeUnmount(() => {
     ref="sectionRef"
     :aria-label="HOME_COPY.storyShowcase.ariaLabel"
     class="relative z-10 w-full bg-[#020406] select-none"
-    :class="reducedMotion ? 'h-[78svh] min-h-[460px]' : 'h-[430vh] sm:h-[470vh]'"
+    :class="reducedMotion ? 'h-[78svh] min-h-[460px]' : fitReady && isCompact ? '' : 'h-[470vh]'"
+    :style="!reducedMotion && fitReady && isCompact && homeStorySectionHeightPx ? { height: `${homeStorySectionHeightPx}px` } : undefined"
   >
     <!-- Pinned Full-Viewport Cinema Stage -->
     <div
       class="w-full overflow-hidden bg-[#020406]"
-      :class="reducedMotion ? 'relative h-full' : 'sticky top-0 h-[100svh]'"
+      :class="reducedMotion ? 'relative h-full' : fitReady && isCompact ? 'sticky top-0' : 'sticky top-0 h-[100svh]'"
+      :style="!reducedMotion && fitReady && isCompact && homeStickyHeightPx ? { height: `${homeStickyHeightPx}px` } : undefined"
     >
       <!-- Hardware-Accelerated Scroll-Scrubbed Panorama Canvas -->
       <div
@@ -433,7 +436,7 @@ onBeforeUnmount(() => {
       <!-- Ultra-Minimal Bottom Scroll Progress Hairline (stacked cleanly above Skip button on mobile) -->
       <div
         v-if="!reducedMotion"
-        class="pointer-events-none absolute bottom-20 sm:bottom-9 inset-x-0 z-10 flex flex-col items-center gap-2.5 px-6"
+        class="pointer-events-none absolute bottom-9 inset-x-0 z-10 flex flex-col items-center gap-2.5 px-6"
         :style="{ opacity: hudOpacity.toFixed(4) }"
         aria-hidden="true"
       >
@@ -462,7 +465,7 @@ onBeforeUnmount(() => {
       <!-- Sleek Floating "Skip this clip" Action Button (centered below bar on mobile, bottom-right on desktop) -->
       <div
         v-if="!reducedMotion"
-        class="absolute bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:bottom-8 sm:right-8 z-30 transition-none"
+        class="absolute bottom-8 right-8 z-30 transition-none"
         :class="skipButtonOpacity > 0.08 ? 'pointer-events-auto' : 'pointer-events-none'"
         :style="{ opacity: skipButtonOpacity.toFixed(4) }"
       >

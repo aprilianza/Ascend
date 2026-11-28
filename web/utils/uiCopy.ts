@@ -285,7 +285,7 @@ export const HOME_COPY = {
         description:
           'Explore nearly two thousand hexagonal areas across active coverage zones with colorblind-safe labels and confidence markers.',
         status: 'available' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: true,
         href: '/map',
@@ -297,7 +297,7 @@ export const HOME_COPY = {
         description:
           'Click any area to compare shops within 500 m, what demand typically supports, and its top three drivers.',
         status: 'available' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: true,
         href: '/map',
@@ -309,7 +309,7 @@ export const HOME_COPY = {
         description:
           'Save up to ten candidate areas locally in your browser with no account required, and jump back in one click.',
         status: 'available' as const,
-        cols: 'md:col-span-4',
+        cols: 'col-span-4',
         layout: 'vertical' as const,
         chamfer: false,
         href: '/map',
@@ -321,7 +321,7 @@ export const HOME_COPY = {
         description:
           'Enter your own cup price, unit cost, and monthly rent to see daily break-even targets alongside area competition.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-4',
+        cols: 'col-span-4',
         layout: 'vertical' as const,
         chamfer: false,
         href: null,
@@ -333,7 +333,7 @@ export const HOME_COPY = {
         description:
           'Describe your target buyers and preferred district so the assistant filters mapped areas and guides the map view.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-4',
+        cols: 'col-span-4',
         layout: 'vertical' as const,
         chamfer: false,
         href: null,
@@ -345,7 +345,7 @@ export const HOME_COPY = {
         description:
           'Line up two to three shortlisted areas side by side to weigh market room, confidence levels, and demand drivers.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: false,
         href: null,
@@ -357,7 +357,7 @@ export const HOME_COPY = {
         description:
           'Record your own rent quotes privately in the browser and weigh them against local market room before signing.',
         status: 'coming_soon' as const,
-        cols: 'md:col-span-6',
+        cols: 'col-span-6',
         layout: 'horizontal' as const,
         chamfer: false,
         href: null,

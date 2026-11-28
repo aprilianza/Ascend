@@ -8,6 +8,7 @@ import type { BusinessStationId } from '~/utils/businessStations'
 
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
+const { fitReady, isCompact } = useDesktopFit()
 
 const props = defineProps<{
   meta: Meta | null
@@ -179,7 +180,8 @@ const totalAreasFormatted = computed(() => {
 <template>
   <section
     id="beranda"
-    class="relative w-full min-h-[calc(100svh-160px)] bg-[#050C0F] overflow-x-clip flex flex-col justify-between pt-20 sm:pt-24"
+    :class="fitReady && isCompact ? 'min-h-[700px] pt-24' : 'min-h-[calc(100svh-160px)] pt-24'"
+    class="relative w-full bg-[#050C0F] overflow-x-clip flex flex-col justify-between"
   >
     <!-- 5 FLUID 60FPS BACKDROP SCENES + SMART TEXT-DIMMING VARIED-STYLE LUHUR MINT HEX CURSOR -->
     <HomeHeroBackdrop2D :wordmark-hovered="wordmarkHovered" />
@@ -197,10 +199,10 @@ const totalAreasFormatted = computed(() => {
       <!-- TOP CLUSTER: Ornate Nusantara Filigree Eyebrow + Synced 15s ASCEND Wordmark + Treasure-Hunt Underline -->
       <div class="w-full flex flex-col items-center">
         <!-- Eyebrow flanked by glowing Nusantara botanical filigree wings -->
-        <div class="inline-flex items-center justify-center gap-2 sm:gap-4 font-mono text-[9px] sm:text-[11px] uppercase tracking-[0.12em] sm:tracking-[0.2em] text-[#34D399] whitespace-nowrap">
+        <div class="inline-flex items-center justify-center gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-[#34D399] whitespace-nowrap">
           <svg
             viewBox="0 0 110 34"
-            class="hidden sm:block w-20 md:w-24 lg:w-28 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0"
+            class="block w-28 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0"
             fill="none"
             aria-hidden="true"
           >
@@ -226,7 +228,7 @@ const totalAreasFormatted = computed(() => {
 
           <svg
             viewBox="0 0 110 34"
-            class="hidden sm:block w-20 md:w-24 lg:w-28 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0 -scale-x-100"
+            class="block w-28 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0 -scale-x-100"
             fill="none"
             aria-hidden="true"
           >
@@ -305,8 +307,8 @@ const totalAreasFormatted = computed(() => {
 
       <!-- MIDDLE CLUSTER: 2-Line Headline, Subtitle, Segmented Pill (Live Mint vs Coming Soon Warm Amber) -->
       <div class="w-full max-w-[980px] flex flex-col items-center -mt-1 sm:-mt-2">
-        <h1 class="font-display font-extrabold text-ink-primary tracking-[-0.03em] leading-[1.08] text-[24px] sm:text-[31px] md:text-[35px] lg:text-[38px] xl:text-[40px] drop-shadow-[0_6px_22px_rgba(0,0,0,0.85)]">
-          <span class="block md:whitespace-nowrap">{{ HOME_COPY.hero.headlineLine1 }}</span>
+        <h1 class="font-display font-extrabold text-ink-primary tracking-[-0.03em] leading-[1.08] text-[40px] drop-shadow-[0_6px_22px_rgba(0,0,0,0.85)]">
+          <span class="block whitespace-nowrap">{{ HOME_COPY.hero.headlineLine1 }}</span>
           <span class="block mt-0.5">
             {{ HOME_COPY.hero.headlineLine2Prefix }}
             <span class="editorial-mint font-semibold tracking-[-0.01em] text-[1.1em]">
@@ -410,7 +412,7 @@ const totalAreasFormatted = computed(() => {
           @mouseleave="scheduleHideChatTip"
         >
           <form
-            class="relative z-10 w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
+            class="relative z-10 w-full flex flex-row items-center gap-2"
             @submit.prevent="submitChatPreview"
           >
             <div class="relative flex-1 min-w-0 group">
@@ -425,7 +427,7 @@ const totalAreasFormatted = computed(() => {
                   @focus="showChatTip()"
                 >
                 <span
-                  class="hidden lg:inline-flex shrink-0 px-2 py-0.5 rounded-full bg-signal-amber/15 border border-signal-amber/45 font-mono text-[8px] font-bold tracking-[0.08em] text-signal-amber uppercase cursor-default"
+                  class="inline-flex shrink-0 px-2 py-0.5 rounded-full bg-signal-amber/15 border border-signal-amber/45 font-mono text-[8px] font-bold tracking-[0.08em] text-signal-amber uppercase cursor-default"
                   @mouseenter="showChatTip()"
                 >
                   {{ HOME_COPY.hero.comingSoon }}

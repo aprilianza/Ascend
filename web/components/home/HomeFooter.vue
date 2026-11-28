@@ -158,7 +158,7 @@ function hexRight(cx: number, topY: number): string {
     <svg
       viewBox="0 0 1440 280"
       preserveAspectRatio="xMidYMax slice"
-      class="select-none absolute inset-x-0 bottom-0 w-full h-[258px] sm:h-[290px]"
+      class="select-none absolute inset-x-0 bottom-0 w-full h-[290px]"
       fill="none"
       aria-hidden="true"
     >
@@ -273,7 +273,7 @@ function hexRight(cx: number, topY: number): string {
     <div class="relative z-10 mx-auto w-full max-w-[1060px] px-4 sm:px-6 pointer-events-none">
       <div class="pointer-events-auto rounded-xl bg-[#0B0F16]/90 backdrop-blur-md border border-white/15 px-5 sm:px-7 py-5 shadow-[0_24px_70px_rgba(0,0,0,0.88),0_0_40px_rgba(16,185,129,0.08)] space-y-4">
         <!-- Row 1: ASCEND Mark & Wordmark + Modal Links -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex flex-row items-center justify-between gap-3">
           <NuxtLink to="/" class="inline-flex items-center gap-2.5 self-start group">
             <UiAscendMark :size="23" class="transition-all duration-mid ease-signal group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_rgba(16,185,129,0.55)]" />
             <span class="font-display font-bold text-[14px] tracking-[0.07em] text-ink-primary">
@@ -300,7 +300,7 @@ function hexRight(cx: number, topY: number): string {
         </p>
 
         <!-- Row 3: Honest Disclaimer + Real Meta Version & Terima kasih -->
-        <div class="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11.5px]">
+        <div class="pt-3 border-t border-white/10 flex flex-row items-center justify-between gap-2 text-[11.5px]">
           <p class="font-sans text-ink-secondary">
             {{ HOME_COPY.footer.disclaimer }}
           </p>

@@ -345,14 +345,14 @@ const summaryStats = computed(() => {
     style="background: linear-gradient(180deg, rgba(15, 17, 21, 0) 0%, rgba(15, 17, 21, 0) 26%, rgba(15, 17, 21, 0.85) 48%, #0F1115 62%, #0F1115 100%);"
   >
     <div class="mx-auto max-w-frame px-5 sm:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+      <div class="grid grid-cols-12 gap-8 items-start">
         <!-- Left 4 cols -->
-        <div v-reveal="{ variant: 'up' }" class="lg:col-span-4 lg:sticky lg:top-28">
+        <div v-reveal="{ variant: 'up' }" class="col-span-4 sticky top-28">
           <div class="border-l-2 border-mint pl-5">
             <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-mint mb-3">
               {{ HOME_COPY.solution.eyebrow }}
             </p>
-            <h2 class="font-display font-extrabold text-ink-primary text-[40px] sm:text-[50px] lg:text-[54px] leading-[1.03] tracking-[-0.03em]">
+            <h2 class="font-display font-extrabold text-ink-primary text-[54px] leading-[1.03] tracking-[-0.03em]">
               {{ HOME_COPY.solution.headlinePrefix }}
               <span class="editorial-mint block mt-1 text-[1.06em]">
                 {{ HOME_COPY.solution.headlineAccent }}
@@ -428,7 +428,7 @@ const summaryStats = computed(() => {
         <!-- Right 8 cols: Frosted Smoked-Glass Interactive Showcase Card -->
         <div
           v-reveal="{ variant: 'scale', delay: 110 }"
-          class="lg:col-span-8 relative"
+          class="col-span-8 relative"
         >
           <!-- Ambient Backlight Orbs Behind the Frosted Glass (gives true optical refraction depth) -->
           <div
@@ -453,7 +453,7 @@ const summaryStats = computed(() => {
 
             <div class="relative z-10 p-5 sm:p-7">
               <!-- Card Top Header: Title + Auto-Cycling Mode Indicator -->
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/10">
+              <div class="flex flex-row items-center justify-between gap-4 pb-5 border-b border-white/10">
                 <div>
                   <h3 class="font-editorial font-semibold text-ink-primary text-[21px] sm:text-[23px] leading-snug">
                     {{ HOME_COPY.solution.cardTitle }}
@@ -520,7 +520,7 @@ const summaryStats = computed(() => {
                 <div class="relative">
                   <svg
                     viewBox="0 0 600 350"
-                    class="w-full h-[290px] sm:h-[355px] relative z-10"
+                    class="w-full h-[355px] relative z-10"
                     fill="none"
                     role="img"
                     aria-label="Nineteen-cell animated hexagon cluster cycling through Ascend area filters"
@@ -619,8 +619,8 @@ const summaryStats = computed(() => {
                       </g>
                     </g>
 
-                    <!-- Dynamic animated leader line pointing from spotlighted hexagon to right frosted glass card (sm+) -->
-                    <g class="hidden sm:inline transition-all duration-500">
+                    <!-- Dynamic animated leader line pointing from spotlighted hexagon to right frosted glass card -->
+                    <g class="inline transition-all duration-500">
                       <polyline
                         :points="leaderPoints.polyline"
                         :stroke="activeAccentColor"
@@ -639,9 +639,9 @@ const summaryStats = computed(() => {
                     </g>
                   </svg>
 
-                  <!-- Floating Frosted Glass Callout Card (Right side of hex cluster on sm+ screens) -->
+                  <!-- Floating Frosted Glass Callout Card (Right side of hex cluster) -->
                   <div
-                    class="hidden sm:block absolute top-[21%] right-4 md:right-6 z-20 w-[212px] md:w-[236px] rounded-xl p-3.5 solution-glass-callout transition-all duration-500"
+                    class="block absolute top-[21%] right-6 z-20 w-[236px] rounded-xl p-3.5 solution-glass-callout transition-all duration-500"
                     :style="{ borderColor: `${activeAccentColor}55` }"
                   >
                     <div class="flex items-center gap-2 mb-1.5">

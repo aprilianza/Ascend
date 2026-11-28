@@ -56,6 +56,7 @@ import {
   type TravelMode,
 } from '~/utils/mapRouting'
 import { HOME_COPY } from '~/utils/uiCopy'
+import { useDesktopFit } from '~/composables/useDesktopFit'
 
 type RightTab = 'area' | 'shortlist' | 'ask'
 type MapStyleId = 'dark' | 'bright' | 'bw' | 'satellite'

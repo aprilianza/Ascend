@@ -91,9 +91,9 @@ const dotGrid = computed(() => {
         >
           <article
             class="blindspot-card group relative z-10"
-            :class="idx === 1 ? 'lg:ml-14' : 'lg:mr-14'"
+            :class="idx === 1 ? 'ml-14' : 'mr-14'"
           >
-            <div class="blindspot-card-inner p-6 sm:p-8 lg:p-10 min-h-[280px] lg:min-h-[308px] grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-10 items-center">
+            <div class="blindspot-card-inner p-10 min-h-[308px] grid grid-cols-12 gap-10 items-center">
             <!-- Emerald depth wash on hover -->
             <div class="blindspot-card-glow-layer" aria-hidden="true" />
 
@@ -128,8 +128,8 @@ const dotGrid = computed(() => {
 
             <!-- Visual Illustration Panel (Stays crisp dark obsidian so glowing animations pop against mint hover card) -->
             <div
-              class="relative z-10 lg:col-span-5 h-[204px] sm:h-[228px] rounded-xl bg-[#0A0E14] border border-[#232836] overflow-hidden flex items-center justify-center p-4 transition-all duration-mid ease-signal group-hover:border-[#A7F3D0]/70 group-hover:shadow-[0_14px_32px_rgba(4,24,17,0.45)]"
-              :class="idx === 1 ? 'lg:order-2' : 'lg:order-1'"
+              class="relative z-10 col-span-5 h-[228px] rounded-xl bg-[#0A0E14] border border-[#232836] overflow-hidden flex items-center justify-center p-4 transition-all duration-mid ease-signal group-hover:border-[#A7F3D0]/70 group-hover:shadow-[0_14px_32px_rgba(4,24,17,0.45)]"
+              :class="idx === 1 ? 'order-2' : 'order-1'"
             >
               <!-- 01: Crowding you can't see (500 m radar scan revealing hidden rivals in neighboring lanes) -->
               <svg
@@ -417,8 +417,8 @@ const dotGrid = computed(() => {
 
             <!-- Copy Panel (Smoothly transitions typography to dark obsidian on primary-mint hover) -->
             <div
-              class="relative z-10 lg:col-span-7 flex flex-col justify-center"
-              :class="idx === 1 ? 'lg:order-1' : 'lg:order-2'"
+              class="relative z-10 col-span-7 flex flex-col justify-center"
+              :class="idx === 1 ? 'order-1' : 'order-2'"
             >
               <span
                 class="inline-flex w-fit items-center px-2.5 py-1 -ml-2.5 rounded-md border border-transparent font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-mint transition-all duration-300 group-hover:bg-[#051B14]/15 group-hover:border-[#051B14]/25 group-hover:text-[#041711]"

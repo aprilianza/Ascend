@@ -16,6 +16,7 @@ const emit = defineEmits<{
 
 const settings = useAscendSettings()
 const copy = computed(() => settings.homeCopy.value)
+const { fitReady, isCompact, homeZoom, HOME_DESIGN_WIDTH } = useDesktopFit()
 
 const isScrolled = ref(false)
 const hoveredNavId = ref<string | null>(null)
@@ -41,7 +42,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="fixed top-3 sm:top-4 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none">
+  <header
+    :class="fitReady && isCompact ? 'fixed top-4 left-0 z-50 px-6 pointer-events-none' : 'fixed top-4 inset-x-0 z-50 px-6 pointer-events-none'"
+    :style="fitReady && isCompact ? { width: `${HOME_DESIGN_WIDTH}px`, zoom: String(homeZoom) } : undefined"
+  >
     <nav
       aria-label="Primary navigation"
       class="pointer-events-auto mx-auto max-w-frame h-[clamp(46px,5.6vw,62px)] px-[clamp(10px,2vw,24px)] rounded-full flex items-center justify-between gap-2 transition-all duration-mid ease-signal backdrop-blur-md"
@@ -195,14 +199,14 @@ onBeforeUnmount(() => {
             to="/map"
             :aria-label="copy.navbar.cta"
             :title="copy.navbar.cta"
-            class="btn-mint h-[clamp(32px,3.6vw,40px)] w-[clamp(32px,3.6vw,40px)] lg:w-auto lg:px-5 text-[13.5px] whitespace-nowrap group shadow-[0_0_24px_rgba(16,185,129,0.45)]"
+            class="btn-mint h-10 w-auto px-5 text-[13.5px] whitespace-nowrap group shadow-[0_0_24px_rgba(16,185,129,0.45)]"
             @focus="hoveredNavId = 'open-map'"
             @blur="hoveredNavId = null"
           >
-            <MapIcon class="w-[clamp(15px,1.6vw,17px)] h-[clamp(15px,1.6vw,17px)] lg:hidden" :stroke-width="2.2" />
-            <span class="hidden lg:inline">{{ copy.navbar.cta }}</span>
+            <MapIcon class="hidden" :stroke-width="2.2" />
+            <span class="inline">{{ copy.navbar.cta }}</span>
             <ArrowRight
-              class="hidden lg:inline-block w-4 h-4 transition-transform duration-fast ease-signal group-hover:translate-x-0.5"
+              class="inline-block w-4 h-4 transition-transform duration-fast ease-signal group-hover:translate-x-0.5"
               :stroke-width="2.2"
             />
           </NuxtLink>
@@ -218,7 +222,7 @@ onBeforeUnmount(() => {
             <div
               v-if="hoveredNavId === 'open-map'"
               role="tooltip"
-              class="lg:hidden pointer-events-none absolute top-[calc(100%+10px)] right-0 z-50 px-3 py-1.5 rounded-xl bg-[#091518]/95 border border-[#224742] backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.72)] whitespace-nowrap text-center"
+              class="hidden pointer-events-none absolute top-[calc(100%+10px)] right-0 z-50 px-3 py-1.5 rounded-xl bg-[#091518]/95 border border-[#224742] backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.72)] whitespace-nowrap text-center"
             >
               <span class="block font-sans text-[11.5px] font-semibold text-ink-primary leading-tight">
                 {{ copy.navbar.cta }}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const settings = useAscendSettings()
 const HOME_COPY = computed(() => settings.homeCopy.value)
+const { fitReady, isCompact, homeStickyHeightPx, homePortalSectionHeightPx } = useDesktopFit()
 
 // 6 airy, luminous concentric hexagons (crisp, serene, 60fps)
 const RING_COUNT = 6
@@ -401,13 +402,23 @@ onBeforeUnmount(() => {
     ref="sectionRef"
     aria-label="The Counting Layer open data transition"
     class="relative z-10 w-full select-none"
-    style="background: linear-gradient(180deg, #060A0F 0%, #0A0E14 48%, #0F1115 100%);"
-    :class="reducedMotion ? 'h-[480px]' : 'h-[190vh] sm:h-[205vh]'"
+    :style="[
+      { background: 'linear-gradient(180deg, #060A0F 0%, #0A0E14 48%, #0F1115 100%)' },
+      !reducedMotion && fitReady && isCompact && homePortalSectionHeightPx
+        ? { height: `${homePortalSectionHeightPx}px` }
+        : undefined,
+    ]"
+    :class="reducedMotion ? 'h-[480px]' : fitReady && isCompact ? '' : 'h-[205vh]'"
   >
     <!-- Smooth Pinned Concentric Hexagon Stage: dark breath -> hexagons -> title -> natural unstick into Solution -->
     <div
       class="w-full overflow-hidden"
-      :class="reducedMotion ? 'relative h-full' : 'sticky top-0 h-[100svh]'"
+      :class="reducedMotion ? 'relative h-full' : fitReady && isCompact ? 'sticky top-0' : 'sticky top-0 h-[100svh]'"
+      :style="
+        !reducedMotion && fitReady && isCompact && homeStickyHeightPx
+          ? { height: `${homeStickyHeightPx}px` }
+          : undefined
+      "
     >
       <canvas
         ref="canvasRef"
@@ -425,11 +436,11 @@ onBeforeUnmount(() => {
           <span>{{ HOME_COPY.portal.layerTag }}</span>
         </div>
 
-        <h2 class="mt-4 font-display font-extrabold text-[32px] sm:text-[50px] lg:text-[62px] tracking-[0.04em] leading-[1.04] bg-gradient-to-r from-[#14B8A6] via-[#F8FAFC] to-[#10B981] bg-clip-text text-transparent drop-shadow-[0_6px_28px_rgba(16,185,129,0.22)]">
+        <h2 class="mt-4 font-display font-extrabold text-[62px] tracking-[0.04em] leading-[1.04] bg-gradient-to-r from-[#14B8A6] via-[#F8FAFC] to-[#10B981] bg-clip-text text-transparent drop-shadow-[0_6px_28px_rgba(16,185,129,0.22)]">
           {{ HOME_COPY.portal.title }}
         </h2>
 
-        <p class="mt-3.5 max-w-lg font-sans text-[14.5px] sm:text-[16px] leading-relaxed text-[#CBD5E1]/90">
+        <p class="mt-3.5 max-w-lg font-sans text-[16px] leading-relaxed text-[#CBD5E1]/90">
           {{ HOME_COPY.portal.subtitle }}
         </p>
       </div>

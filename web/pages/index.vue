@@ -4,6 +4,7 @@ import type { InfoModalTab } from '~/components/home/HomeInfoModal.vue'
 
 const { meta, loadingMeta, error, dataVersionLabel, getMeta } = useAscendData()
 const settings = useAscendSettings()
+const { fitReady, isCompact, homeZoom, HOME_DESIGN_WIDTH } = useDesktopFit()
 
 useHead({
   title: computed(() =>
@@ -106,11 +107,15 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-ground text-ink-primary">
+  <div class="min-h-screen bg-ground text-ink-primary overflow-x-clip">
     <!-- 0. Floating Pill Navbar -->
     <HomeNavbar :active-section="activeSection" @open-settings="settingsOpen = true" />
 
-    <main>
+    <div
+      class="bg-ground text-ink-primary overflow-x-clip"
+      :style="fitReady && isCompact ? { width: `${HOME_DESIGN_WIDTH}px`, zoom: String(homeZoom) } : undefined"
+    >
+      <main>
       <!-- 1. Centered 2D Hero with 15s Synced ASCEND Trail & Swappable 3D-Hex Side Wings -->
       <HomeHero
         :meta="meta"
@@ -162,12 +167,13 @@ onBeforeUnmount(() => {
     </main>
 
     <!-- 9. Footer: "PETA JALUR NIAGA" -->
-    <HomeFooter
-      :meta="meta"
-      :loading-meta="loadingMeta"
-      :data-version-label="dataVersionLabel"
-      @open-modal="openModal"
-    />
+      <HomeFooter
+        :meta="meta"
+        :loading-meta="loadingMeta"
+        :data-version-label="dataVersionLabel"
+        @open-modal="openModal"
+      />
+    </div>
 
     <!-- Info Modal: About Ascend (6-Tab Redesign) -->
     <HomeInfoModal

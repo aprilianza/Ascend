@@ -76,7 +76,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Symmetric 2 - 3 - 2 Bento Grid (Hover Lift, Ambient Bubble Backdrop, Shadow-Separated Tinted Visuals) -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+      <div class="grid grid-cols-12 gap-5">
         <div
           v-for="(card, idx) in HOME_COPY.features.items"
           :key="card.id"
@@ -90,7 +90,7 @@ onBeforeUnmount(() => {
             :to="card.href ?? '/map'"
             :class="
               card.layout === 'horizontal'
-                ? 'grid grid-cols-1 sm:grid-cols-12 min-h-[262px]'
+                ? 'grid grid-cols-12 min-h-[262px]'
                 : 'flex flex-col justify-between min-h-[346px]'
             "
             class="feat-bento-live group block h-full w-full"
@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
 
             <!-- HORIZONTAL LIVE CARDS (01 Labeled Map & 02 Area Card): Dark Copy Left, Primary-Mint Visual Right Separated by Shadow -->
             <template v-if="card.layout === 'horizontal'">
-              <div class="relative z-20 sm:col-span-6 p-6 sm:p-7 flex flex-col justify-between bg-[#0E141C]/90">
+              <div class="relative z-20 col-span-6 p-7 flex flex-col justify-between bg-[#0E141C]/90">
                 <div>
                   <div class="flex items-center justify-between gap-2">
                     <span class="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-mint whitespace-nowrap">
@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- Primary-Mint Tinted Animation Panel Separated Purely by Soft Cast Shadow -->
-              <div class="feat-visual-mint relative sm:col-span-6 min-h-[192px] sm:min-h-full flex items-center justify-center overflow-hidden px-4 py-5 sm:py-4">
+              <div class="feat-visual-mint relative col-span-6 min-h-full flex items-center justify-center overflow-hidden px-4 py-4">
                 <!-- Glossy Mint Floating Bubbles Inside Animation Zone -->
                 <span
                   class="ascend-bubble-a pointer-events-none absolute top-3 right-5 w-14 h-14 rounded-full border border-[#A7F3D0]/30"
@@ -237,13 +237,8 @@ onBeforeUnmount(() => {
 
                 <!-- Shadow-only separation between left text zone and right primary-mint animation zone -->
                 <div
-                  class="pointer-events-none hidden sm:block absolute inset-y-0 left-0 w-16 z-10"
+                  class="pointer-events-none block absolute inset-y-0 left-0 w-16 z-10"
                   style="background: linear-gradient(90deg, #0E141C 0%, rgba(14, 20, 28, 0.72) 28%, rgba(6, 22, 19, 0.18) 65%, transparent 100%);"
-                  aria-hidden="true"
-                />
-                <div
-                  class="pointer-events-none sm:hidden absolute inset-x-0 top-0 h-10 z-10"
-                  style="background: linear-gradient(180deg, #0E141C 0%, rgba(14, 20, 28, 0.65) 40%, transparent 100%);"
                   aria-hidden="true"
                 />
               </div>
@@ -325,7 +320,7 @@ onBeforeUnmount(() => {
             type="button"
             :class="
               card.layout === 'horizontal'
-                ? 'grid grid-cols-1 sm:grid-cols-12 min-h-[244px]'
+                ? 'grid grid-cols-12 min-h-[244px]'
                 : 'flex flex-col justify-between min-h-[346px]'
             "
             class="feat-bento-soon text-left group cursor-pointer h-full w-full"
@@ -439,7 +434,7 @@ onBeforeUnmount(() => {
 
             <!-- HORIZONTAL COMING SOON CARDS (06 Compare Areas & 07 Rent Check): Copy Left, Grey Visual Right Separated by Shadow -->
             <template v-else>
-              <div class="relative z-20 sm:col-span-6 p-6 sm:p-7 flex flex-col justify-between bg-[#10141B]/92">
+              <div class="relative z-20 col-span-6 p-7 flex flex-col justify-between bg-[#10141B]/92">
                 <div>
                   <div class="flex items-center justify-between gap-2">
                     <span class="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-[#64748B] whitespace-nowrap">
@@ -468,7 +463,7 @@ onBeforeUnmount(() => {
               </div>
 
               <!-- Grey Tinted Animated Visual Separated Purely by Soft Cast Shadow -->
-              <div class="feat-visual-grey relative sm:col-span-6 min-h-[172px] sm:min-h-full flex items-center justify-center overflow-hidden px-5 py-5">
+              <div class="feat-visual-grey relative col-span-6 min-h-full flex items-center justify-center overflow-hidden px-5 py-5">
                 <!-- Subtle grey floating bubbles in animation zone -->
                 <span
                   class="ascend-bubble-a pointer-events-none absolute top-3 right-5 w-12 h-12 rounded-full border border-[#CBD5E1]/20"
@@ -528,13 +523,8 @@ onBeforeUnmount(() => {
 
                 <!-- Shadow-only horizontal fade separating text cleanly from grey visual zone -->
                 <div
-                  class="pointer-events-none hidden sm:block absolute inset-y-0 left-0 w-16 z-10"
+                  class="pointer-events-none block absolute inset-y-0 left-0 w-16 z-10"
                   style="background: linear-gradient(90deg, #10141B 0%, rgba(16, 20, 27, 0.72) 28%, rgba(16, 20, 27, 0.2) 65%, transparent 100%);"
-                  aria-hidden="true"
-                />
-                <div
-                  class="pointer-events-none sm:hidden absolute inset-x-0 top-0 h-10 z-10"
-                  style="background: linear-gradient(180deg, #10141B 0%, rgba(16, 20, 27, 0.65) 40%, transparent 100%);"
                   aria-hidden="true"
                 />
               </div>

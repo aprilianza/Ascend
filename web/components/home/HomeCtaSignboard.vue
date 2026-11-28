@@ -643,13 +643,13 @@ onBeforeUnmount(() => {
           <span>{{ HOME_COPY.footer.captionChip }}</span>
         </div>
 
-        <span class="hidden sm:inline-flex font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted/80">
+        <span class="inline-flex font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted/80">
           SCROLL TO TRACE DEMAND
         </span>
       </div>
 
       <!-- DESKTOP INTERACTIVE SCROLL-DRAWN ROUTE CANVAS (1440 x 880) -->
-      <div class="hidden md:block relative w-full aspect-[1440/880] max-h-[860px] mx-auto">
+      <div class="block relative w-full aspect-[1440/880] max-h-[860px] mx-auto">
         <svg
           viewBox="0 0 1440 880"
           class="w-full h-full overflow-visible select-none"
@@ -921,8 +921,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <!-- MOBILE VERTICAL MEASURED ROUTE FLOW (< md) -->
-      <div class="md:hidden relative pl-10 py-4 space-y-4">
+      <div class="hidden" aria-hidden="true">
         <div class="absolute left-4 top-0 bottom-0 w-[2px] bg-[#1F2937] rounded-full overflow-hidden" aria-hidden="true">
           <div
             class="w-full bg-gradient-to-b from-[#00E5A8] via-mint to-transparent transition-all duration-200"
@@ -1068,9 +1067,9 @@ onBeforeUnmount(() => {
           </p>
 
           <!-- Balanced 2-Line Headline -->
-          <h2 class="mt-3.5 font-display font-extrabold text-ink-primary text-[24px] sm:text-[34px] lg:text-[38px] leading-[1.14] tracking-[-0.025em]">
-            <span class="sm:whitespace-nowrap">Ready to find room for</span>
-            <br class="hidden sm:block">
+          <h2 class="mt-3.5 font-display font-extrabold text-ink-primary text-[38px] leading-[1.14] tracking-[-0.025em]">
+            <span class="whitespace-nowrap">Ready to find room for</span>
+            <br class="block">
             <span> your </span>
             <span class="editorial-mint whitespace-nowrap text-[1.06em]">
               {{ HOME_COPY.cta.headlineAccent }}
@@ -1078,10 +1077,10 @@ onBeforeUnmount(() => {
           </h2>
 
           <!-- Buttons Row -->
-          <div class="mt-7 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          <div class="mt-7 flex flex-wrap items-center justify-center gap-6">
             <NuxtLink
               to="/map"
-              class="btn-mint h-11 sm:h-12 px-6 sm:px-7 text-[14px] sm:text-[15px] group shadow-[0_0_30px_rgba(16,185,129,0.48)]"
+              class="btn-mint h-12 px-7 text-[15px] group shadow-[0_0_30px_rgba(16,185,129,0.48)]"
               @mouseenter="ctaHovered = true"
               @mouseleave="ctaHovered = false"
             >
@@ -1139,7 +1138,7 @@ onBeforeUnmount(() => {
         <svg
           viewBox="0 0 1440 600"
           preserveAspectRatio="xMidYMid slice"
-          class="relative z-10 w-full h-[390px] sm:h-[510px] lg:h-[610px] block select-none"
+          class="relative z-10 w-full h-[610px] block select-none"
           fill="none"
           role="img"
           aria-label="Interactive mountain aurora and Ascend stepped summit diorama"

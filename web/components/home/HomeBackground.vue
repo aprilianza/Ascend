@@ -131,9 +131,9 @@ onBeforeUnmount(() => {
   >
     <div id="busy-header" class="mx-auto max-w-frame px-5 sm:px-8">
       <!-- Row 1: Precision-Aligned Left Headline & Right Editorial Explanation -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+      <div class="grid grid-cols-12 gap-10 items-stretch">
         <!-- Left Column: Street Reality + "Busy isn't room." -->
-        <div class="lg:col-span-6 flex flex-col justify-between">
+        <div class="col-span-6 flex flex-col justify-between">
           <p
             v-reveal="{ variant: 'up' }"
             class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mint mb-4"
@@ -144,7 +144,7 @@ onBeforeUnmount(() => {
 
           <h2
             v-reveal="{ variant: 'up', delay: 70 }"
-            class="font-display font-extrabold text-ink-primary tracking-[-0.03em] leading-[0.94] text-[48px] sm:text-[66px] lg:text-[78px] xl:text-[88px]"
+            class="font-display font-extrabold text-ink-primary tracking-[-0.03em] leading-[0.94] text-[88px]"
           >
             <span class="block">{{ HOME_COPY.background.headlinePrefix }}</span>
             <span class="editorial-mint block mt-1 text-[1.06em]">
@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
         <!-- Right Column: Matched Eyebrow Rail + Editorial Paragraph -->
         <div
           v-reveal="{ variant: 'up', delay: 130 }"
-          class="lg:col-span-6 flex flex-col justify-between border-t border-[#232836]/80 pt-6 lg:border-t-0 lg:pt-0 lg:border-l lg:border-[#232836]/80 lg:pl-10"
+          class="col-span-6 flex flex-col justify-between border-l border-[#232836]/80 pl-10"
         >
           <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted mb-4">
             {{ HOME_COPY.background.rightEyebrow }}
@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
         @mouseleave="isHoverPaused = false"
       >
         <!-- Single Clean Context Row: Concise Readout (left) + Minimal Stage Selector (right) -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7">
+        <div class="flex flex-row items-center justify-between gap-4 mb-7">
           <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
             <span
               class="inline-flex items-center gap-2 font-mono text-[11.5px] font-bold uppercase tracking-[0.1em] transition-colors duration-500"
@@ -190,7 +190,7 @@ onBeforeUnmount(() => {
               {{ activeStage.ratioText }}
             </span>
 
-            <span class="hidden sm:inline text-[#34404F]" aria-hidden="true">·</span>
+            <span class="inline text-[#34404F]" aria-hidden="true">·</span>
 
             <p class="font-sans text-[14px] sm:text-[15px] text-ink-secondary">
               {{ activeStage.meaning }}
@@ -312,9 +312,9 @@ onBeforeUnmount(() => {
             style="transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);"
             :class="
               activeStage.id === 'crowded'
-                ? '-translate-x-[18%] sm:-translate-x-1/2'
+                ? '-translate-x-1/2'
                 : activeStage.id === 'opportunity'
-                  ? '-translate-x-[82%] sm:-translate-x-1/2'
+                  ? '-translate-x-1/2'
                   : '-translate-x-1/2'
             "
             :style="{ left: `${activeStage.position}%` }"

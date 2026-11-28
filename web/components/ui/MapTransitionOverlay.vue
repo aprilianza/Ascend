@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { visible, mode, progress, runId } = useMapTransition()
 const settings = useAscendSettings()
+const { viewportH, fitReady, isCompact, loaderZoom } = useDesktopFit()
 
 const isEnter = computed(() => mode.value === 'enter-map')
 const progressPct = computed(() => Math.round(Math.max(0, Math.min(100, progress.value))))
@@ -386,8 +387,22 @@ onBeforeUnmount(() => {
         role="status"
         aria-live="polite"
         :aria-label="isEnter ? 'Opening the opportunity map' : 'Returning to homepage'"
-        class="fixed inset-0 z-[90] bg-[#060B11] overflow-hidden flex flex-col justify-between select-none"
+        class="fixed inset-0 z-[90] bg-[#060B11] overflow-hidden select-none"
       >
+        <div
+          class="relative w-full h-full flex flex-col justify-between"
+          :style="
+            fitReady && isCompact
+              ? {
+                  width: '1180px',
+                  height: `${Math.ceil(viewportH / loaderZoom)}px`,
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  zoom: String(loaderZoom),
+                }
+              : undefined
+          "
+        >
         <!-- EYE-CATCHING GPU-COMPOSITED SILKY AURORA SKY CURTAINS (ZERO HEAVY SVG BLUR!) -->
         <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div
@@ -744,7 +759,7 @@ onBeforeUnmount(() => {
 
         <!-- LEFT WING: NUSANTARA COFFEE SHOP ("KEDAI KOPI") & CYCLING SME SCALE BADGES (CLEANLY CLEAR OF CENTER) -->
         <div
-          class="pointer-events-none hidden xl:flex flex-col items-center gap-2.5 absolute left-8 bottom-[35vh] z-20 w-[184px] loader-wing-float-a"
+          class="pointer-events-none flex flex-col items-center gap-2.5 absolute left-8 bottom-[35vh] z-20 w-[184px] loader-wing-float-a"
           aria-hidden="true"
         >
           <div class="relative w-[124px] h-[106px] flex items-center justify-center">
@@ -781,7 +796,7 @@ onBeforeUnmount(() => {
 
         <!-- RIGHT WING: NUSANTARA SPATIAL COMPASS & 7-HEX (~500 M) COUNTING RADAR -->
         <div
-          class="pointer-events-none hidden xl:flex flex-col items-center gap-2.5 absolute right-8 bottom-[35vh] z-20 w-[184px] loader-wing-float-b"
+          class="pointer-events-none flex flex-col items-center gap-2.5 absolute right-8 bottom-[35vh] z-20 w-[184px] loader-wing-float-b"
           aria-hidden="true"
         >
           <div class="relative w-[122px] h-[114px] flex items-center justify-center">
@@ -820,11 +835,11 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- TOP ORNATE NUSANTARA FILIGREE EYEBROW -->
-        <div class="relative z-20 pt-6 sm:pt-8 px-6 flex justify-center">
-          <div class="inline-flex items-center justify-center gap-2 sm:gap-4 font-mono text-[9.5px] sm:text-[11px] uppercase tracking-[0.14em] sm:tracking-[0.2em] text-[#34D399] whitespace-nowrap">
+        <div class="relative z-20 pt-8 px-6 flex justify-center">
+          <div class="inline-flex items-center justify-center gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-[#34D399] whitespace-nowrap">
             <svg
               viewBox="0 0 110 34"
-              class="hidden sm:block w-20 md:w-24 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0"
+              class="block w-24 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0"
               fill="none"
               aria-hidden="true"
             >
@@ -856,7 +871,7 @@ onBeforeUnmount(() => {
 
             <svg
               viewBox="0 0 110 34"
-              class="hidden sm:block w-20 md:w-24 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0 -scale-x-100"
+              class="block w-24 h-7 text-[#10B981] drop-shadow-[0_0_12px_rgba(16,185,129,0.62)] shrink-0 -scale-x-100"
               fill="none"
               aria-hidden="true"
             >
@@ -1121,10 +1136,11 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- BOTTOM OPEN DATA ATTRIBUTION STRIP -->
-        <div class="relative z-20 pb-3.5 sm:pb-4 px-4 text-center">
-          <p class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-[0.14em] text-ink-muted/75">
+        <div class="relative z-20 pb-4 px-4 text-center">
+          <p class="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-muted/75">
             OPENFREEMAP · OPENMAPTILES · © OPENSTREETMAP CONTRIBUTORS · OVERTURE MAPS FOUNDATION · WORLDPOP
           </p>
+        </div>
         </div>
       </div>
     </Transition>

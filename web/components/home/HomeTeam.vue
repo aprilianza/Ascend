@@ -249,7 +249,7 @@ const scrollCueStyle = computed(() => {
       :style="teamStageStyle"
     >
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16 sm:mb-20">
+      <div class="flex flex-row items-end justify-between gap-4 mb-20">
         <div>
           <p
             v-reveal="{ variant: 'up' }"
@@ -258,7 +258,7 @@ const scrollCueStyle = computed(() => {
             <span class="w-1.5 h-1.5 rounded-full bg-mint shadow-[0_0_8px_rgba(16,185,129,0.85)]" aria-hidden="true" />
             <span>{{ HOME_COPY.team.eyebrow }}</span>
           </p>
-          <h2 v-reveal="{ variant: 'up', delay: 80 }" class="font-editorial font-semibold text-ink-primary text-[32px] sm:text-[42px] leading-[1.15] tracking-[-0.01em]">
+          <h2 v-reveal="{ variant: 'up', delay: 80 }" class="font-editorial font-semibold text-ink-primary text-[42px] leading-[1.15] tracking-[-0.01em]">
             {{ HOME_COPY.team.headlinePrefix }}
             <span class="editorial-mint">{{ HOME_COPY.team.headlineAccent }}</span>
           </h2>
@@ -274,7 +274,7 @@ const scrollCueStyle = computed(() => {
       </div>
 
       <!-- 4 Concentric Hexagon Cards -> 3D Pop-Out Dual-Pose Portraits on Hover -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5 pt-4">
+      <div class="grid grid-cols-4 gap-5 pt-4">
         <div
           v-for="(member, idx) in HOME_COPY.team.members"
           :key="member.id"
